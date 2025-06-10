@@ -66,11 +66,16 @@ export function activatePathway(
 
   // Fire nodes in sequence
   pathway.nodes.forEach(node => {
-    // Increase activation level
+    // Increase activation level and track the change
     const oldActivation = node.activation_level;
     node.activation_level = Math.min(1, node.activation_level + 0.1);
     node.last_activated = now;
     firedNodes.push(node.id);
+    
+    // Log significant activation changes for debugging/monitoring
+    if (node.activation_level - oldActivation > 0.05) {
+      console.log(`Node ${node.label} activation increased from ${oldActivation.toFixed(2)} to ${node.activation_level.toFixed(2)}`);
+    }
   });
 
   // Strengthen connections through Hebbian learning
@@ -112,6 +117,85 @@ export function updatePathwayStrength(pathway: NeuralPathway, strengthDelta: num
   });
 }
 
+// Function to create a brain network snapshot for analysis and monitoring
+export function createBrainNetworkSnapshot(
+  userId: string, 
+  nodes: NeuralNode[], 
+  connections: SynapticConnection[], 
+  pathways: NeuralPathway[]
+): BrainNetworkSnapshot {
+  const now = new Date().toISOString();
+  
+  // Calculate network metrics
+  const totalActivation = nodes.reduce((sum, node) => sum + node.activation_level, 0);
+  const averageConnectionStrength = connections.length > 0 
+    ? connections.reduce((sum, conn) => sum + conn.strength, 0) / connections.length 
+    : 0;
+  
+  // Identify dominant emotional state
+  const emotionNodes = nodes.filter(node => node.type === 'emotion');
+  const dominantEmotion = emotionNodes.length > 0
+    ? emotionNodes.reduce((prev, current) => 
+        current.activation_level > prev.activation_level ? current : prev
+      ).label
+    : 'neutral';
+
+  // Calculate crisis risk based on harmful pathway activation
+  const crisisPathways = pathways.filter(pathway => 
+    pathway.crisis_risk_level === 'high' || pathway.crisis_risk_level === 'critical'
+  );
+  const crisisRisk = crisisPathways.length > 0 ? 'high' : 'low';
+
+  return {
+    id: uuidv4(),
+    user_id: userId,
+    timestamp: now,
+    total_nodes: nodes.length,
+    total_connections: connections.length,
+    active_pathways: pathways.filter(p => p.activation_frequency > 0).length,
+    network_density: connections.length / (nodes.length * (nodes.length - 1) / 2),
+    average_activation: totalActivation / nodes.length,
+    dominant_emotion: dominantEmotion,
+    crisis_indicators: crisisPathways.map(p => p.name),
+    plasticity_score: calculateNetworkPlasticity(nodes, connections, pathways),
+    created_at: now
+  };
+}
+
+// Helper function to calculate network plasticity
+function calculateNetworkPlasticity(
+  nodes: NeuralNode[], 
+  connections: SynapticConnection[], 
+  pathways: NeuralPathway[]
+): number {
+  if (pathways.length === 0) return 0;
+
+  // Measure diversity of node types and emotional states
+  const nodeTypes = new Set(nodes.map(node => node.type));
+  const emotionTypes = new Set(
+    nodes.filter(node => node.type === 'emotion').map(node => node.label)
+  );
+
+  // Calculate connection variability (how diverse the connection strengths are)
+  const connectionStrengths = connections.map(conn => conn.strength);
+  const strengthVariance = calculateVariance(connectionStrengths);
+
+  // Plasticity is higher when there's diversity and balanced activation
+  const diversityScore = (nodeTypes.size + emotionTypes.size) / (nodes.length + 1);
+  const balanceScore = 1 - Math.min(1, strengthVariance);
+  
+  return Math.min(1, (diversityScore + balanceScore) / 2);
+}
+
+// Helper function for variance calculation
+function calculateVariance(values: number[]): number {
+  if (values.length === 0) return 0;
+  
+  const mean = values.reduce((sum, val) => sum + val, 0) / values.length;
+  const squaredDifferences = values.map(val => Math.pow(val - mean, 2));
+  return squaredDifferences.reduce((sum, val) => sum + val, 0) / values.length;
+}
+
 export class NeuralPathwayEngine {
   private userId: string;
   private nodes: Map<string, NeuralNode> = new Map();
@@ -136,6 +220,16 @@ export class NeuralPathwayEngine {
 
   getPathways(): NeuralPathway[] {
     return Array.from(this.pathways.values());
+  }
+
+  // Method to create a network snapshot using the BrainNetworkSnapshot type
+  createNetworkSnapshot(): BrainNetworkSnapshot {
+    return createBrainNetworkSnapshot(
+      this.userId,
+      this.getNodes(),
+      this.getConnections(),
+      this.getPathways()
+    );
   }
 
   addNode(params: {
