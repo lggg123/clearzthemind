@@ -53,7 +53,7 @@ export default function ShowcasePage() {
         return (
           <div className="h-full flex items-center justify-center bg-gradient-to-br from-green-900/20 to-blue-900/20 rounded-2xl">
             <div className="text-center">
-              <FrankAvatar mood="happy" size="large" />
+              <FrankAvatar mood="neutral"/>
               <h3 className="text-2xl font-bold text-white mt-6 mb-2">Meet FRANK</h3>
               <p className="text-gray-400">Your AI Mental Health Companion</p>
               <div className="mt-8 grid grid-cols-2 gap-4 max-w-md">

@@ -36,3 +36,62 @@ export interface CrisisEvent {
     created_at: string;
     resolved_at?: string;
 }
+
+export interface NeuralNode {
+    id: string;
+    type: 'emotion' | 'memory' | 'trigger' | 'response' | 'pattern';
+    label: string;
+    activation_level: number; // 0-1 scale
+    position: { x: number; y: number; z?: number };
+    created_at: string;
+    last_activated: string;
+}
+
+export interface SynapticConnection {
+    id: string;
+    source_node_id: string;
+    target_node_id: string;
+    strength: number; // 0-1 scale, how strong the connection is
+    weight: number; // -1 to 1, positive or negative influence
+    activation_count: number;
+    last_fired: string;
+    pathway_type: 'strengthening' | 'weakening' | 'neutral';
+}
+
+export interface NeuralPathway {
+    id: string;
+    user_id: string;
+    name: string;
+    nodes: NeuralNode[];
+    connections: SynapticConnection[];
+    dominant_emotion: string;
+    crisis_risk_level: 'low' | 'medium' | 'high' | 'critical';
+    activation_frequency: number; // How often this pathway fires
+    created_at: string;
+    last_activated: string;
+}
+
+export interface BrainNetworkSnapshot {
+    id: string;
+    user_id: string;
+    pathways: NeuralPathway[];
+    overall_connectivity: number; // 0-1 scale
+    dominant_patterns: string[];
+    crisis_indicators: string[];
+    neural_plasticity_score: number; // Ability to form new pathways
+    timestamp: string;
+}
+
+export interface PathwayActivation {
+    id: string;
+    pathway_id: string;
+    trigger_type: 'message' | 'mood_entry' | 'external_event';
+    trigger_content: string;
+    nodes_fired: string[];
+    strength_changes: Array<{
+        connection_id: string;
+        old_strength: number;
+        new_strength: number;
+    }>;
+    created_at: string;
+}
