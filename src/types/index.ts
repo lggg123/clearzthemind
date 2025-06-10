@@ -74,12 +74,18 @@ export interface NeuralPathway {
 export interface BrainNetworkSnapshot {
     id: string;
     user_id: string;
-    pathways: NeuralPathway[];
-    overall_connectivity: number; // 0-1 scale
-    dominant_patterns: string[];
-    crisis_indicators: string[];
-    neural_plasticity_score: number; // Ability to form new pathways
     timestamp: string;
+    total_nodes: number;
+    total_connections: number;
+    active_pathways: number;
+    network_density: number;
+    average_activation: number;
+    average_connection_strength: number;
+    dominant_emotion: string;
+    crisis_risk_level: 'low' | 'medium' | 'high' | 'critical';
+    crisis_indicators: string[];
+    plasticity_score: number;
+    created_at: string;
 }
 
 export interface PathwayActivation {
