@@ -57,6 +57,11 @@ export default function InvestmentPitch() {
 
   return (
     <div className="bg-black text-white overflow-hidden">
+      {/* Debug indicator */}
+      <div className="fixed top-4 right-4 z-50 bg-red-500 text-white px-3 py-1 rounded text-sm">
+        Demo: {showDemo ? 'OPEN' : 'CLOSED'}
+      </div>
+      
       {/* Section 1: Crisis - Heart Monitor */}
       <motion.section 
         style={{ opacity: opacity1 }}
@@ -235,7 +240,11 @@ export default function InvestmentPitch() {
             className="flex flex-col sm:flex-row gap-6 justify-center"
           >
             <button 
-              onClick={() => setShowDemo(true)}
+              onClick={() => {
+                console.log('Button clicked!');
+                setShowDemo(true);
+                console.log('showDemo state:', showDemo);
+              }}
               className="px-12 py-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl text-xl font-bold hover:scale-105 transition-transform flex items-center gap-3 mx-auto"
             >
               <Play className="w-6 h-6" />
