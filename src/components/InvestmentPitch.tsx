@@ -1,7 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { useScroll } from 'framer-motion';
+import { useTransform } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import { Play, Download, Heart, AlertTriangle, Brain, Zap } from 'lucide-react';
 import Link from 'next/link';
 
