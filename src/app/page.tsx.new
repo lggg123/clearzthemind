@@ -1,5 +1,0 @@
-import InvestmentPitch from '@/components/InvestmentPitch';
-
-export default function Home() {
-  return <InvestmentPitch />;
-}
