@@ -282,7 +282,7 @@ describe('Neural Pathway Engine', () => {
 
       const suggestions = engine.suggestHealthyPathways();
       
-      expect(suggestions).toHaveLength(greaterThan(0));
+      expect(suggestions.length).toBeGreaterThan(0);
       expect(suggestions[0]).toHaveProperty('suggested_nodes');
       expect(suggestions[0]).toHaveProperty('rationale');
       expect(suggestions[0].rationale).toContain('healthy coping');

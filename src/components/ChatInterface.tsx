@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, AlertTriangle } from 'lucide-react';
+import { Send, AlertTriangle, Activity, Brain, Zap } from 'lucide-react';
 import FrankAvatar from './FrankAvatar';
 import { Message } from '@/types';
 
@@ -11,6 +11,17 @@ export default function ChatInterface() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [crisisDetected, setCrisisDetected] = useState(false);
+  const [neuralActivity, setNeuralActivity] = useState<{
+    pathwayActive: string | null;
+    emotionalState: string;
+    riskLevel: 'low' | 'medium' | 'high' | 'critical';
+    activeNodes: string[];
+  }>({
+    pathwayActive: null,
+    emotionalState: 'neutral',
+    riskLevel: 'low',
+    activeNodes: []
+  });
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -21,12 +32,76 @@ export default function ChatInterface() {
     scrollToBottom();
   }, [messages]);
 
+  const analyzeNeuralPathways = (message: string) => {
+    const lowerMessage = message.toLowerCase();
+    
+    // Detect emotional patterns and neural pathways
+    let pathwayActive = null;
+    let emotionalState = 'neutral';
+    let riskLevel: 'low' | 'medium' | 'high' | 'critical' = 'low';
+    let activeNodes: string[] = [];
+
+    // Crisis indicators
+    const crisisKeywords = ['suicide', 'kill myself', 'end it all', 'worthless', 'hopeless', 'nobody cares'];
+    const stressKeywords = ['stressed', 'overwhelmed', 'anxious', 'pressure', 'can\'t handle'];
+    const sadnessKeywords = ['sad', 'depressed', 'lonely', 'empty', 'hurt'];
+    const angerKeywords = ['angry', 'furious', 'hate', 'frustrated', 'mad'];
+    const fearKeywords = ['scared', 'afraid', 'terrified', 'worried', 'panic'];
+
+    if (crisisKeywords.some(keyword => lowerMessage.includes(keyword))) {
+      pathwayActive = 'crisis-pathway';
+      emotionalState = 'crisis';
+      riskLevel = 'critical';
+      activeNodes = ['hopelessness', 'self-harm ideation', 'isolation'];
+    } else if (stressKeywords.some(keyword => lowerMessage.includes(keyword))) {
+      pathwayActive = 'stress-anxiety';
+      emotionalState = 'stressed';
+      riskLevel = 'medium';
+      activeNodes = ['stress', 'anxiety', 'overthinking'];
+    } else if (sadnessKeywords.some(keyword => lowerMessage.includes(keyword))) {
+      pathwayActive = 'sadness-pathway';
+      emotionalState = 'sad';
+      riskLevel = 'medium';
+      activeNodes = ['sadness', 'loneliness', 'withdrawal'];
+    } else if (angerKeywords.some(keyword => lowerMessage.includes(keyword))) {
+      pathwayActive = 'anger-pathway';
+      emotionalState = 'angry';
+      riskLevel = 'medium';
+      activeNodes = ['anger', 'frustration', 'aggression'];
+    } else if (fearKeywords.some(keyword => lowerMessage.includes(keyword))) {
+      pathwayActive = 'fear-pathway';
+      emotionalState = 'fearful';
+      riskLevel = 'medium';
+      activeNodes = ['fear', 'anxiety', 'avoidance'];
+    }
+
+    setNeuralActivity({
+      pathwayActive,
+      emotionalState,
+      riskLevel,
+      activeNodes
+    });
+
+    // Reset neural activity after 5 seconds
+    setTimeout(() => {
+      setNeuralActivity({
+        pathwayActive: null,
+        emotionalState: 'neutral',
+        riskLevel: 'low',
+        activeNodes: []
+      });
+    }, 5000);
+  };
+
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
 
     const userMessage = input;
     setInput('');
     setIsLoading(true);
+
+    // Simulate neural pathway analysis based on message content
+    analyzeNeuralPathways(userMessage);
 
     // Add user message
     setMessages(prev => [...prev, {
@@ -75,7 +150,7 @@ export default function ChatInterface() {
         <div className="flex items-center gap-3 md:gap-4">
           <FrankAvatar 
             isListening={isLoading} 
-            mood={crisisDetected ? 'concerned' : 'neutral'}
+            mood={crisisDetected ? 'concerned' : neuralActivity.emotionalState as any}
             className="w-10 h-10 md:w-12 md:h-12"
           />
           <div>
@@ -85,17 +160,35 @@ export default function ChatInterface() {
             </p>
           </div>
         </div>
-        {crisisDetected && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="flex items-center gap-2 text-destructive"
-          >
-            <AlertTriangle className="w-4 h-4 md:w-5 md:h-5" />
-            <span className="text-xs md:text-sm font-medium hidden sm:inline">Crisis Support Active</span>
-            <span className="text-xs md:text-sm font-medium sm:hidden">Crisis</span>
-          </motion.div>
-        )}
+        
+        <div className="flex items-center gap-2">
+          {/* Neural Activity Indicator */}
+          {neuralActivity.pathwayActive && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="flex items-center gap-2 bg-blue-500/20 border border-blue-500/30 rounded-lg px-3 py-1"
+            >
+              <Activity className="w-4 h-4 text-blue-400 animate-pulse" />
+              <div className="text-xs">
+                <div className="text-blue-400 font-medium">Neural Activity</div>
+                <div className="text-gray-400">{neuralActivity.emotionalState}</div>
+              </div>
+            </motion.div>
+          )}
+          
+          {crisisDetected && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="flex items-center gap-2 text-destructive"
+            >
+              <AlertTriangle className="w-4 h-4 md:w-5 md:h-5" />
+              <span className="text-xs md:text-sm font-medium hidden sm:inline">Crisis Support Active</span>
+              <span className="text-xs md:text-sm font-medium sm:hidden">Crisis</span>
+            </motion.div>
+          )}
+        </div>
       </div>
 
       {/* Messages */}
@@ -142,28 +235,91 @@ export default function ChatInterface() {
               </div>
             </div>
           </motion.div>
-        )}
-        <div ref={messagesEndRef} />
-      </div>
+        )}            <div ref={messagesEndRef} />
+          </div>
 
-      {/* Input */}
-      <div className="flex gap-2 md:gap-3">
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-          placeholder="Tell me what's really going on..."
-          className="flex-1 px-3 md:px-4 py-2 md:py-3 rounded-xl bg-muted border border-muted-foreground/20 focus:outline-none focus:border-primary transition-colors text-sm md:text-base"
-          disabled={isLoading}
-        />
-        <button
-          onClick={sendMessage}
-          disabled={isLoading || !input.trim()}
-          className="px-4 md:px-6 py-2 md:py-3 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50"
-        >
-          <Send className="w-4 h-4 md:w-5 md:h-5" />
-        </button>
+          {/* Input */}
+          <div className="flex gap-2 md:gap-3">
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+              placeholder="Tell me what's really going on..."
+              className="flex-1 px-3 md:px-4 py-2 md:py-3 rounded-xl bg-muted border border-muted-foreground/20 focus:outline-none focus:border-primary transition-colors text-sm md:text-base"
+              disabled={isLoading}
+            />
+            <button
+              onClick={sendMessage}
+              disabled={isLoading || !input.trim()}
+              className="px-4 md:px-6 py-2 md:py-3 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50"
+            >
+              <Send className="w-4 h-4 md:w-5 md:h-5" />
+            </button>
+          </div>
+        </div>
+
+        {/* Neural Pathway Sidebar */}
+        <div className="w-64 hidden lg:block">
+          <div className="bg-black/20 border border-gray-700 rounded-xl p-4 h-full">
+            <div className="flex items-center gap-2 mb-4">
+              <Brain className="w-5 h-5 text-blue-400" />
+              <h3 className="font-semibold text-white">Neural Activity</h3>
+            </div>
+            
+            {neuralActivity.pathwayActive ? (
+              <div className="space-y-4">
+                <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Zap className="w-4 h-4 text-blue-400" />
+                    <span className="text-sm font-medium text-blue-400">Pathway Active</span>
+                  </div>
+                  <div className="text-xs text-gray-400">{neuralActivity.pathwayActive}</div>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="text-sm font-medium text-white">Active Nodes:</div>
+                  {neuralActivity.activeNodes.map((node, index) => (
+                    <motion.div
+                      key={node}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex items-center gap-2 text-xs"
+                    >
+                      <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                      <span className="text-gray-300">{node}</span>
+                    </motion.div>
+                  ))}
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex justify-between text-xs">
+                    <span className="text-gray-400">Risk Level</span>
+                    <span className={`font-medium ${
+                      neuralActivity.riskLevel === 'critical' ? 'text-red-400' :
+                      neuralActivity.riskLevel === 'high' ? 'text-orange-400' :
+                      neuralActivity.riskLevel === 'medium' ? 'text-yellow-400' :
+                      'text-green-400'
+                    }`}>
+                      {neuralActivity.riskLevel}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-xs">
+                    <span className="text-gray-400">Emotional State</span>
+                    <span className="text-purple-400">{neuralActivity.emotionalState}</span>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center text-gray-500 text-sm py-8">
+                <Brain className="w-8 h-8 mx-auto mb-2 opacity-50" />
+                <div>Neural pathways at rest</div>
+                <div className="text-xs mt-1">Start chatting to see brain activity</div>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Crisis Resources */}

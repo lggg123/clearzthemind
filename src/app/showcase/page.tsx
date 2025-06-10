@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Brain, Heart, MessageCircle, BarChart3, Shield, Zap } from 'lucide-react';
+import { ArrowLeft, Brain, Heart, MessageCircle, BarChart3, Shield, Zap, Activity } from 'lucide-react';
 import Link from 'next/link';
 import ChatInterface from '@/components/ChatInterface';
 import MoodTracker from '@/components/MoodTracker';
 import FrankAvatar from '@/components/FrankAvatar';
+import NeuralPathwayVisualization from '@/components/NeuralPathwayVisualization';
 
 export default function ShowcasePage() {
   const [activeComponent, setActiveComponent] = useState('chat');
@@ -25,6 +26,13 @@ export default function ShowcasePage() {
       description: 'Advanced mood analysis and pattern recognition',
       icon: BarChart3,
       color: 'purple'
+    },
+    {
+      id: 'neural',
+      name: 'Neural Pathways',
+      description: 'Brain activity visualization and pathway analysis',
+      icon: Activity,
+      color: 'cyan'
     },
     {
       id: 'avatar',
@@ -47,6 +55,12 @@ export default function ShowcasePage() {
         return (
           <div className="h-full">
             <MoodTracker />
+          </div>
+        );
+      case 'neural':
+        return (
+          <div className="h-full">
+            <NeuralPathwayVisualization />
           </div>
         );
       case 'avatar':
