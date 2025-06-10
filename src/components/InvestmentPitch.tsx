@@ -448,10 +448,7 @@ export default function InvestmentPitch() {
             className="flex flex-col sm:flex-row gap-6 justify-center"
           >
             <motion.button 
-              onClick={() => {
-                console.log('Button clicked - Opening FRANK Demo');
-                setShowDemo(true);
-              }}
+              onClick={() => setShowDemo(true)}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               className="px-12 py-6 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 rounded-2xl text-xl font-bold transition-all duration-300 flex items-center gap-3 mx-auto shadow-2xl shadow-blue-500/30 border border-blue-400/30 relative overflow-hidden group"
