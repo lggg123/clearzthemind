@@ -7,6 +7,7 @@ import Link from 'next/link';
 
 export default function InvestmentPitch() {
   const { scrollYProgress } = useScroll();
+  const [currentSection, setCurrentSection] = useState(1);
 
   // Heart monitor animation
   const [isFlatlining, setIsFlatlining] = useState(false);
@@ -30,25 +31,47 @@ export default function InvestmentPitch() {
     return () => clearInterval(interval);
   }, [isFlatlining]);
 
+  // Track scroll progress and update current section
+  useEffect(() => {
+    const unsubscribe = scrollYProgress.onChange((latest) => {
+      if (latest < 0.2) setCurrentSection(1);
+      else if (latest < 0.42) setCurrentSection(2);
+      else if (latest < 0.62) setCurrentSection(3);
+      else if (latest < 0.82) setCurrentSection(4);
+      else setCurrentSection(5);
+    });
+
+    return unsubscribe;
+  }, [scrollYProgress]);
+
   // Scroll-triggered animations with better transitions
   const opacity1 = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const opacity2 = useTransform(scrollYProgress, [0.18, 0.22, 0.38, 0.42], [0, 1, 1, 0]);
   const opacity3 = useTransform(scrollYProgress, [0.38, 0.42, 0.58, 0.62], [0, 1, 1, 0]);
   const opacity4 = useTransform(scrollYProgress, [0.58, 0.62, 0.78, 0.82], [0, 1, 1, 0]);
-  const opacity5 = useTransform(scrollYProgress, [0.78, 0.82], [0, 1]);
-  
-  // Z-index transforms to control layering
-  const zIndex1 = useTransform(scrollYProgress, [0, 0.2], [50, 10]);
-  const zIndex2 = useTransform(scrollYProgress, [0.18, 0.42], [10, 50]);
-  const zIndex3 = useTransform(scrollYProgress, [0.38, 0.62], [10, 50]);
-  const zIndex4 = useTransform(scrollYProgress, [0.58, 0.82], [10, 50]);
-  const zIndex5 = useTransform(scrollYProgress, [0.78, 1], [10, 50]);
+  const opacity5 = useTransform(scrollYProgress, [0.78, 1], [0, 1]);
 
   return (
     <div className="bg-black text-white overflow-x-hidden" style={{ height: '500vh' }}>
+      {/* Scroll Progress Indicator */}
+      <div className="fixed top-4 right-4 z-[200] bg-black/80 backdrop-blur-sm rounded-lg p-3 border border-gray-600">
+        <div className="text-sm text-gray-300 mb-2">Section {currentSection}/5</div>
+        <div className="w-24 h-2 bg-gray-700 rounded-full overflow-hidden">
+          <motion.div 
+            className="h-full bg-purple-400 rounded-full"
+            style={{ 
+              width: useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
+            }}
+          />
+        </div>
+      </div>
       {/* Section 1: Crisis - Heart Monitor */}
       <motion.section
-        style={{ opacity: opacity1, zIndex: zIndex1 }}
+        style={{ 
+          opacity: opacity1, 
+          zIndex: currentSection === 1 ? 50 : 10,
+          pointerEvents: currentSection === 1 ? 'auto' : 'none'
+        }}
         className="h-screen flex items-center justify-center relative fixed inset-0"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-red-900/20 to-black"></div>
@@ -131,7 +154,11 @@ export default function InvestmentPitch() {
 
       {/* Section 2: The Problem */}
       <motion.section
-        style={{ opacity: opacity2, zIndex: zIndex2 }}
+        style={{ 
+          opacity: opacity2, 
+          zIndex: currentSection === 2 ? 50 : 10,
+          pointerEvents: currentSection === 2 ? 'auto' : 'none'
+        }}
         className="h-screen flex items-center justify-center px-8 fixed inset-0"
       >
         <div className="max-w-6xl mx-auto text-center">
@@ -183,7 +210,11 @@ export default function InvestmentPitch() {
 
       {/* Section 3: Solution */}
       <motion.section
-        style={{ opacity: opacity3, zIndex: zIndex3 }}
+        style={{ 
+          opacity: opacity3, 
+          zIndex: currentSection === 3 ? 50 : 10,
+          pointerEvents: currentSection === 3 ? 'auto' : 'none'
+        }}
         className="h-screen flex items-center justify-center px-8 fixed inset-0"
       >
         <div className="max-w-6xl mx-auto text-center">
@@ -263,7 +294,11 @@ export default function InvestmentPitch() {
 
       {/* Section 4: Market */}
       <motion.section
-        style={{ opacity: opacity4, zIndex: zIndex4 }}
+        style={{ 
+          opacity: opacity4, 
+          zIndex: currentSection === 4 ? 50 : 10,
+          pointerEvents: currentSection === 4 ? 'auto' : 'none'
+        }}
         className="h-screen flex items-center justify-center px-8 fixed inset-0"
       >
         <div className="max-w-6xl mx-auto text-center">
@@ -323,7 +358,11 @@ export default function InvestmentPitch() {
 
       {/* Section 5: Ask */}
       <motion.section
-        style={{ opacity: opacity5, zIndex: zIndex5 }}
+        style={{ 
+          opacity: opacity5, 
+          zIndex: currentSection === 5 ? 100 : 10,
+          pointerEvents: currentSection === 5 ? 'auto' : 'none'
+        }}
         className="h-screen flex items-center justify-center px-8 fixed inset-0"
       >
         <div className="max-w-4xl mx-auto text-center">
@@ -353,13 +392,13 @@ export default function InvestmentPitch() {
             <div className="flex flex-col md:flex-row gap-4 justify-center">
               <Link 
                 href="/showcase" 
-                className="bg-green-500 hover:bg-green-600 text-black px-8 py-4 rounded-lg font-bold text-xl transition-all transform hover:scale-105"
+                className="bg-green-500 hover:bg-green-600 text-black px-8 py-4 rounded-lg font-bold text-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-green-500/25"
               >
                 See Live Demo
               </Link>
               <Link
                 href="/waitlist"
-                className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-4 rounded-lg font-bold text-xl transition-all transform hover:scale-105"
+                className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-4 rounded-lg font-bold text-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-purple-500/25"
               >
                 Join Waitlist
               </Link>
@@ -369,7 +408,7 @@ export default function InvestmentPitch() {
             <div className="flex flex-col md:flex-row gap-4 justify-center">
               <Link
                 href="/frank-technical-deck.html"
-                className="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105"
+                className="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-yellow-500/25"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -377,13 +416,13 @@ export default function InvestmentPitch() {
               </Link>
               <Link
                 href="/executive-summary"
-                className="bg-cyan-500 hover:bg-cyan-600 text-black px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105"
+                className="bg-cyan-500 hover:bg-cyan-600 text-black px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-cyan-500/25"
               >
                 Executive Summary
               </Link>
               <Link
                 href="/financials"
-                className="bg-emerald-500 hover:bg-emerald-600 text-black px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105"
+                className="bg-emerald-500 hover:bg-emerald-600 text-black px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-emerald-500/25"
               >
                 View Financials
               </Link>
@@ -393,19 +432,19 @@ export default function InvestmentPitch() {
             <div className="flex flex-col md:flex-row gap-4 justify-center">
               <Link
                 href="/pitch-video"
-                className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105"
+                className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-red-500/25"
               >
                 Watch Pitch Video
               </Link>
               <Link
                 href="/company-presentation"
-                className="bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105"
+                className="bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-indigo-500/25"
               >
                 Company Presentation
               </Link>
               <Link
                 href="/contact"
-                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-blue-500/25"
               >
                 Contact Form
               </Link>
@@ -415,7 +454,7 @@ export default function InvestmentPitch() {
             <div className="flex justify-center pt-4">
               <Link
                 href="mailto:contact@frank-robotics.com"
-                className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 border border-gray-500"
+                className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 border border-gray-500 shadow-lg hover:shadow-gray-600/25"
               >
                 Email Us Directly
               </Link>
