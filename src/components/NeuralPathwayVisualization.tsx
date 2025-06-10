@@ -197,7 +197,7 @@ export default function NeuralPathwayVisualization() {
           <Brain className="w-8 h-8 text-blue-400" />
           <div>
             <h2 className="text-2xl font-bold text-white">Neural Pathway Visualization</h2>
-            <p className="text-gray-400">Real-time brain activity patterns in FRANK's AI</p>
+            <p className="text-gray-400">Real-time brain activity patterns in FRANK&apos;s AI</p>
           </div>
         </div>
 
