@@ -1,21 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'fra        <div className="mood-selector-grid">
-          {moodIcons.map(({ score, icon: Icon, label }) => (
-            <motion.button
-              key={score}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => setSelectedMood(score)}
-              className={`mood-button ${
-                Math.abs(selectedMood - score) <= 1 ? 'selected' : ''
-              }`}
-            >
-              <Icon className="w-6 h-6 md:w-8 md:h-8 mb-1" />
-              <span className="text-xs font-medium">{label}</span>
-            </motion.button>
-          ))} { 
+import { motion } from 'framer-motion';
+import { 
   Frown, 
   Meh, 
   Smile, 
@@ -82,19 +69,19 @@ export default function MoodTracker() {
   };
 
   return (
-    <div className="space-y-4 md:space-y-6">
+    <div className="space-y-6">
       {/* Mood Selector */}
       <div className="glass-morphism rounded-2xl p-4 md:p-6">
-        <h3 className="text-lg md:text-xl font-semibold mb-3 md:mb-4">How are you feeling?</h3>
+        <h3 className="text-lg md:text-xl font-semibold mb-4">How are you feeling?</h3>
         
-        <div className="flex justify-between items-center mb-4 md:mb-6">
+        <div className="grid grid-cols-5 gap-2 md:gap-4 mb-6">
           {moodIcons.map(({ score, icon: Icon, label }) => (
             <motion.button
               key={score}
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setSelectedMood(score)}
-              className={`mood-button flex flex-col items-center gap-1 md:gap-2 p-2 md:p-3 rounded-xl transition-colors ${
+              className={`flex flex-col items-center gap-1 md:gap-2 p-2 md:p-3 rounded-xl transition-colors text-xs md:text-sm ${
                 Math.abs(selectedMood - score) <= 1
                   ? 'bg-primary text-primary-foreground'
                   : 'hover:bg-muted'
@@ -106,13 +93,13 @@ export default function MoodTracker() {
           ))}
         </div>
 
-        <div className="flex items-center justify-center gap-3 md:gap-4 mb-4 md:mb-6">
+        <div className="flex items-center justify-center gap-2 md:gap-4 mb-6">
           <span className="text-2xl md:text-3xl font-bold">{selectedMood}</span>
-          <span className="text-muted-foreground text-lg md:text-xl">/10</span>
+          <span className="text-muted-foreground">/10</span>
         </div>
 
         {/* Emotions */}
-        <div className="space-y-2 mb-3 md:mb-4">
+        <div className="space-y-2 mb-4">
           <p className="text-sm text-muted-foreground">What emotions are you experiencing?</p>
           <div className="flex flex-wrap gap-2">
             {emotions.map(emotion => (
@@ -147,7 +134,7 @@ export default function MoodTracker() {
           whileTap={{ scale: 0.98 }}
           onClick={submitMood}
           disabled={submitted}
-          className="w-full mt-3 md:mt-4 px-4 md:px-6 py-2 md:py-3 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50 text-sm md:text-base"
+          className="w-full mt-4 px-4 md:px-6 py-2 md:py-3 rounded-xl bg-primary text-primary-foreground hover:opacity-90 transition-opacity disabled:opacity-50 text-sm md:text-base"
         >
           {submitted ? 'Mood Recorded ✓' : 'Record Mood'}
         </motion.button>
@@ -155,7 +142,7 @@ export default function MoodTracker() {
 
       {/* Mood Chart */}
       <div className="glass-morphism rounded-2xl p-4 md:p-6">
-        <div className="flex items-center justify-between mb-3 md:mb-4">
+        <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg md:text-xl font-semibold">Your Week</h3>
           <div className="flex items-center gap-2 text-xs md:text-sm">
             {selectedMood > 5 ? (
@@ -174,31 +161,43 @@ export default function MoodTracker() {
           </div>
         </div>
 
-        <ResponsiveContainer width="100%" height={180}>
-          <LineChart data={mockData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="#333" />
-            <XAxis dataKey="date" stroke="#666" fontSize={12} />
-            <YAxis domain={[0, 10]} stroke="#666" fontSize={12} />
-            <Tooltip
-              contentStyle={{
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                border: 'none',
-                borderRadius: '8px',
-                fontSize: '12px'
-              }}
-            />
-            <Line
-              type="monotone"
-              dataKey="mood"
-              stroke="#8b5cf6"
-              strokeWidth={2}
-              dot={{ fill: '#8b5cf6', r: 4 }}
-              activeDot={{ r: 6 }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+        <div className="h-48 md:h-64">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={mockData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#333" />
+              <XAxis 
+                dataKey="date" 
+                stroke="#666" 
+                fontSize={12}
+                tick={{ fontSize: 12 }}
+              />
+              <YAxis 
+                domain={[0, 10]} 
+                stroke="#666" 
+                fontSize={12}
+                tick={{ fontSize: 12 }}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                  border: 'none',
+                  borderRadius: '8px',
+                  fontSize: '12px'
+                }}
+              />
+              <Line
+                type="monotone"
+                dataKey="mood"
+                stroke="#8b5cf6"
+                strokeWidth={2}
+                dot={{ fill: '#8b5cf6', r: 4 }}
+                activeDot={{ r: 6 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
 
-        <div className="mt-3 md:mt-4 p-2 md:p-3 rounded-lg bg-muted">
+        <div className="mt-4 p-3 rounded-lg bg-muted">
           <p className="text-xs md:text-sm">
             <span className="font-medium">FRANK says:</span> &quot;Your mood&apos;s been all over the place this week. 
             That&apos;s normal. Life&apos;s a rollercoaster, and at least you&apos;re still riding it.&quot;

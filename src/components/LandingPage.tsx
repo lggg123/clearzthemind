@@ -114,7 +114,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.9 }}
           >
-            The Robot That Won't Let You Die
+            The Robot That Won&apos;t Let You Die
           </motion.p>
 
           <motion.p 
@@ -262,7 +262,7 @@ export default function LandingPage({ onGetStarted }: { onGetStarted: () => void
           <span className="ticker-item">⚡ Someone attempts suicide every 38 seconds</span>
           <span className="ticker-item">📞 Average crisis hotline wait: 17 minutes</span>
           <span className="ticker-item">🤖 FRANK response time: 0.3 seconds</span>
-          <span className="ticker-item">💔 132 lives lost today. Let's change that.</span>
+          <span className="ticker-item">💔 132 lives lost today. Let&apos;s change that.</span>
         </div>
       </div>
     </div>

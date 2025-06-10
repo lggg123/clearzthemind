@@ -1,5 +1,5 @@
 import { detectCrisisIndictators, getFrankResponse } from '@/lib/openai';
-import { Profile } from '@/types';
+import { Profile, Message } from '@/types';
 
 // Test data
 const mockProfile: Profile = {
@@ -42,7 +42,7 @@ export async function testFrankResponse() {
   try {
     const response = await getFrankResponse(
       "I'm feeling really down today",
-      testMessages as any,
+      testMessages as Message[],
       mockProfile
     );
     console.log('✅ FRANK Response:', response);
