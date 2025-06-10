@@ -1,18 +1,16 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Heart, AlertTriangle, Brain, Zap } from 'lucide-react';
 import Link from 'next/link';
 
 export default function InvestmentPitch() {
-  const { scrollYProgress } = useScroll();
-  const [currentSection, setCurrentSection] = useState(1);
-
   // Heart monitor animation
   const [isFlatlining, setIsFlatlining] = useState(false);
   const [heartRate, setHeartRate] = useState(72);
   const [showCrisisText, setShowCrisisText] = useState(false);
+  const [currentSection, setCurrentSection] = useState(1);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -31,18 +29,28 @@ export default function InvestmentPitch() {
     return () => clearInterval(interval);
   }, [isFlatlining]);
 
-  // Track scroll progress and update current section
+  // Scroll tracking with intersection observer
   useEffect(() => {
-    const unsubscribe = scrollYProgress.onChange((latest) => {
-      if (latest < 0.2) setCurrentSection(1);
-      else if (latest < 0.42) setCurrentSection(2);
-      else if (latest < 0.62) setCurrentSection(3);
-      else if (latest < 0.82) setCurrentSection(4);
-      else setCurrentSection(5);
-    });
+    const sections = document.querySelectorAll('section[data-section]');
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const sectionNumber = parseInt(entry.target.getAttribute('data-section') || '1');
+            setCurrentSection(sectionNumber);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
 
-    return unsubscribe;
-  }, [scrollYProgress]);
+    sections.forEach((section) => observer.observe(section));
+
+    return () => {
+      sections.forEach((section) => observer.unobserve(section));
+    };
+  }, []);
 
   // Scroll-triggered animations with better transitions
   const opacity1 = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
@@ -52,30 +60,24 @@ export default function InvestmentPitch() {
   const opacity5 = useTransform(scrollYProgress, [0.78, 1], [0, 1]);
 
   return (
-    <div className="bg-black text-white overflow-x-hidden" style={{ height: '500vh' }}>
+    <div className="bg-black text-white">
       {/* Scroll Progress Indicator */}
       <div className="fixed top-4 right-4 z-[200] bg-black/80 backdrop-blur-sm rounded-lg p-3 border border-gray-600">
         <div className="text-sm text-gray-300 mb-2">Section {currentSection}/5</div>
         <div className="w-24 h-2 bg-gray-700 rounded-full overflow-hidden">
-          <motion.div 
-            className="h-full bg-purple-400 rounded-full"
+          <div 
+            className="h-full bg-purple-400 rounded-full transition-all duration-300"
             style={{ 
-              width: useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
+              width: `${(currentSection / 5) * 100}%`
             }}
           />
         </div>
       </div>
+
       {/* Section 1: Crisis - Heart Monitor */}
-      <motion.section
-        style={{ 
-          opacity: opacity1, 
-          zIndex: currentSection === 1 ? 50 : 10,
-          pointerEvents: currentSection === 1 ? 'auto' : 'none'
-        }}
-        className="h-screen flex items-center justify-center relative fixed inset-0"
-      >
+      <section data-section="1" className="min-h-screen flex items-center justify-center relative">
         <div className="absolute inset-0 bg-gradient-to-b from-red-900/20 to-black"></div>
-        <div className="text-center z-10">
+        <div className="text-center z-10 px-8">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -150,17 +152,10 @@ export default function InvestmentPitch() {
             </p>
           </motion.div>
         </div>
-      </motion.section>
+      </section>
 
       {/* Section 2: The Problem */}
-      <motion.section
-        style={{ 
-          opacity: opacity2, 
-          zIndex: currentSection === 2 ? 50 : 10,
-          pointerEvents: currentSection === 2 ? 'auto' : 'none'
-        }}
-        className="h-screen flex items-center justify-center px-8 fixed inset-0"
-      >
+      <section data-section="2" className="min-h-screen flex items-center justify-center px-8">
         <div className="max-w-6xl mx-auto text-center">
           <motion.h2
             initial={{ opacity: 0, y: 50 }}
@@ -206,17 +201,10 @@ export default function InvestmentPitch() {
             </div>
           </motion.div>
         </div>
-      </motion.section>
+      </section>
 
       {/* Section 3: Solution */}
-      <motion.section
-        style={{ 
-          opacity: opacity3, 
-          zIndex: currentSection === 3 ? 50 : 10,
-          pointerEvents: currentSection === 3 ? 'auto' : 'none'
-        }}
-        className="h-screen flex items-center justify-center px-8 fixed inset-0"
-      >
+      <section data-section="3" className="min-h-screen flex items-center justify-center px-8">
         <div className="max-w-6xl mx-auto text-center">
           <motion.h2
             initial={{ opacity: 0, y: 50 }}
@@ -290,7 +278,7 @@ export default function InvestmentPitch() {
             </div>
           </motion.div>
         </div>
-      </motion.section>
+      </section>
 
       {/* Section 4: Market */}
       <motion.section
