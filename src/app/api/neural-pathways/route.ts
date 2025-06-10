@@ -2,12 +2,6 @@ import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import type { NeuralPathway } from '@/types';
 
-// Initialize Supabase client (use env vars for security)
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
-
 export async function GET() {
   try {
     // Check if Supabase credentials are available
@@ -15,6 +9,12 @@ export async function GET() {
       console.warn('Supabase credentials not found, returning mock data');
       return NextResponse.json(getMockPathways());
     }
+
+    // Initialize Supabase client only when credentials are available
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+    );
 
     // Fetch pathways from the 'neural_pathways' table
     const { data, error } = await supabase
