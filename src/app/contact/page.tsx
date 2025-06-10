@@ -49,7 +49,7 @@ export default function ContactPage() {
           <CheckCircle className="w-24 h-24 text-green-400 mx-auto mb-6" />
           <h1 className="text-4xl font-bold text-green-400 mb-4">Message Sent Successfully!</h1>
           <p className="text-xl text-gray-300 mb-8 max-w-md mx-auto">
-            Thank you for reaching out. We'll get back to you within 24 hours.
+            Thank you for reaching out. We&apos;ll get back to you within 24 hours.
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center">
             <Link
@@ -126,7 +126,7 @@ export default function ContactPage() {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="text-2xl text-gray-300 mb-8"
             >
-              Ready to transform mental healthcare? Let's start the conversation.
+              Ready to transform mental healthcare? Let&apos;s start the conversation.
             </motion.p>
           </div>
 
@@ -409,7 +409,7 @@ export default function ContactPage() {
               <div className="bg-gradient-to-br from-yellow-900/30 to-orange-900/30 p-6 rounded-xl border border-yellow-500/30">
                 <h3 className="text-2xl font-bold text-yellow-400 mb-4">For Investors</h3>
                 <p className="text-gray-300 mb-4">
-                  Interested in our $10M Series A? We'd love to discuss how FRANK can transform mental healthcare.
+                  Interested in our $10M Series A? We&apos;d love to discuss how FRANK can transform mental healthcare.
                 </p>
                 <div className="space-y-2 text-sm text-gray-400">
                   <div>• Comprehensive due diligence materials</div>

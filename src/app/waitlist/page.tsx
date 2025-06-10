@@ -323,7 +323,7 @@ export default function WaitlistPage() {
                       className="w-4 h-4 text-purple-400 bg-black/50 border-gray-600 rounded focus:ring-purple-400 focus:ring-2 mt-1"
                     />
                     <label className="text-gray-300 text-sm">
-                      I&apos;d like to receive updates about FRANK's development, beta testing opportunities, and launch announcements. You can unsubscribe at any time.
+                      I&apos;d like to receive updates about FRANK&apos;s development, beta testing opportunities, and launch announcements. You can unsubscribe at any time.
                     </label>
                   </div>
 
