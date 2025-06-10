@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FRANK - Friendly Robotic Anti-Nihilism Kompanion",
-  description: "A mental AI that actually gives a shit",
+  title: "FRANK - Investment Pitch | The Robot That Won't Let You Die",
+  description: "Series A pitch deck for FRANK, the AI crisis intervention system saving lives 24/7",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
 };
 
 export default function RootLayout({
