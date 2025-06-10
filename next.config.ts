@@ -1,12 +1,11 @@
-
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  
+
   // Server external packages (moved from experimental)
   serverExternalPackages: ['@supabase/supabase-js'],
-  
+
   // Image optimization
   images: {
     remotePatterns: [
@@ -17,7 +16,7 @@ const nextConfig: NextConfig = {
     ],
     formats: ['image/webp', 'image/avif'],
   },
-  
+
   // Headers for security and performance
   async headers() {
     return [
@@ -44,7 +43,7 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  
+
   // Redirects for SEO
   async redirects() {
     return [
@@ -55,26 +54,31 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  
+
   // Environment variables
   env: {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },
-  
+
   // TypeScript configuration
   typescript: {
     // Dangerously allow production builds to successfully complete even if your project has type errors
     ignoreBuildErrors: false,
   },
-  
+
   // ESLint configuration
   eslint: {
     // Warning: This allows production builds to successfully complete even if your project has ESLint errors
     ignoreDuringBuilds: false,
   },
-  
+
   // Compression
   compress: true,
+
+  // Experimental configuration for handling ESM modules like framer-motion
+  experimental: {
+    esmExternals: 'loose', // Ensures proper handling of ESM exports
+  },
 };
 
 export default nextConfig;
