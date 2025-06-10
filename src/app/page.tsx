@@ -1,5 +1,9 @@
-import InvestmentPitch from '@/components/InvestmentPitch';
+import { motion } from 'framer-motion';
 
-export default function Home() {
-  return <InvestmentPitch />;
+export default function App() {
+  return (
+    <motion.div style={{ height: '100vh', overflowY: 'scroll' }}>
+      <InvestmentPitch />
+    </motion.div>
+  );
 }
