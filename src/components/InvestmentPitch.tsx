@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Play, Download, Users, TrendingUp, Heart, AlertTriangle, Brain, Zap } from 'lucide-react';
+import { Play, Download, Heart, AlertTriangle, Brain, Zap } from 'lucide-react';
 
 export default function InvestmentPitch() {
   const [showDemo, setShowDemo] = useState(false);
@@ -30,7 +30,6 @@ export default function InvestmentPitch() {
   // Scroll-triggered animations
   const opacity1 = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const opacity2 = useTransform(scrollYProgress, [0.15, 0.35], [0, 1]);
-  const opacity3 = useTransform(scrollYProgress, [0.3, 0.5], [0, 1]);
 
   const sections = [
     'crisis',
@@ -53,7 +52,7 @@ export default function InvestmentPitch() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [sections.length]);
 
   return (
     <div className="bg-black text-white overflow-hidden">
