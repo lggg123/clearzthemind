@@ -1,8 +1,9 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Play, Download, Heart, AlertTriangle, Brain, Zap } from 'lucide-react';
+import Link from 'next/link';
 
 export default function InvestmentPitch() {
   const [showDemo, setShowDemo] = useState(false);
