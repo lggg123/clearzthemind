@@ -6,6 +6,10 @@ import { Send, AlertTriangle, Activity, Brain, Zap } from 'lucide-react';
 import FrankAvatar from './FrankAvatar';
 import { Message } from '@/types';
 
+type EmotionalState = 'neutral' | 'stressed' | 'sad' | 'angry' | 'fearful' | 'crisis';
+type RiskLevel = 'low' | 'medium' | 'high' | 'critical';
+type FrankMood = 'neutral' | 'concerned' | 'supportive';
+
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -13,8 +17,8 @@ export default function ChatInterface() {
   const [crisisDetected, setCrisisDetected] = useState(false);
   const [neuralActivity, setNeuralActivity] = useState<{
     pathwayActive: string | null;
-    emotionalState: string;
-    riskLevel: 'low' | 'medium' | 'high' | 'critical';
+    emotionalState: EmotionalState;
+    riskLevel: RiskLevel;
     activeNodes: string[];
   }>({
     pathwayActive: null,
@@ -32,13 +36,28 @@ export default function ChatInterface() {
     scrollToBottom();
   }, [messages]);
 
+  // Map emotional states to Frank's mood
+  const mapEmotionalStateToMood = (state: EmotionalState): FrankMood => {
+    switch (state) {
+      case 'crisis':
+      case 'stressed':
+      case 'sad':
+      case 'angry':
+      case 'fearful':
+        return 'concerned';
+      case 'neutral':
+      default:
+        return 'neutral';
+    }
+  };
+
   const analyzeNeuralPathways = (message: string) => {
     const lowerMessage = message.toLowerCase();
     
     // Detect emotional patterns and neural pathways
     let pathwayActive = null;
-    let emotionalState = 'neutral';
-    let riskLevel: 'low' | 'medium' | 'high' | 'critical' = 'low';
+    let emotionalState: EmotionalState = 'neutral';
+    let riskLevel: RiskLevel = 'low';
     let activeNodes: string[] = [];
 
     // Crisis indicators
@@ -152,7 +171,7 @@ export default function ChatInterface() {
           <div className="flex items-center gap-3 md:gap-4">
             <FrankAvatar 
               isListening={isLoading} 
-              mood={crisisDetected ? 'concerned' : neuralActivity.emotionalState as any}
+              mood={crisisDetected ? 'concerned' : mapEmotionalStateToMood(neuralActivity.emotionalState)}
               className="w-10 h-10 md:w-12 md:h-12"
             />
             <div>
