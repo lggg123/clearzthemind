@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Download, Heart, AlertTriangle, Brain, Zap, Star, TrendingUp, Shield, Clock } from 'lucide-react';
+import { Play, Download, Heart, AlertTriangle, Brain, Zap, Star, Clock } from 'lucide-react';
 import Image from 'next/image';
 
 export default function InvestmentPitch() {
@@ -27,11 +27,39 @@ export default function InvestmentPitch() {
 
   return (
     <div className="bg-gradient-to-br from-slate-950 via-purple-950 to-slate-900 text-white overflow-hidden relative">
-      {/* Animated Background Elements */}
+      {/* Enhanced Animated Background Elements */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-cyan-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-pink-500/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        <div className="absolute top-3/4 left-1/3 w-64 h-64 bg-blue-500/15 rounded-full blur-2xl animate-pulse delay-3000"></div>
+        <div className="absolute top-1/6 right-1/3 w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl animate-pulse delay-4000"></div>
+        
+        {/* Floating geometric shapes */}
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={`bg-shape-${i}`}
+            className={`absolute w-4 h-4 ${
+              i % 3 === 0 ? 'bg-cyan-400/10' : 
+              i % 3 === 1 ? 'bg-purple-400/10' : 'bg-pink-400/10'
+            } ${i % 2 === 0 ? 'rounded-full' : 'rotate-45'}`}
+            animate={{
+              x: [0, Math.random() * 200 - 100, 0],
+              y: [0, Math.random() * 200 - 100, 0],
+              rotate: [0, 360, 0],
+              opacity: [0.1, 0.3, 0.1],
+            }}
+            transition={{
+              duration: 8 + Math.random() * 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+          />
+        ))}
       </div>
 
       {/* Logo Header */}

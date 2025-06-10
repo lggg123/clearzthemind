@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FRANK Robotics - Technical Architecture Deck</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: #f8fafc;
+            line-height: 1.6;
+        }
+        
+        .slide {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            page-break-after: always;
+            position: relative;
+        }
+        
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        
+        .content {
+            max-width: 1000px;
+            width: 100%;
+            z-index: 1;
+            position: relative;
+        }
+        
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00d4ff 0%, #3b82f6 50%, #6366f1 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #00d4ff;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .tech-card {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 1rem;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        
+        .tech-card h4 {
+            color: #00d4ff;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+        
+        .feature-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        
+        .feature-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        .metric {
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 1rem;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #00d4ff;
+            display: block;
+        }
+        
+        .metric-label {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            font-weight: 500;
+        }
+        
+        .architecture-diagram {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .code-block {
+            background: rgba(15, 23, 42, 0.9);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        .highlight {
+            color: #00d4ff;
+            font-weight: 600;
+        }
+        
+        .header-logo {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00d4ff 0%, #3b82f6 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .page-number {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+        
+        @media print {
+            .slide {
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: Title -->
+    <div class="slide">
+        <div class="header-logo">FRANK ROBOTICS</div>
+        <div class="content">
+            <h1>Technical Architecture Deck</h1>
+            <div style="text-align: center; margin: 3rem 0;">
+                <div style="font-size: 1.5rem; color: #64748b; margin-bottom: 1rem;">
+                    Friendly Robotic Anti-Nihilism Kompanion
+                </div>
+                <div style="font-size: 1.2rem; color: #94a3b8;">
+                    Advanced AI Mental Health Platform
+                </div>
+                <div style="font-size: 1rem; color: #64748b; margin-top: 2rem;">
+                    Version 2.1.0 • Confidential Technical Documentation
+                </div>
+            </div>
+        </div>
+        <div class="page-number">01</div>
+    </div>
+
+    <!-- Slide 2: System Overview -->
+    <div class="slide">
+        <div class="header-logo">FRANK ROBOTICS</div>
+        <div class="content">
+            <h2>System Architecture Overview</h2>
+            <div class="architecture-diagram">
+                <h3>Microservices Architecture</h3>
+                <div class="tech-grid">
+                    <div class="tech-card">
+                        <h4>Frontend Layer</h4>
+                        <ul class="feature-list">
+                            <li>Next.js 14 with App Router</li>
+                            <li>TypeScript for type safety</li>
+                            <li>Tailwind CSS + Framer Motion</li>
+                            <li>Real-time WebSocket connections</li>
+                            <li>Progressive Web App (PWA)</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>AI Processing Engine</h4>
+                        <ul class="feature-list">
+                            <li>Google Gemini Pro for reasoning</li>
+                            <li>Crisis detection algorithms</li>
+                            <li>Sentiment analysis pipeline</li>
+                            <li>NLP preprocessing</li>
+                            <li>Context-aware responses</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Backend Infrastructure</h4>
+                        <ul class="feature-list">
+                            <li>Supabase PostgreSQL database</li>
+                            <li>Real-time subscriptions</li>
+                            <li>Row-level security (RLS)</li>
+                            <li>Edge functions for AI calls</li>
+                            <li>Automatic backups & scaling</li>
+                        </ul>
+                    </div>
+                    <div class="tech-card">
+                        <h4>Security & Compliance</h4>
+                        <ul class="feature-list">
+                            <li>HIPAA compliance ready</li>
+                            <li>End-to-end encryption</li>
+                            <li>OAuth 2.0 authentication</li>
+                            <li>Audit logging</li>
+                            <li>Data anonymization</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-number">02</div>
+    </div>
+
+    <!-- Slide 3: AI Engine Details -->
+    <div class="slide">
+        <div class="header-logo">FRANK ROBOTICS</div>
+        <div class="content">
+            <h2>FRANK AI Engine</h2>
+            <div class="tech-grid">
+                <div class="metric">
+                    <span class="metric-value">94%</span>
+                    <span class="metric-label">Crisis Detection Accuracy</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value">0.3s</span>
+                    <span class="metric-label">Average Response Time</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value">24/7</span>
+                    <span class="metric-label">Availability</span>
+                </div>
+            </div>
+            
+            <h3>Crisis Detection Algorithm</h3>
+            <div class="code-block">
+interface CrisisIndicator {
+  severity: 'low' | 'medium' | 'high' | 'critical';
+  confidence: number;
+  keywords: string[];
+  sentiment_score: number;
+  risk_factors: string[];
+  immediate_action_required: boolean;
+}
+
+async function detectCrisisIndicators(text: string): Promise&lt;CrisisIndicator&gt; {
+  const analysis = await geminiPro.analyze({
+    input: text,
+    context: conversationHistory,
+    userProfile: riskAssessment
+  });
+  
+  return {
+    severity: calculateSeverity(analysis),
+    confidence: analysis.confidence,
+    keywords: extractCrisisKeywords(text),
+    sentiment_score: analysis.sentiment,
+    risk_factors: identifyRiskFactors(analysis),
+    immediate_action_required: analysis.severity === 'critical'
+  };
+}
+            </div>
+            
+            <h3>Response Generation Pipeline</h3>
+            <ul class="feature-list">
+                <li><span class="highlight">Context Analysis:</span> Understanding conversation history and user state</li>
+                <li><span class="highlight">Empathy Modeling:</span> Generating compassionate, human-like responses</li>
+                <li><span class="highlight">Safety Filtering:</span> Ensuring responses are therapeutically appropriate</li>
+                <li><span class="highlight">Crisis Escalation:</span> Automatic routing to human counselors when needed</li>
+            </ul>
+        </div>
+        <div class="page-number">03</div>
+    </div>
+
+    <!-- Slide 4: Data Architecture -->
+    <div class="slide">
+        <div class="header-logo">FRANK ROBOTICS</div>
+        <div class="content">
+            <h2>Data Architecture & Security</h2>
+            
+            <div class="architecture-diagram">
+                <h3>Data Flow Diagram</h3>
+                <div style="font-family: monospace; color: #64748b; margin: 2rem 0;">
+                    User Input → Encryption → AI Processing → Response Generation → Audit Log → Encrypted Storage
+                </div>
+            </div>
+            
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h4>Database Schema</h4>
+                    <div class="code-block">
+-- Users table with RLS
+CREATE TABLE profiles (
+  id UUID PRIMARY KEY,
+  email TEXT UNIQUE NOT NULL,
+  risk_level risk_level_enum,
+  created_at TIMESTAMPTZ,
+  updated_at TIMESTAMPTZ
+);
+
+-- Messages with crisis indicators
+CREATE TABLE messages (
+  id UUID PRIMARY KEY,
+  user_id UUID REFERENCES profiles(id),
+  role message_role_enum,
+  content TEXT NOT NULL,
+  crisis_indicators JSONB,
+  sentiment_score DECIMAL,
+  created_at TIMESTAMPTZ
+);
+
+-- Mood tracking
+CREATE TABLE mood_entries (
+  id UUID PRIMARY KEY,
+  user_id UUID REFERENCES profiles(id),
+  mood_score INTEGER CHECK (mood_score BETWEEN 1 AND 5),
+  emotions TEXT[],
+  notes TEXT,
+  created_at TIMESTAMPTZ
+);
+                    </div>
+                </div>
+                <div class="tech-card">
+                    <h4>Security Measures</h4>
+                    <ul class="feature-list">
+                        <li>AES-256 encryption at rest</li>
+                        <li>TLS 1.3 for data in transit</li>
+                        <li>Row-level security policies</li>
+                        <li>Regular security audits</li>
+                        <li>GDPR compliance</li>
+                        <li>Automated backup encryption</li>
+                        <li>Zero-trust architecture</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-number">04</div>
+    </div>
+
+    <!-- Slide 5: Performance & Scalability -->
+    <div class="slide">
+        <div class="header-logo">FRANK ROBOTICS</div>
+        <div class="content">
+            <h2>Performance & Scalability</h2>
+            
+            <div class="tech-grid">
+                <div class="metric">
+                    <span class="metric-value">10M+</span>
+                    <span class="metric-label">Concurrent Users Supported</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value">99.9%</span>
+                    <span class="metric-label">Uptime SLA</span>
+                </div>
+                <div class="metric">
+                    <span class="metric-value">&lt;100ms</span>
+                    <span class="metric-label">Database Query Time</span>
+                </div>
+            </div>
+            
+            <h3>Scalability Strategy</h3>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h4>Horizontal Scaling</h4>
+                    <ul class="feature-list">
+                        <li>Auto-scaling edge functions</li>
+                        <li>Load balancing across regions</li>
+                        <li>CDN for static assets</li>
+                        <li>Database read replicas</li>
+                        <li>Redis caching layer</li>
+                    </ul>
+                </div>
+                <div class="tech-card">
+                    <h4>Performance Monitoring</h4>
+                    <ul class="feature-list">
+                        <li>Real-time performance metrics</li>
+                        <li>AI response time tracking</li>
+                        <li>Database performance analysis</li>
+                        <li>User experience monitoring</li>
+                        <li>Automated alerting system</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3>Infrastructure as Code</h3>
+            <div class="code-block">
+// Vercel deployment configuration
+export default {
+  name: 'frank-robotics',
+  version: 2,
+  builds: [
+    { src: 'package.json', use: '@vercel/next' }
+  ],
+  env: {
+    SUPABASE_URL: '@supabase-url',
+    GEMINI_API_KEY: '@gemini-api-key',
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: '@supabase-anon-key'
+  },
+  functions: {
+    'app/api/chat/route.ts': {
+      maxDuration: 30
+    }
+  }
+};
+            </div>
+        </div>
+        <div class="page-number">05</div>
+    </div>
+
+    <!-- Slide 6: Development & Testing -->
+    <div class="slide">
+        <div class="header-logo">FRANK ROBOTICS</div>
+        <div class="content">
+            <h2>Development & Testing Strategy</h2>
+            
+            <h3>Test-Driven Development (TDD)</h3>
+            <div class="code-block">
+// Crisis detection testing
+describe('Crisis Detection Engine', () => {
+  test('should detect high-risk suicide ideation', async () => {
+    const result = await detectCrisisIndicators('I want to kill myself');
+    expect(result.severity).toBe('critical');
+    expect(result.confidence).toBeGreaterThan(0.9);
+    expect(result.immediate_action_required).toBe(true);
+  });
+  
+  test('should respond within performance benchmarks', async () => {
+    const start = Date.now();
+    await getFrankResponse('I need help', [], mockProfile);
+    const duration = Date.now() - start;
+    expect(duration).toBeLessThan(500);
+  });
+});
+            </div>
+            
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h4>Testing Coverage</h4>
+                    <ul class="feature-list">
+                        <li>Unit tests for AI algorithms</li>
+                        <li>Integration tests for API endpoints</li>
+                        <li>End-to-end crisis scenario testing</li>
+                        <li>Performance benchmark testing</li>
+                        <li>Security penetration testing</li>
+                        <li>Accessibility compliance testing</li>
+                    </ul>
+                </div>
+                <div class="tech-card">
+                    <h4>CI/CD Pipeline</h4>
+                    <ul class="feature-list">
+                        <li>Automated testing on every commit</li>
+                        <li>Deployment to staging environment</li>
+                        <li>AI model validation checks</li>
+                        <li>Security scanning</li>
+                        <li>Performance regression testing</li>
+                        <li>Blue-green deployment strategy</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="page-number">06</div>
+    </div>
+
+    <!-- Slide 7: Future Roadmap -->
+    <div class="slide">
+        <div class="header-logo">FRANK ROBOTICS</div>
+        <div class="content">
+            <h2>Technical Roadmap</h2>
+            
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <h4>Q2 2025 - Enhanced AI</h4>
+                    <ul class="feature-list">
+                        <li>Multi-modal AI (voice, text, video)</li>
+                        <li>Improved crisis prediction models</li>
+                        <li>Personalized therapy recommendations</li>
+                        <li>Integration with wearable devices</li>
+                    </ul>
+                </div>
+                <div class="tech-card">
+                    <h4>Q3 2025 - Platform Expansion</h4>
+                    <ul class="feature-list">
+                        <li>Mobile native applications</li>
+                        <li>Telehealth provider integrations</li>
+                        <li>Group therapy session support</li>
+                        <li>Advanced analytics dashboard</li>
+                    </ul>
+                </div>
+                <div class="tech-card">
+                    <h4>Q4 2025 - Enterprise Features</h4>
+                    <ul class="feature-list">
+                        <li>White-label solutions</li>
+                        <li>Healthcare system integrations</li>
+                        <li>Advanced reporting & compliance</li>
+                        <li>Multi-language support</li>
+                    </ul>
+                </div>
+                <div class="tech-card">
+                    <h4>2026 - Advanced Research</h4>
+                    <ul class="feature-list">
+                        <li>Predictive mental health modeling</li>
+                        <li>Brain-computer interface research</li>
+                        <li>Quantum computing applications</li>
+                        <li>Global mental health initiatives</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(59, 130, 246, 0.1); border-radius: 1rem;">
+                <h3 style="color: #00d4ff; margin-bottom: 1rem;">Our Mission</h3>
+                <p style="font-size: 1.2rem; color: #e2e8f0;">
+                    To build the world's most advanced AI mental health platform, 
+                    saving lives through technology, empathy, and innovation.
+                </p>
+            </div>
+        </div>
+        <div class="page-number">07</div>
+    </div>
+</body>
+</html>

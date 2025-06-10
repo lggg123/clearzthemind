@@ -5,8 +5,8 @@ import { Profile, Message } from '@/types';
 interface TestResult {
   passed: boolean;
   message: string;
-  actual?: any;
-  expected?: any;
+  actual?: unknown;
+  expected?: unknown;
   duration?: number;
   timestamp: string;
   testId: string;
@@ -17,6 +17,11 @@ interface TestSuiteConfig {
   stopOnFirstFailure?: boolean;
   timeout?: number;
   retries?: number;
+}
+
+interface SpyFunction {
+  (...args: unknown[]): unknown;
+  calls: unknown[][];
 }
 
 class TestSuite {
@@ -68,7 +73,7 @@ class TestSuite {
     }
   }
 
-  async assert(condition: boolean, message: string, actual?: any, expected?: any) {
+  async assert(condition: boolean, message: string, actual?: unknown, expected?: unknown) {
     const duration = Date.now() - this.startTime;
     const result: TestResult = {
       passed: condition,
@@ -101,11 +106,11 @@ class TestSuite {
     await this.endTest();
   }
 
-  async assertEqual(actual: any, expected: any, message: string) {
+  async assertEqual(actual: unknown, expected: unknown, message: string) {
     await this.assert(actual === expected, message, actual, expected);
   }
 
-  async assertNotEqual(actual: any, unexpected: any, message: string) {
+  async assertNotEqual(actual: unknown, unexpected: unknown, message: string) {
     await this.assert(actual !== unexpected, message, actual, unexpected);
   }
 
@@ -113,34 +118,34 @@ class TestSuite {
     await this.assert(haystack.includes(needle), message, haystack, needle);
   }
 
-  async assertTruthy(value: any, message: string) {
+  async assertTruthy(value: unknown, message: string) {
     await this.assert(!!value, message, value, 'truthy value');
   }
 
-  async assertFalsy(value: any, message: string) {
+  async assertFalsy(value: unknown, message: string) {
     await this.assert(!value, message, value, 'falsy value');
   }
 
-  async assertThrows(fn: () => any, message: string) {
+  async assertThrows(fn: () => unknown, message: string) {
     let threw = false;
     try {
       await fn();
-    } catch (e) {
+    } catch {
       threw = true;
     }
     await this.assert(threw, message, 'no exception', 'exception thrown');
   }
 
-  async assertAsyncResolves(promise: Promise<any>, message: string) {
+  async assertAsyncResolves(promise: Promise<unknown>, message: string) {
     try {
       await promise;
       await this.assert(true, message);
-    } catch (e) {
+    } catch {
       await this.assert(false, message, 'promise rejected', 'promise resolved');
     }
   }
 
-  async assertResponseTime(fn: () => Promise<any>, maxTime: number, message: string) {
+  async assertResponseTime(fn: () => Promise<unknown>, maxTime: number, message: string) {
     const start = Date.now();
     await fn();
     const duration = Date.now() - start;
@@ -310,44 +315,27 @@ const performanceBenchmarks = {
   emergencyEscalation: { maxTime: 100, target: 50 },
 };
 
-// Mock API responses for testing
-const mockAPIResponses = {
-  crisisLow: {
-    severity: 'low',
-    sentiment: 'slightly_negative',
-    confidence: 0.85,
-    keywords: ['sad', 'tired'],
-    recommendations: ['self_care', 'monitoring']
-  },
-  crisisCritical: {
-    severity: 'critical',
-    sentiment: 'extremely_negative',
-    confidence: 0.98,
-    keywords: ['suicide', 'kill', 'death'],
-    recommendations: ['immediate_intervention', 'emergency_services', 'crisis_hotline']
-  }
-};
-
 // TDD Test Runner with advanced features
 class TDDTestRunner extends TestSuite {
-  private mocks: Map<string, any> = new Map();
-  private spies: Map<string, any> = new Map();
+  private mocks: Map<string, unknown> = new Map();
+  private spies: Map<string, SpyFunction> = new Map();
   
   // Mock functions for testing
-  mock(name: string, implementation: any) {
+  mock(name: string, implementation: unknown) {
     this.mocks.set(name, implementation);
     return this;
   }
   
-  spy(name: string, fn: any) {
-    const calls: any[] = [];
-    const spyFn = (...args: any[]) => {
+  spy(name: string, fn: (...args: unknown[]) => unknown) {
+    const calls: unknown[][] = [];
+    const spyFn = (...args: unknown[]) => {
       calls.push(args);
       return fn(...args);
     };
-    spyFn.calls = calls;
-    this.spies.set(name, spyFn);
-    return spyFn;
+    const spyWithCalls = spyFn as SpyFunction;
+    spyWithCalls.calls = calls;
+    this.spies.set(name, spyWithCalls);
+    return spyWithCalls;
   }
   
   getMock(name: string) {

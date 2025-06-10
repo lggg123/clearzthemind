@@ -13,28 +13,28 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FRANK - Investment Pitch | The Robot That Won't Let You Die",
-  description: "Series A pitch deck for FRANK, the AI crisis intervention system saving lives 24/7",
+  title: "FRANK Robotics - Mental Health AI Platform",
+  description: "Advanced AI-powered mental health support platform. Friendly Robotic Anti-Nihilism Kompanion providing 24/7 crisis intervention and emotional support.",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
   icons: {
     icon: [
-      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/frank-favicon.svg', type: 'image/svg+xml' },
       { url: '/favicon.ico', type: 'image/x-icon' }
     ],
     apple: [
-      { url: '/favicon.svg', sizes: '180x180', type: 'image/svg+xml' }
+      { url: '/frank-favicon.svg', sizes: '180x180', type: 'image/svg+xml' }
     ],
   },
   openGraph: {
-    title: "FRANK - Mental Health AI Revolution",
-    description: "The AI crisis intervention system saving lives 24/7. $50M Series A.",
-    images: [{ url: '/clearz-logo.svg' }],
+    title: "FRANK Robotics - Mental Health AI Revolution",
+    description: "The AI crisis intervention system saving lives 24/7. Revolutionary technology for mental health support.",
+    images: [{ url: '/frank-robotics-logo.svg' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: "FRANK - Mental Health AI Revolution",
-    description: "The AI crisis intervention system saving lives 24/7. $50M Series A.",
-    images: ['/clearz-logo.svg'],
+    title: "FRANK Robotics - Mental Health AI Revolution",
+    description: "The AI crisis intervention system saving lives 24/7. Revolutionary technology for mental health support.",
+    images: ['/frank-robotics-logo.svg'],
   },
 };
 
