@@ -301,7 +301,7 @@ export default function InvestmentPitch() {
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-yellow-400">60%</div>
-              <div className="text-sm text-gray-400">Don't receive treatment</div>
+              <div className="text-sm text-gray-400">Don&apos;t receive treatment</div>
             </div>
             <div className="text-center">
               <div className="text-3xl font-bold text-pink-400">24/7</div>
