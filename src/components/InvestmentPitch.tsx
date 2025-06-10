@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Play, Download, Heart, AlertTriangle, Brain, Zap, Star, Clock } from 'lucide-react';
 import Image from 'next/image';
@@ -15,7 +15,7 @@ export default function InvestmentPitch() {
   const [crisisLevel, setCrisisLevel] = useState(0);
 
   // Demo scenarios
-  const demoScenarios = [
+  const demoScenarios = useMemo(() => [
     {
       userMessage: "Hi FRANK, I'm having a really tough day",
       frankResponse: "I hear you. I'm here to listen. What's making today particularly difficult for you?",
@@ -40,7 +40,7 @@ export default function InvestmentPitch() {
       crisisLevel: 10,
       detectionTime: "0.08s"
     }
-  ];
+  ], []);
 
   const startDemo = useCallback(async () => {
     setDemoMessages([]);
@@ -447,17 +447,24 @@ export default function InvestmentPitch() {
             transition={{ delay: 1 }}
             className="flex flex-col sm:flex-row gap-6 justify-center"
           >
-            <button 
+            <motion.button 
               onClick={() => {
-                console.log('Button clicked!');
+                console.log('Button clicked - Opening FRANK Demo');
                 setShowDemo(true);
-                console.log('showDemo set to true');
               }}
-              className="px-12 py-6 bg-blue-600 rounded-2xl text-xl font-bold text-white hover:bg-blue-700 transition-all duration-300 flex items-center gap-3 mx-auto"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-12 py-6 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 rounded-2xl text-xl font-bold transition-all duration-300 flex items-center gap-3 mx-auto shadow-2xl shadow-blue-500/30 border border-blue-400/30 relative overflow-hidden group"
             >
-              <Play className="w-6 h-6" />
-              <span>See FRANK in Action</span>
-            </button>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-purple-400/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+              <Play className="w-6 h-6 relative z-10" />
+              <span className="relative z-10">See FRANK in Action</span>
+              <motion.div
+                animate={{ rotate: [0, 360] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                className="w-2 h-2 bg-blue-300 rounded-full relative z-10"
+              />
+            </motion.button>
             
             <motion.a 
               href="/frank-technical-deck.html" 
@@ -493,21 +500,168 @@ export default function InvestmentPitch() {
       </section>
 
       {/* Demo Modal */}
-      {console.log('showDemo state:', showDemo)}
-      {showDemo && (
-        <div className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl p-8 max-w-4xl w-full text-black">
-            <h3 className="text-3xl font-bold mb-4">FRANK Demo</h3>
-            <p className="mb-4">This is a test modal to see if the button works!</p>
-            <button
-              onClick={() => setShowDemo(false)}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+      <AnimatePresence>
+        {showDemo && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
+            onClick={() => setShowDemo(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              className="bg-gradient-to-br from-gray-900 via-blue-900/30 to-purple-900/30 rounded-3xl p-8 max-w-6xl w-full max-h-[90vh] overflow-hidden border border-blue-500/30"
+              onClick={(e) => e.stopPropagation()}
             >
-              Close Demo
-            </button>
-          </div>
-        </div>
-      )}
+              {/* Demo Header */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                    <Brain className="w-10 h-10 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-bold text-white">FRANK Demo</h3>
+                    <p className="text-blue-400">Real-time Crisis Detection & Response</p>
+                  </div>
+                </div>
+                
+                {/* Crisis Level Indicator */}
+                <div className="text-right">
+                  <div className="text-sm text-gray-400 mb-1">Crisis Level</div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-32 h-3 bg-gray-700 rounded-full overflow-hidden">
+                      <motion.div
+                        className={`h-full rounded-full ${
+                          crisisLevel <= 2 ? 'bg-green-500' :
+                          crisisLevel <= 5 ? 'bg-yellow-500' :
+                          crisisLevel <= 7 ? 'bg-orange-500' :
+                          'bg-red-500'
+                        }`}
+                        initial={{ width: 0 }}
+                        animate={{ width: `${crisisLevel * 10}%` }}
+                        transition={{ duration: 0.5 }}
+                      />
+                    </div>
+                    <span className={`text-xl font-bold ${
+                      crisisLevel <= 2 ? 'text-green-400' :
+                      crisisLevel <= 5 ? 'text-yellow-400' :
+                      crisisLevel <= 7 ? 'text-orange-400' :
+                      'text-red-400'
+                    }`}>
+                      {crisisLevel}/10
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Chat Interface */}
+              <div className="bg-black/50 rounded-2xl p-6 h-96 overflow-y-auto mb-6 border border-gray-700">
+                <div className="space-y-4">
+                  {demoMessages.length === 0 && !isTyping && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-center py-12"
+                    >
+                      <Brain className="w-16 h-16 mx-auto mb-4 text-blue-400 animate-pulse" />
+                      <p className="text-xl text-white mb-2">FRANK is ready to help</p>
+                      <p className="text-gray-400">Demonstrating crisis intervention capabilities...</p>
+                    </motion.div>
+                  )}
+                  
+                  {demoMessages.map((msg, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div className={`max-w-xs lg:max-w-md px-4 py-3 rounded-2xl ${
+                        msg.role === 'user' 
+                          ? 'bg-blue-600 text-white' 
+                          : 'bg-gray-700 text-white border border-blue-500/30'
+                      }`}>
+                        <div className="flex items-center gap-2 mb-1">
+                          {msg.role === 'frank' && (
+                            <Brain className="w-4 h-4 text-blue-400" />
+                          )}
+                          <span className="text-xs font-medium opacity-70">
+                            {msg.role === 'user' ? 'User' : 'FRANK'}
+                          </span>
+                        </div>
+                        <p className="text-sm">{msg.message}</p>
+                        {msg.role === 'frank' && (
+                          <div className="text-xs text-blue-400 mt-2 opacity-70">
+                            Detected in {demoScenarios[Math.floor(index/2)]?.detectionTime || '0.1s'}
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  ))}
+                  
+                  {isTyping && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex justify-start"
+                    >
+                      <div className="bg-gray-700 text-white border border-blue-500/30 px-4 py-3 rounded-2xl">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Brain className="w-4 h-4 text-blue-400 animate-pulse" />
+                          <span className="text-xs font-medium opacity-70">FRANK</span>
+                        </div>
+                        <div className="flex gap-1">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+              </div>
+
+              {/* Demo Controls */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="text-sm text-gray-400">
+                    Step {demoStep} of {demoScenarios.length}
+                  </div>
+                  {crisisLevel > 7 && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="flex items-center gap-2 px-3 py-1 bg-red-900/50 rounded-full border border-red-500"
+                    >
+                      <AlertTriangle className="w-4 h-4 text-red-400" />
+                      <span className="text-red-400 text-sm font-medium">Emergency Protocol Activated</span>
+                    </motion.div>
+                  )}
+                </div>
+                
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => startDemo()}
+                    className="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors text-white font-medium"
+                  >
+                    Restart Demo
+                  </button>
+                  <button
+                    onClick={() => setShowDemo(false)}
+                    className="px-6 py-2 bg-gray-700 hover:bg-gray-600 rounded-xl transition-colors text-white font-medium"
+                  >
+                    Close Demo
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
