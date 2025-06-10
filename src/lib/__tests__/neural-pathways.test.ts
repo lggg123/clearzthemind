@@ -52,7 +52,7 @@ describe('InvestmentPitch Component', () => {
     });
 
     // Ensure Ask section content is rendered
-    expect(screen.getByText(/$50M Series A/i)).toBeInTheDocument();
+    expect(screen.getByText(/\$50M Series A/i)).toBeInTheDocument();
     expect(screen.getByText(/To save 10,000 lives in the next 12 months/i)).toBeInTheDocument();
     expect(screen.getByText(/Every second we wait, another life hangs in the balance./i)).toBeInTheDocument();
   });
