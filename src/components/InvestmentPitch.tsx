@@ -46,16 +46,20 @@ export default function InvestmentPitch() {
   ];
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrolled = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const newSection = Math.floor(scrolled / windowHeight);
-      setCurrentSection(Math.min(newSection, sections.length - 1));
-    };
+  let interval;
+  if (currentSection === 0) {
+    interval = setInterval(() => {
+      setHeartRate((prev) => Math.min(prev + 2, 180));
+      if (heartRate > 160) {
+        setIsFlatlining(true);
+      }
+    }, 100);
+  }
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [sections.length]);
+  return () => {
+    if (interval) clearInterval(interval); // Clear interval on unmount or section change
+  };
+}, [currentSection, heartRate]);
 
   return (
     <div className="bg-black text-white overflow-hidden">
