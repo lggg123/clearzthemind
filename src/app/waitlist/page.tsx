@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowLeft, Users, Mail, Bell, CheckCircle, Star, Zap, Shield, Heart } from 'lucide-react';
+import { ArrowLeft, Users, Mail, CheckCircle, Star, Zap, Shield, Heart } from 'lucide-react';
 
 export default function WaitlistPage() {
   const [formData, setFormData] = useState({
@@ -60,7 +60,7 @@ export default function WaitlistPage() {
           <CheckCircle className="w-24 h-24 text-purple-400 mx-auto mb-6" />
           <h1 className="text-5xl font-bold text-purple-400 mb-6">Welcome to the FRANK Family!</h1>
           <p className="text-xl text-gray-300 mb-8">
-            You're now on our exclusive early access waitlist. You'll be among the first to experience FRANK when we launch.
+            You&apos;re now on our exclusive early access waitlist. You&apos;ll be among the first to experience FRANK when we launch.
           </p>
           
           <div className="bg-gray-900/50 p-6 rounded-xl border border-purple-500/30 mb-8">
@@ -68,11 +68,11 @@ export default function WaitlistPage() {
             <div className="space-y-3 text-left">
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold">1</div>
-                <span className="text-gray-300">We'll send you regular updates on our development progress</span>
+                <span className="text-gray-300">We&apos;ll send you regular updates on our development progress</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold">2</div>
-                <span className="text-gray-300">You'll get early access to FRANK beta testing programs</span>
+                <span className="text-gray-300">You&apos;ll get early access to FRANK beta testing programs</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center font-bold">3</div>
@@ -323,7 +323,7 @@ export default function WaitlistPage() {
                       className="w-4 h-4 text-purple-400 bg-black/50 border-gray-600 rounded focus:ring-purple-400 focus:ring-2 mt-1"
                     />
                     <label className="text-gray-300 text-sm">
-                      I'd like to receive updates about FRANK's development, beta testing opportunities, and launch announcements. You can unsubscribe at any time.
+                      I&apos;d like to receive updates about FRANK's development, beta testing opportunities, and launch announcements. You can unsubscribe at any time.
                     </label>
                   </div>
 
@@ -438,7 +438,7 @@ export default function WaitlistPage() {
               <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-700">
                 <h3 className="text-2xl font-bold text-blue-400 mb-4">Questions?</h3>
                 <p className="text-gray-300 mb-4">
-                  Have questions about early access or FRANK's capabilities?
+                  Have questions about early access or FRANK&apos;s capabilities?
                 </p>
                 <Link
                   href="/contact"

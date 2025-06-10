@@ -139,7 +139,10 @@ export default function ContactPage() {
               className="lg:col-span-2"
             >
               <div className="bg-gray-900/50 p-8 rounded-xl border border-gray-700">
-                <h2 className="text-3xl font-bold text-white mb-6">Send us a message</h2>
+                <h2 className="text-3xl font-bold text-white mb-6 flex items-center gap-3">
+                  <MessageSquare className="w-8 h-8 text-blue-400" />
+                  Send us a message
+                </h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
                   {/* Inquiry Type */}
                   <div>
@@ -301,7 +304,10 @@ export default function ContactPage() {
             >
               {/* Direct Contact */}
               <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-700">
-                <h3 className="text-2xl font-bold text-blue-400 mb-4">Direct Contact</h3>
+                <h3 className="text-2xl font-bold text-blue-400 mb-4 flex items-center gap-2">
+                  <User className="w-6 h-6" />
+                  Direct Contact
+                </h3>
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <Mail className="w-5 h-5 text-blue-400" />
@@ -320,6 +326,13 @@ export default function ContactPage() {
                     <div>
                       <div className="text-white font-semibold">Phone</div>
                       <div className="text-gray-400">Available upon request</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <Building className="w-5 h-5 text-blue-400" />
+                    <div>
+                      <div className="text-white font-semibold">Company</div>
+                      <div className="text-gray-400">FRANK Robotics Inc.</div>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">

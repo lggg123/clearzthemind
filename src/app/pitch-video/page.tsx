@@ -83,7 +83,7 @@ export default function PitchVideoPage() {
             <div className="bg-gray-900/50 p-8 rounded-xl border border-gray-700">
               <div className="flex items-center gap-3 mb-6">
                 <Video className="w-8 h-8 text-red-400" />
-                <h2 className="text-3xl font-bold text-red-400">What You'll Learn</h2>
+                <h2 className="text-3xl font-bold text-red-400">What You&apos;ll Learn</h2>
               </div>
               <ul className="space-y-3 text-gray-300">
                 <li className="flex items-start gap-2">
