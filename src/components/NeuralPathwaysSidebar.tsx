@@ -66,6 +66,24 @@ const NeuralPathwaysSidebar: React.FC<Props> = ({
     }
   };
 
+  // Helper function to determine if a pathway is active
+  const isPathwayActive = (pathway: NeuralPathway) => {
+    return pathway.activation_frequency > 0;
+  };
+
+  // Helper function to get pathway strength as percentage
+  const getPathwayStrength = (pathway: NeuralPathway) => {
+    if (pathway.connections.length === 0) return 0;
+    const avgStrength = pathway.connections.reduce((sum, conn) => sum + conn.strength, 0) / pathway.connections.length;
+    return Math.round(avgStrength * 100);
+  };
+
+  // Helper function to find node labels for synaptic connections
+  const getNodeLabel = (nodeId: string) => {
+    const node = activeNodes.find(n => n.id === nodeId);
+    return node ? node.label : 'Unknown';
+  };
+
   return (
     <aside className={`${styles.sidebar} bg-gray-900/95 backdrop-blur-sm border-l border-gray-700`}>
       {/* Header */}
@@ -110,34 +128,42 @@ const NeuralPathwaysSidebar: React.FC<Props> = ({
         <h3 className="text-sm font-semibold text-gray-300 mb-3">Active Pathways</h3>
         <ul className={`${styles.pathwayList} space-y-2`}>
           <AnimatePresence>
-            {pathways.map((pathway) => (
-              <motion.li 
-                key={pathway.id} 
-                className={`${styles.pathwayItem} bg-gray-800/50 rounded-lg p-3 border ${
-                  pathway.isActive ? 'border-blue-500/50' : 'border-gray-700'
-                }`}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                layout
-              >
-                <div className="flex items-center justify-between">
-                  <span className={`${styles.pathwayLabel} text-sm font-medium text-white`}>
-                    {pathway.label}
-                  </span>
-                  {pathway.isActive && (
-                    <motion.div
-                      className="w-2 h-2 bg-blue-400 rounded-full"
-                      animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
-                      transition={{ repeat: Infinity, duration: 1 }}
-                    />
-                  )}
-                </div>
-                <div className="text-xs text-gray-400 mt-1">
-                  Strength: {pathway.strength}%
-                </div>
-              </motion.li>
-            ))}
+            {pathways.map((pathway) => {
+              const isActive = isPathwayActive(pathway);
+              const strength = getPathwayStrength(pathway);
+              
+              return (
+                <motion.li 
+                  key={pathway.id} 
+                  className={`${styles.pathwayItem} bg-gray-800/50 rounded-lg p-3 border ${
+                    isActive ? 'border-blue-500/50' : 'border-gray-700'
+                  }`}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  layout
+                >
+                  <div className="flex items-center justify-between">
+                    <span className={`${styles.pathwayLabel} text-sm font-medium text-white`}>
+                      {pathway.name}
+                    </span>
+                    {isActive && (
+                      <motion.div
+                        className="w-2 h-2 bg-blue-400 rounded-full"
+                        animate={{ scale: [1, 1.5, 1], opacity: [1, 0.5, 1] }}
+                        transition={{ repeat: Infinity, duration: 1 }}
+                      />
+                    )}
+                  </div>
+                  <div className="text-xs text-gray-400 mt-1">
+                    Strength: {strength}%
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    Risk: {pathway.crisis_risk_level} | Emotion: {pathway.dominant_emotion}
+                  </div>
+                </motion.li>
+              );
+            })}
           </AnimatePresence>
         </ul>
       </div>
@@ -168,7 +194,7 @@ const NeuralPathwaysSidebar: React.FC<Props> = ({
                   <div className="flex-1">
                     <div className="text-xs font-medium text-white">{node.label}</div>
                     <div className="text-xs text-gray-400">
-                      Activation: {node.activationLevel}%
+                      Activation: {Math.round(node.activation_level * 100)}%
                     </div>
                   </div>
                   {animatingNodes.includes(node.id) && (
@@ -204,7 +230,7 @@ const NeuralPathwaysSidebar: React.FC<Props> = ({
                 >
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-gray-300">
-                      {connection.fromNode} → {connection.toNode}
+                      {getNodeLabel(connection.source_node_id)} → {getNodeLabel(connection.target_node_id)}
                     </span>
                     <span className="text-purple-400 font-medium">
                       {Math.round(synapticActivity[connection.id] || 0)}%
@@ -219,7 +245,7 @@ const NeuralPathwaysSidebar: React.FC<Props> = ({
                     />
                   </div>
                   <div className="text-xs text-gray-500 mt-1">
-                    Strength: {connection.strength} | Weight: {connection.weight}
+                    Strength: {Math.round(connection.strength * 100)}% | Weight: {connection.weight.toFixed(2)} | Type: {connection.pathway_type}
                   </div>
                 </motion.div>
               ))}
@@ -243,13 +269,15 @@ const NeuralPathwaysSidebar: React.FC<Props> = ({
           <div className="bg-gray-800/30 p-2 rounded">
             <div className="text-gray-400">Active Pathways</div>
             <div className="text-white font-bold">
-              {pathways.filter(p => p.isActive).length}
+              {pathways.filter(p => isPathwayActive(p)).length}
             </div>
           </div>
           <div className="bg-gray-800/30 p-2 rounded">
             <div className="text-gray-400">Network Load</div>
             <div className="text-white font-bold">
-              {Math.round(activeNodes.reduce((sum, node) => sum + node.activationLevel, 0) / activeNodes.length) || 0}%
+              {activeNodes.length > 0 
+                ? Math.round(activeNodes.reduce((sum, node) => sum + (node.activation_level * 100), 0) / activeNodes.length) 
+                : 0}%
             </div>
           </div>
         </div>
