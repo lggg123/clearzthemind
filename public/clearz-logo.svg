@@ -1,0 +1,29 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7c3aed;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Brain icon -->
+  <g transform="translate(10, 10)">
+    <path d="M20 15c-3 0-5.5-2.5-5.5-5.5S17 4 20 4s5.5 2.5 5.5 5.5-2.5 5.5-5.5 5.5zm0-9c-1.9 0-3.5 1.6-3.5 3.5S18.1 13 20 13s3.5-1.6 3.5-3.5S21.9 6 20 6z" fill="url(#logoGradient)"/>
+    <path d="M15 25c0-2.8 2.2-5 5-5s5 2.2 5 5-2.2 5-5 5-5-2.2-5-5zm8 0c0-1.7-1.3-3-3-3s-3 1.3-3 3 1.3 3 3 3 3-1.3 3-3z" fill="url(#logoGradient)"/>
+    <path d="M10 35c0-2.8 2.2-5 5-5s5 2.2 5 5-2.2 5-5 5-5-2.2-5-5zm8 0c0-1.7-1.3-3-3-3s-3 1.3-3 3 1.3 3 3 3 3-1.3 3-3z" fill="url(#logoGradient)"/>
+    <path d="M25 35c0-2.8 2.2-5 5-5s5 2.2 5 5-2.2 5-5 5-5-2.2-5-5zm8 0c0-1.7-1.3-3-3-3s-3 1.3-3 3 1.3 3 3 3 3-1.3 3-3z" fill="url(#logoGradient)"/>
+    <path d="M12 18L18 22L25 18L30 25L25 32L18 28L12 32L7 25L12 18Z" fill="url(#logoGradient)" opacity="0.3"/>
+  </g>
+  
+  <!-- ClearZ Text -->
+  <text x="60" y="25" font-family="Arial Black, sans-serif" font-size="18" font-weight="900" fill="url(#logoGradient)" filter="url(#glow)">ClearZ</text>
+  <text x="60" y="45" font-family="Arial, sans-serif" font-size="12" font-weight="500" fill="#64748b">The Mind</text>
+</svg>

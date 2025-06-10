@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="brain-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4F46E5;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#06B6D4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#10B981;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge> 
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="45" fill="url(#brain-gradient)" stroke="#ffffff" stroke-width="2" filter="url(#glow)"/>
+  
+  <!-- Brain shape -->
+  <path d="M30 35c5-8 15-8 20 0c5-8 15-8 20 0c3 5 3 15-2 20c-3 3-8 5-13 5c-5 0-10-2-13-5c-5-5-5-15-2-20z" 
+        fill="#ffffff" opacity="0.9"/>
+  
+  <!-- Brain details -->
+  <path d="M32 40c3-2 6-2 9 0M59 40c3-2 6-2 9 0" stroke="#4F46E5" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Neural connections -->
+  <circle cx="38" cy="42" r="2" fill="#4F46E5"/>
+  <circle cx="62" cy="42" r="2" fill="#4F46E5"/>
+  <circle cx="50" cy="48" r="1.5" fill="#06B6D4"/>
+  
+  <!-- Smile/positive indicator -->
+  <path d="M35 55c5 8 15 8 20 0c5 8 15 8 20 0" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="round"/>
+  
+  <!-- Heart rate line -->
+  <path d="M20 75L25 75L30 65L35 85L40 55L45 75L80 75" stroke="#10B981" stroke-width="2" fill="none"/>
+</svg>
