@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import React from 'react';
+import NeuralPathwaysSidebar from '../components/NeuralPathwaysSidebar';
+import type { NeuralPathway } from '@/types';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,17 +41,23 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || ''}/api/neural-pathways`, {
+    cache: 'no-store',
+  });
+  const pathways: NeuralPathway[] = await res.json();
+
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <div>
+          <NeuralPathwaysSidebar pathways={pathways} />
+          {children}
+        </div>
       </body>
     </html>
   );

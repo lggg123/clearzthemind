@@ -58,18 +58,22 @@ export interface SynapticConnection {
     pathway_type: 'strengthening' | 'weakening' | 'neutral';
 }
 
-export interface NeuralPathway {
-    id: string;
-    user_id: string;
-    name: string;
-    nodes: NeuralNode[];
-    connections: SynapticConnection[];
-    dominant_emotion: string;
-    crisis_risk_level: 'low' | 'medium' | 'high' | 'critical';
-    activation_frequency: number; // How often this pathway fires
-    created_at: string;
-    last_activated: string;
-}
+export type NeuralPathway = {
+  id: string;
+  user_id: string;
+  nodes: any[];
+  connections: any[];
+  dominant_emotion: string;
+  created_at: string;
+  updated_at: string;
+  name: string;
+  label: string;
+  visual_color?: string;
+  activity_level?: number;
+  tags?: string[];
+  description?: string;
+  is_active?: boolean;
+};
 
 export interface BrainNetworkSnapshot {
     id: string;
