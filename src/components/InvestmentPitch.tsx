@@ -11,30 +11,44 @@ export default function InvestmentPitch() {
   // Heart monitor animation
   const [isFlatlining, setIsFlatlining] = useState(false);
   const [heartRate, setHeartRate] = useState(72);
+  const [showCrisisText, setShowCrisisText] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setHeartRate((prev) => Math.min(prev + 2, 180));
-      if (heartRate > 160) {
-        setIsFlatlining(true);
-      }
-    }, 100);
+      setHeartRate((prev) => {
+        const newRate = Math.min(prev + 3, 200);
+        if (newRate > 160 && !isFlatlining) {
+          setTimeout(() => {
+            setIsFlatlining(true);
+            setShowCrisisText(true);
+          }, 2000);
+        }
+        return newRate;
+      });
+    }, 150);
 
     return () => clearInterval(interval);
-  }, [heartRate]);
+  }, [isFlatlining]);
 
-  // Scroll-triggered animations
+  // Scroll-triggered animations with better transitions
   const opacity1 = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const opacity2 = useTransform(scrollYProgress, [0.15, 0.35], [0, 1]);
-  const opacity3 = useTransform(scrollYProgress, [0.3, 0.5], [0, 1]);
-  const opacity4 = useTransform(scrollYProgress, [0.45, 0.65], [0, 1]);
-  const opacity5 = useTransform(scrollYProgress, [0.6, 0.8], [0, 1]);
+  const opacity2 = useTransform(scrollYProgress, [0.18, 0.22, 0.38, 0.42], [0, 1, 1, 0]);
+  const opacity3 = useTransform(scrollYProgress, [0.38, 0.42, 0.58, 0.62], [0, 1, 1, 0]);
+  const opacity4 = useTransform(scrollYProgress, [0.58, 0.62, 0.78, 0.82], [0, 1, 1, 0]);
+  const opacity5 = useTransform(scrollYProgress, [0.78, 0.82], [0, 1]);
+  
+  // Z-index transforms to control layering
+  const zIndex1 = useTransform(scrollYProgress, [0, 0.2], [50, 10]);
+  const zIndex2 = useTransform(scrollYProgress, [0.18, 0.42], [10, 50]);
+  const zIndex3 = useTransform(scrollYProgress, [0.38, 0.62], [10, 50]);
+  const zIndex4 = useTransform(scrollYProgress, [0.58, 0.82], [10, 50]);
+  const zIndex5 = useTransform(scrollYProgress, [0.78, 1], [10, 50]);
 
   return (
     <div className="bg-black text-white overflow-x-hidden" style={{ height: '500vh' }}>
       {/* Section 1: Crisis - Heart Monitor */}
       <motion.section
-        style={{ opacity: opacity1 }}
+        style={{ opacity: opacity1, zIndex: zIndex1 }}
         className="h-screen flex items-center justify-center relative fixed inset-0"
       >
         <div className="absolute inset-0 bg-gradient-to-b from-red-900/20 to-black"></div>
@@ -45,14 +59,44 @@ export default function InvestmentPitch() {
             transition={{ duration: 1 }}
             className="mb-8"
           >
-            <Heart
-              className={`w-32 h-32 mx-auto mb-4 ${
-                isFlatlining ? 'text-red-500 animate-pulse' : 'text-red-400'
-              }`}
-            />
-            <div className="text-6xl font-mono font-bold text-red-400">
+            <motion.div
+              animate={isFlatlining ? { 
+                scale: [1, 1.2, 1],
+                filter: ["brightness(1)", "brightness(2)", "brightness(1)"]
+              } : {
+                scale: [1, 1.05, 1],
+              }}
+              transition={{ 
+                duration: isFlatlining ? 0.5 : 0.8,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            >
+              <Heart
+                className={`w-32 h-32 mx-auto mb-4 ${
+                  isFlatlining ? 'text-red-500' : 'text-red-400'
+                }`}
+              />
+            </motion.div>
+            <motion.div 
+              className="text-6xl font-mono font-bold text-red-400"
+              animate={isFlatlining ? { 
+                color: ["#ef4444", "#dc2626", "#b91c1c"],
+                textShadow: ["0 0 10px #ef4444", "0 0 20px #dc2626", "0 0 10px #ef4444"]
+              } : {}}
+              transition={{ duration: 0.3, repeat: Infinity }}
+            >
               {isFlatlining ? '0' : heartRate} BPM
-            </div>
+            </motion.div>
+            {isFlatlining && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-red-500 text-2xl font-bold mt-4 animate-pulse"
+              >
+                ⚠️ FLATLINE DETECTED ⚠️
+              </motion.div>
+            )}
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -60,8 +104,23 @@ export default function InvestmentPitch() {
             transition={{ delay: 1.5, duration: 0.8 }}
             className="space-y-4"
           >
-            <h1 className="text-5xl font-black">Someone Dies by Suicide</h1>
-            <p className="text-3xl text-red-400 font-bold">Every 11 Minutes</p>
+            <motion.h1 
+              className="text-5xl font-black"
+              animate={showCrisisText ? {
+                color: ["#ffffff", "#ef4444", "#ffffff"],
+                textShadow: ["0 0 0px transparent", "0 0 20px #ef4444", "0 0 0px transparent"]
+              } : {}}
+              transition={{ duration: 1, repeat: Infinity }}
+            >
+              Someone Dies by Suicide
+            </motion.h1>
+            <motion.p 
+              className="text-3xl text-red-400 font-bold"
+              animate={showCrisisText ? { scale: [1, 1.1, 1] } : {}}
+              transition={{ duration: 0.8, repeat: Infinity }}
+            >
+              Every 11 Minutes
+            </motion.p>
             <p className="text-xl text-gray-300 max-w-2xl mx-auto mt-8">
               Mental health crisis is killing our youth, destroying families, 
               and costing society billions. The current system isn&apos;t working.
@@ -72,7 +131,7 @@ export default function InvestmentPitch() {
 
       {/* Section 2: The Problem */}
       <motion.section
-        style={{ opacity: opacity2 }}
+        style={{ opacity: opacity2, zIndex: zIndex2 }}
         className="h-screen flex items-center justify-center px-8 fixed inset-0"
       >
         <div className="max-w-6xl mx-auto text-center">
@@ -124,7 +183,7 @@ export default function InvestmentPitch() {
 
       {/* Section 3: Solution */}
       <motion.section
-        style={{ opacity: opacity3 }}
+        style={{ opacity: opacity3, zIndex: zIndex3 }}
         className="h-screen flex items-center justify-center px-8 fixed inset-0"
       >
         <div className="max-w-6xl mx-auto text-center">
@@ -134,7 +193,19 @@ export default function InvestmentPitch() {
             transition={{ duration: 0.8 }}
             className="text-7xl font-black mb-8"
           >
-            Meet <span className="text-green-400">FRANK</span>
+            Meet <motion.span 
+              className="text-green-400"
+              animate={{
+                textShadow: [
+                  "0 0 20px #4ade80",
+                  "0 0 40px #4ade80",
+                  "0 0 20px #4ade80"
+                ]
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              FRANK
+            </motion.span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -151,7 +222,15 @@ export default function InvestmentPitch() {
             className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left"
           >
             <div className="bg-green-900/20 p-6 rounded-lg border border-green-400/30">
-              <Brain className="w-12 h-12 text-green-400 mb-4" />
+              <motion.div
+                animate={{ 
+                  scale: [1, 1.1, 1],
+                  rotate: [0, 5, -5, 0]
+                }}
+                transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <Brain className="w-12 h-12 text-green-400 mb-4" />
+              </motion.div>
               <h3 className="text-2xl font-bold text-green-400 mb-4">AI-Powered Crisis Detection</h3>
               <ul className="space-y-2 text-gray-300">
                 <li>• Real-time emotional analysis</li>
@@ -161,7 +240,15 @@ export default function InvestmentPitch() {
               </ul>
             </div>
             <div className="bg-blue-900/20 p-6 rounded-lg border border-blue-400/30">
-              <Zap className="w-12 h-12 text-blue-400 mb-4" />
+              <motion.div
+                animate={{ 
+                  scale: [1, 1.2, 1],
+                  filter: ["brightness(1)", "brightness(1.5)", "brightness(1)"]
+                }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              >
+                <Zap className="w-12 h-12 text-blue-400 mb-4" />
+              </motion.div>
               <h3 className="text-2xl font-bold text-blue-400 mb-4">Personalized Treatment</h3>
               <ul className="space-y-2 text-gray-300">
                 <li>• Individual neural patterns</li>
@@ -176,7 +263,7 @@ export default function InvestmentPitch() {
 
       {/* Section 4: Market */}
       <motion.section
-        style={{ opacity: opacity4 }}
+        style={{ opacity: opacity4, zIndex: zIndex4 }}
         className="h-screen flex items-center justify-center px-8 fixed inset-0"
       >
         <div className="max-w-6xl mx-auto text-center">
@@ -195,17 +282,38 @@ export default function InvestmentPitch() {
             className="grid grid-cols-1 md:grid-cols-3 gap-8"
           >
             <div className="bg-purple-900/20 p-8 rounded-lg border border-purple-400/30">
-              <div className="text-5xl font-black text-purple-400 mb-4">$240B</div>
+              <motion.div 
+                className="text-5xl font-black text-purple-400 mb-4"
+                initial={{ scale: 0, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
+              >
+                $240B
+              </motion.div>
               <div className="text-xl text-white font-bold mb-2">Mental Health Market</div>
               <div className="text-gray-300">Growing 25% annually</div>
             </div>
             <div className="bg-purple-900/20 p-8 rounded-lg border border-purple-400/30">
-              <div className="text-5xl font-black text-purple-400 mb-4">970M</div>
+              <motion.div 
+                className="text-5xl font-black text-purple-400 mb-4"
+                initial={{ scale: 0, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.2, type: "spring", bounce: 0.4 }}
+              >
+                970M
+              </motion.div>
               <div className="text-xl text-white font-bold mb-2">People Affected</div>
               <div className="text-gray-300">Worldwide mental health issues</div>
             </div>
             <div className="bg-purple-900/20 p-8 rounded-lg border border-purple-400/30">
-              <div className="text-5xl font-black text-purple-400 mb-4">$4.2T</div>
+              <motion.div 
+                className="text-5xl font-black text-purple-400 mb-4"
+                initial={{ scale: 0, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.4, type: "spring", bounce: 0.4 }}
+              >
+                $4.2T
+              </motion.div>
               <div className="text-xl text-white font-bold mb-2">Economic Impact</div>
               <div className="text-gray-300">Lost productivity annually</div>
             </div>
@@ -215,7 +323,7 @@ export default function InvestmentPitch() {
 
       {/* Section 5: Ask */}
       <motion.section
-        style={{ opacity: opacity5 }}
+        style={{ opacity: opacity5, zIndex: zIndex5 }}
         className="h-screen flex items-center justify-center px-8 fixed inset-0"
       >
         <div className="max-w-4xl mx-auto text-center">
