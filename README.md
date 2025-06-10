@@ -45,7 +45,7 @@ A mental health support application featuring FRANK (Friendly Robotic Anti-Nihil
    
    Edit `.env.local` and add your Gemini API key:
    ```env
-   GEMINI_API_KEY=your_actual_api_key_here
+   GOOGLE_GEMINI_API_KEY=your_actual_api_key_here
    ```
 
 4. **Run the development server**

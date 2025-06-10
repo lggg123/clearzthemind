@@ -52,13 +52,6 @@ export default function InvestmentPitch() {
     };
   }, []);
 
-  // Scroll-triggered animations with better transitions
-  const opacity1 = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const opacity2 = useTransform(scrollYProgress, [0.18, 0.22, 0.38, 0.42], [0, 1, 1, 0]);
-  const opacity3 = useTransform(scrollYProgress, [0.38, 0.42, 0.58, 0.62], [0, 1, 1, 0]);
-  const opacity4 = useTransform(scrollYProgress, [0.58, 0.62, 0.78, 0.82], [0, 1, 1, 0]);
-  const opacity5 = useTransform(scrollYProgress, [0.78, 1], [0, 1]);
-
   return (
     <div className="bg-black text-white">
       {/* Scroll Progress Indicator */}
@@ -281,14 +274,7 @@ export default function InvestmentPitch() {
       </section>
 
       {/* Section 4: Market */}
-      <motion.section
-        style={{ 
-          opacity: opacity4, 
-          zIndex: currentSection === 4 ? 50 : 10,
-          pointerEvents: currentSection === 4 ? 'auto' : 'none'
-        }}
-        className="h-screen flex items-center justify-center px-8 fixed inset-0"
-      >
+      <section data-section="4" className="min-h-screen flex items-center justify-center px-8">
         <div className="max-w-6xl mx-auto text-center">
           <motion.h2
             initial={{ opacity: 0, y: 50 }}
@@ -342,18 +328,11 @@ export default function InvestmentPitch() {
             </div>
           </motion.div>
         </div>
-      </motion.section>
+      </section>
 
-      {/* Section 5: Ask */}
-      <motion.section
-        style={{ 
-          opacity: opacity5, 
-          zIndex: currentSection === 5 ? 100 : 10,
-          pointerEvents: currentSection === 5 ? 'auto' : 'none'
-        }}
-        className="h-screen flex items-center justify-center px-8 fixed inset-0"
-      >
-        <div className="max-w-4xl mx-auto text-center">
+      {/* Section 5: Ask - The Call to Action with All Buttons */}
+      <section data-section="5" className="min-h-screen flex items-center justify-center px-8 py-16">
+        <div className="max-w-5xl mx-auto text-center">
           <motion.h2
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -370,29 +349,30 @@ export default function InvestmentPitch() {
           >
             We&apos;re raising $10M Series A to save lives and transform mental healthcare
           </motion.div>
+          
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="space-y-6"
+            className="space-y-8"
           >
             {/* Primary Action Buttons */}
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
+            <div className="flex flex-col md:flex-row gap-6 justify-center">
               <Link 
                 href="/showcase" 
                 className="bg-green-500 hover:bg-green-600 text-black px-8 py-4 rounded-lg font-bold text-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-green-500/25"
               >
-                See Live Demo
+                🚀 See Live Demo
               </Link>
               <Link
                 href="/waitlist"
                 className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-4 rounded-lg font-bold text-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-purple-500/25"
               >
-                Join Waitlist
+                💝 Join Waitlist
               </Link>
             </div>
 
-            {/* Document & Presentation Buttons */}
+            {/* Document & Presentation Buttons Row 1 */}
             <div className="flex flex-col md:flex-row gap-4 justify-center">
               <Link
                 href="/frank-technical-deck.html"
@@ -400,56 +380,73 @@ export default function InvestmentPitch() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Download Technical Deck
+                📊 Download Technical Deck
               </Link>
               <Link
                 href="/executive-summary"
                 className="bg-cyan-500 hover:bg-cyan-600 text-black px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-cyan-500/25"
               >
-                Executive Summary
+                📈 Executive Summary
               </Link>
               <Link
                 href="/financials"
                 className="bg-emerald-500 hover:bg-emerald-600 text-black px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-emerald-500/25"
               >
-                View Financials
+                💰 View Financials
               </Link>
             </div>
 
-            {/* Presentation & Contact Buttons */}
+            {/* Presentation & Contact Buttons Row 2 */}
             <div className="flex flex-col md:flex-row gap-4 justify-center">
               <Link
                 href="/pitch-video"
                 className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-red-500/25"
               >
-                Watch Pitch Video
+                🎥 Watch Pitch Video
               </Link>
               <Link
                 href="/company-presentation"
                 className="bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-indigo-500/25"
               >
-                Company Presentation
+                📋 Company Presentation
               </Link>
               <Link
                 href="/contact"
                 className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-blue-500/25"
               >
-                Contact Form
+                📞 Contact Form
               </Link>
             </div>
 
-            {/* Direct Contact Button */}
-            <div className="flex justify-center pt-4">
+            {/* Direct Contact & Investment Buttons */}
+            <div className="flex flex-col md:flex-row gap-4 justify-center pt-4">
               <Link
                 href="mailto:contact@frank-robotics.com"
                 className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 border border-gray-500 shadow-lg hover:shadow-gray-600/25"
               >
-                Email Us Directly
+                ✉️ Email Us Directly
               </Link>
+              <Link
+                href="mailto:invest@frank-robotics.com?subject=Investment%20Inquiry"
+                className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-orange-500/25"
+              >
+                💎 Investment Inquiry
+              </Link>
+            </div>
+
+            {/* Call to Action Message */}
+            <div className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 p-6 rounded-xl border border-purple-500/30 mt-8">
+              <p className="text-xl text-gray-200 mb-4">
+                <strong>Ready to save lives and transform mental healthcare?</strong>
+              </p>
+              <p className="text-gray-300">
+                Contact us today to learn more about investment opportunities, partnerships, 
+                or early access to FRANK&apos;s revolutionary mental health platform.
+              </p>
             </div>
           </motion.div>
         </div>
-      </motion.section>
+      </section>
     </div>
   );
 }

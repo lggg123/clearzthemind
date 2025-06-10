@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { Message, Profile, MoodEntry } from '@/types';
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_API_KEY!);
 const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
 
 const CRISIS_KEYWORDS = [
