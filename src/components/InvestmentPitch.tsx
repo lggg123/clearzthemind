@@ -9,6 +9,78 @@ export default function InvestmentPitch() {
   const [showDemo, setShowDemo] = useState(false);
   const [heartRate, setHeartRate] = useState(72);
   const [isFlatlining, setIsFlatlining] = useState(false);
+  const [demoStep, setDemoStep] = useState(0);
+  const [demoMessages, setDemoMessages] = useState<Array<{role: 'user' | 'frank', message: string, timestamp: Date}>>([]);
+  const [isTyping, setIsTyping] = useState(false);
+  const [crisisLevel, setCrisisLevel] = useState(0);
+
+  // Demo scenarios
+  const demoScenarios = [
+    {
+      userMessage: "Hi FRANK, I'm having a really tough day",
+      frankResponse: "I hear you. I'm here to listen. What's making today particularly difficult for you?",
+      crisisLevel: 1,
+      detectionTime: "0.2s"
+    },
+    {
+      userMessage: "I feel like nothing matters anymore",
+      frankResponse: "That sounds like a really heavy feeling. When you say nothing matters, can you tell me more about what's going through your mind?",
+      crisisLevel: 3,
+      detectionTime: "0.15s"
+    },
+    {
+      userMessage: "Sometimes I think everyone would be better off without me",
+      frankResponse: "I'm really concerned about you right now. Those thoughts must be incredibly painful. You matter, and I want you to know that you're not alone in this. Can we talk about what's brought you to this point?",
+      crisisLevel: 8,
+      detectionTime: "0.1s"
+    },
+    {
+      userMessage: "I've been thinking about ending it all",
+      frankResponse: "I'm very worried about you right now. Thank you for trusting me with something so important. I want you to know that there are people who care about you and want to help. Are you in a safe place right now?",
+      crisisLevel: 10,
+      detectionTime: "0.08s"
+    }
+  ];
+
+  const startDemo = async () => {
+    setDemoMessages([]);
+    setDemoStep(0);
+    setCrisisLevel(0);
+    
+    for (let i = 0; i < demoScenarios.length; i++) {
+      const scenario = demoScenarios[i];
+      
+      // Add user message
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setDemoMessages(prev => [...prev, {
+        role: 'user',
+        message: scenario.userMessage,
+        timestamp: new Date()
+      }]);
+      
+      // Show typing indicator
+      setIsTyping(true);
+      setCrisisLevel(scenario.crisisLevel);
+      
+      // Add FRANK response
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      setIsTyping(false);
+      setDemoMessages(prev => [...prev, {
+        role: 'frank',
+        message: scenario.frankResponse,
+        timestamp: new Date()
+      }]);
+      
+      setDemoStep(i + 1);
+      await new Promise(resolve => setTimeout(resolve, 2000));
+    }
+  };
+
+  useEffect(() => {
+    if (showDemo && demoMessages.length === 0) {
+      startDemo();
+    }
+  }, [showDemo]); // Removing demoMessages.length and startDemo to avoid infinite loop
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -375,23 +447,41 @@ export default function InvestmentPitch() {
             transition={{ delay: 1 }}
             className="flex flex-col sm:flex-row gap-6 justify-center"
           >
-            <button 
+            <motion.button 
               onClick={() => setShowDemo(true)}
-              className="px-12 py-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl text-xl font-bold hover:scale-105 transition-transform flex items-center gap-3 mx-auto shadow-2xl shadow-blue-500/25"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-12 py-6 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 rounded-2xl text-xl font-bold transition-all duration-300 flex items-center gap-3 mx-auto shadow-2xl shadow-blue-500/30 border border-blue-400/30 relative overflow-hidden group"
             >
-              <Play className="w-6 h-6" />
-              See FRANK in Action
-            </button>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 to-purple-400/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+              <Play className="w-6 h-6 relative z-10" />
+              <span className="relative z-10">See FRANK in Action</span>
+              <motion.div
+                animate={{ rotate: [0, 360] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                className="w-2 h-2 bg-blue-300 rounded-full relative z-10"
+              />
+            </motion.button>
             
-            <a 
+            <motion.a 
               href="/frank-technical-deck.html" 
               target="_blank"
               rel="noopener noreferrer"
-              className="px-12 py-6 bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl text-xl font-bold hover:scale-105 transition-transform flex items-center gap-3 mx-auto shadow-2xl shadow-green-500/25"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-12 py-6 bg-gradient-to-r from-green-600 via-emerald-600 to-green-700 rounded-2xl text-xl font-bold transition-all duration-300 flex items-center gap-3 mx-auto shadow-2xl shadow-green-500/30 border border-green-400/30 relative overflow-hidden group"
             >
-              <Download className="w-6 h-6" />
-              Technical Deck
-            </a>
+              <div className="absolute inset-0 bg-gradient-to-r from-green-400/20 to-emerald-400/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+              <Download className="w-6 h-6 relative z-10" />
+              <span className="relative z-10">Technical Deck</span>
+              <motion.div
+                animate={{ y: [0, -3, 0] }}
+                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                className="relative z-10"
+              >
+                📋
+              </motion.div>
+            </motion.a>
           </motion.div>
 
           <motion.div
@@ -413,36 +503,157 @@ export default function InvestmentPitch() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-8"
+            className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
             onClick={() => setShowDemo(false)}
           >
             <motion.div
-              initial={{ scale: 0.5, opacity: 0 }}
+              initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.5, opacity: 0 }}
-              className="bg-gray-900 rounded-2xl p-8 max-w-4xl w-full max-h-[80vh] overflow-auto"
+              exit={{ scale: 0.8, opacity: 0 }}
+              className="bg-gradient-to-br from-gray-900 via-blue-900/30 to-purple-900/30 rounded-3xl p-8 max-w-6xl w-full max-h-[90vh] overflow-hidden border border-blue-500/30"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="text-center mb-8">
-                <h3 className="text-3xl font-bold mb-4">FRANK Demo</h3>
-                <p className="text-gray-400">Experience crisis intervention in real-time</p>
-              </div>
-              
-              <div className="bg-black rounded-xl p-6 min-h-96 flex items-center justify-center">
-                <div className="text-center">
-                  <Brain className="w-24 h-24 mx-auto mb-4 text-blue-400 animate-pulse" />
-                  <p className="text-xl">FRANK is initializing...</p>
-                  <p className="text-gray-400 mt-2">Demo starting soon</p>
+              {/* Demo Header */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                    <Brain className="w-10 h-10 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-bold text-white">FRANK Demo</h3>
+                    <p className="text-blue-400">Real-time Crisis Detection & Response</p>
+                  </div>
+                </div>
+                
+                {/* Crisis Level Indicator */}
+                <div className="text-right">
+                  <div className="text-sm text-gray-400 mb-1">Crisis Level</div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-32 h-3 bg-gray-700 rounded-full overflow-hidden">
+                      <motion.div
+                        className={`h-full rounded-full ${
+                          crisisLevel <= 2 ? 'bg-green-500' :
+                          crisisLevel <= 5 ? 'bg-yellow-500' :
+                          crisisLevel <= 7 ? 'bg-orange-500' :
+                          'bg-red-500'
+                        }`}
+                        initial={{ width: 0 }}
+                        animate={{ width: `${crisisLevel * 10}%` }}
+                        transition={{ duration: 0.5 }}
+                      />
+                    </div>
+                    <span className={`text-xl font-bold ${
+                      crisisLevel <= 2 ? 'text-green-400' :
+                      crisisLevel <= 5 ? 'text-yellow-400' :
+                      crisisLevel <= 7 ? 'text-orange-400' :
+                      'text-red-400'
+                    }`}>
+                      {crisisLevel}/10
+                    </span>
+                  </div>
                 </div>
               </div>
-              
-              <div className="flex justify-center mt-8">
-                <button
-                  onClick={() => setShowDemo(false)}
-                  className="px-8 py-3 bg-gray-700 rounded-xl hover:bg-gray-600 transition-colors"
-                >
-                  Close Demo
-                </button>
+
+              {/* Chat Interface */}
+              <div className="bg-black/50 rounded-2xl p-6 h-96 overflow-y-auto mb-6 border border-gray-700">
+                <div className="space-y-4">
+                  {demoMessages.length === 0 && !isTyping && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-center py-12"
+                    >
+                      <Brain className="w-16 h-16 mx-auto mb-4 text-blue-400 animate-pulse" />
+                      <p className="text-xl text-white mb-2">FRANK is ready to help</p>
+                      <p className="text-gray-400">Demonstrating crisis intervention capabilities...</p>
+                    </motion.div>
+                  )}
+                  
+                  {demoMessages.map((msg, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                    >
+                      <div className={`max-w-xs lg:max-w-md px-4 py-3 rounded-2xl ${
+                        msg.role === 'user' 
+                          ? 'bg-blue-600 text-white' 
+                          : 'bg-gray-700 text-white border border-blue-500/30'
+                      }`}>
+                        <div className="flex items-center gap-2 mb-1">
+                          {msg.role === 'frank' && (
+                            <Brain className="w-4 h-4 text-blue-400" />
+                          )}
+                          <span className="text-xs font-medium opacity-70">
+                            {msg.role === 'user' ? 'User' : 'FRANK'}
+                          </span>
+                        </div>
+                        <p className="text-sm">{msg.message}</p>
+                        {msg.role === 'frank' && (
+                          <div className="text-xs text-blue-400 mt-2 opacity-70">
+                            Detected in {demoScenarios[Math.floor(index/2)]?.detectionTime || '0.1s'}
+                          </div>
+                        )}
+                      </div>
+                    </motion.div>
+                  ))}
+                  
+                  {isTyping && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="flex justify-start"
+                    >
+                      <div className="bg-gray-700 text-white border border-blue-500/30 px-4 py-3 rounded-2xl">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Brain className="w-4 h-4 text-blue-400 animate-pulse" />
+                          <span className="text-xs font-medium opacity-70">FRANK</span>
+                        </div>
+                        <div className="flex gap-1">
+                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"></div>
+                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+              </div>
+
+              {/* Demo Controls */}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div className="text-sm text-gray-400">
+                    Step {demoStep} of {demoScenarios.length}
+                  </div>
+                  {crisisLevel > 7 && (
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="flex items-center gap-2 px-3 py-1 bg-red-900/50 rounded-full border border-red-500"
+                    >
+                      <AlertTriangle className="w-4 h-4 text-red-400" />
+                      <span className="text-red-400 text-sm font-medium">Emergency Protocol Activated</span>
+                    </motion.div>
+                  )}
+                </div>
+                
+                <div className="flex gap-4">
+                  <button
+                    onClick={() => startDemo()}
+                    className="px-6 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors text-white font-medium"
+                  >
+                    Restart Demo
+                  </button>
+                  <button
+                    onClick={() => setShowDemo(false)}
+                    className="px-6 py-2 bg-gray-700 hover:bg-gray-600 rounded-xl transition-colors text-white font-medium"
+                  >
+                    Close Demo
+                  </button>
+                </div>
               </div>
             </motion.div>
           </motion.div>
