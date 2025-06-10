@@ -1,10 +1,62 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "geist-ui";
+@import "geist-ui/theme.css";
+@import "geist-ui/theme-dark.css";
+@import "geist-ui/theme-inline.css";
+@import "geist-ui/theme-inline-dark.css";
+@import "geist-ui/theme-inline-light.css";
+@import "geist-ui/theme-inline.css";
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #171717;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --muted: 210 40% 96.1;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --detructive: 0 84.2% 60.2%;
+  }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --primary: 222.2 47.4% 98%;
+    --foreground: #ededed;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 47.4% 11.2%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --detructive: 0 84.2% 60.2%;
+  }
 }
 
+@laye utilities {
+  .animate-pulse-slow {
+    animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .glass-morphism {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .glass-morphism-dark {
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+  .glass-morphism-light {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+}
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
