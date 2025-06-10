@@ -258,18 +258,35 @@ describe('Neural Pathways', () => {
       expect(snapshot.user_id).toBe('test-user');
       expect(snapshot.total_nodes).toBe(1);
       expect(snapshot.total_connections).toBe(0);
+      
+      // Now actually use the node variable in our assertions
+      expect(snapshot.dominant_emotion).toBe('happy'); // Should match the node we added
+      expect(engine.getNodes()).toContain(node); // Verify the node exists in the engine
+      expect(node.type).toBe('emotion'); // Verify the node properties
+      expect(node.label).toBe('happy');
     });
 
     it('calculates neural plasticity', () => {
       // Add diverse nodes
-      engine.addNode({ type: 'emotion', label: 'happy', position: { x: 0, y: 0 } });
-      engine.addNode({ type: 'emotion', label: 'sad', position: { x: 1, y: 1 } });
-      engine.addNode({ type: 'response', label: 'coping', position: { x: 2, y: 2 } });
-      engine.addNode({ type: 'response', label: 'breathing', position: { x: 3, y: 3 } });
+      const happyNode = engine.addNode({ type: 'emotion', label: 'happy', position: { x: 0, y: 0 } });
+      const sadNode = engine.addNode({ type: 'emotion', label: 'sad', position: { x: 1, y: 1 } });
+      const copingNode = engine.addNode({ type: 'response', label: 'coping', position: { x: 2, y: 2 } });
+      const breathingNode = engine.addNode({ type: 'response', label: 'breathing', position: { x: 3, y: 3 } });
+
+      // Connect some nodes to create pathways
+      engine.connectNodes(happyNode.id, copingNode.id, { strength: 0.7, weight: 0.5 });
+      engine.connectNodes(sadNode.id, breathingNode.id, { strength: 0.6, weight: 0.4 });
 
       const plasticity = engine.calculateNeuralPlasticity();
       expect(plasticity).toBeGreaterThanOrEqual(0);
       expect(plasticity).toBeLessThanOrEqual(1);
+
+      // Verify all nodes are properly added and used
+      const allNodes = engine.getNodes();
+      expect(allNodes).toContain(happyNode);
+      expect(allNodes).toContain(sadNode);
+      expect(allNodes).toContain(copingNode);
+      expect(allNodes).toContain(breathingNode);
     });
 
     it('suggests healthy pathways for negative patterns', () => {
@@ -287,12 +304,17 @@ describe('Neural Pathways', () => {
       });
 
       engine.connectNodes(triggerNode.id, emotionNode.id, { strength: 0.9, weight: 0.8 });
-      engine.createPathway('negative-pathway', [triggerNode, emotionNode]);
+      const negativePathway = engine.createPathway('negative-pathway', [triggerNode, emotionNode]);
 
       const suggestions = engine.suggestHealthyPathways();
       expect(suggestions).toHaveLength(2);
       expect(suggestions[0].suggested_nodes).toBeDefined();
       expect(suggestions[0].rationale).toContain('coping');
+
+      // Verify the negative pathway was created with our nodes
+      expect(negativePathway.nodes).toContain(triggerNode);
+      expect(negativePathway.nodes).toContain(emotionNode);
+      expect(negativePathway.crisis_risk_level).toBeOneOf(['medium', 'high', 'critical']);
     });
   });
 });
