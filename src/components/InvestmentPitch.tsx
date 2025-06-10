@@ -16,7 +16,7 @@ export default function InvestmentPitch() {
   // Demo state
   const [demoStep, setDemoStep] = useState(0);
   const [isTyping, setIsTyping] = useState(false);
-  const [demoMessages, setDemoMessages] = useState<Array<{role: 'user' | 'frank', text: string, timestamp: number}>>([]);
+  const [demoMessages, setDemoMessages] = useState<Array<{role: 'user' | 'frank', text: string}>>([]);
 
   const demoScenario = [
     { role: 'user' as const, text: "I'm having a really tough day..." },
@@ -30,6 +30,10 @@ export default function InvestmentPitch() {
   const startDemo = async () => {
     setDemoMessages([]);
     setDemoStep(0);
+    setIsTyping(false);
+    
+    // Small delay before starting
+    await new Promise(resolve => setTimeout(resolve, 500));
     
     for (let i = 0; i < demoScenario.length; i++) {
       const message = demoScenario[i];
@@ -39,11 +43,11 @@ export default function InvestmentPitch() {
       
       if (message.role === 'frank') {
         setIsTyping(true);
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 1200));
         setIsTyping(false);
       }
       
-      setDemoMessages(prev => [...prev, { ...message, timestamp: Date.now() }]);
+      setDemoMessages(prev => [...prev, message]);
       setDemoStep(i + 1);
     }
   };
@@ -52,7 +56,7 @@ export default function InvestmentPitch() {
     if (showDemo && demoMessages.length === 0) {
       startDemo();
     }
-  }, [showDemo]);
+  }, [showDemo, demoMessages.length]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -280,21 +284,22 @@ export default function InvestmentPitch() {
             className="flex flex-col sm:flex-row gap-6 justify-center"
           >
             <button 
-              onClick={() => {
-                console.log('Button clicked!');
-                setShowDemo(true);
-                console.log('showDemo state:', showDemo);
-              }}
+              onClick={() => setShowDemo(true)}
               className="px-12 py-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl text-xl font-bold hover:scale-105 transition-transform flex items-center gap-3 mx-auto"
             >
               <Play className="w-6 h-6" />
               See FRANK in Action
             </button>
             
-            <button className="px-12 py-6 bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl text-xl font-bold hover:scale-105 transition-transform flex items-center gap-3 mx-auto">
+            <a 
+              href="/frank-technical-deck.html" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-12 py-6 bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl text-xl font-bold hover:scale-105 transition-transform flex items-center gap-3 mx-auto text-white no-underline"
+            >
               <Download className="w-6 h-6" />
               Download Deck
-            </button>
+            </a>
           </motion.div>
 
           <motion.div
@@ -413,7 +418,7 @@ export default function InvestmentPitch() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
                   <div className="text-sm text-gray-400">
-                    Interactive Crisis Detection Demo
+                    Step {demoStep} of {demoScenario.length} - Crisis Detection Demo
                   </div>
                   {demoMessages.some(msg => msg.text.includes('🚨')) && (
                     <motion.div
