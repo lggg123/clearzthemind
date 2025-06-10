@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Brain, Activity, Zap, AlertTriangle, X, Menu } from 'lucide-react';
+import { Brain, X } from 'lucide-react';
 import styles from './NeuralPathwaysSidebar.module.css';
 import { NeuralNode, SynapticConnection, NeuralPathway } from '@/types';
 
@@ -22,32 +22,6 @@ const NeuralPathwaysSidebar: React.FC<Props> = ({
   riskLevel = 'low'
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [animatingNodes, setAnimatingNodes] = useState<string[]>([]);
-  const [synapticActivity, setSynapticActivity] = useState<{ [key: string]: number }>({});
-
-  // Simulate neural activity
-  useEffect(() => {
-    const interval = setInterval(() => {
-      // Animate random nodes
-      const randomNode = activeNodes[Math.floor(Math.random() * activeNodes.length)];
-      if (randomNode) {
-        setAnimatingNodes(prev => [...prev, randomNode.id]);
-        setTimeout(() => {
-          setAnimatingNodes(prev => prev.filter(id => id !== randomNode.id));
-        }, 1000);
-      }
-
-      // Update synaptic activity
-      synapticConnections.forEach(connection => {
-        setSynapticActivity(prev => ({
-          ...prev,
-          [connection.id]: Math.random() * 100
-        }));
-      });
-    }, 2000);
-
-    return () => clearInterval(interval);
-  }, [activeNodes, synapticConnections]);
 
   const getRiskLevelColor = (level: string) => {
     switch (level) {
@@ -55,15 +29,6 @@ const NeuralPathwaysSidebar: React.FC<Props> = ({
       case 'high': return 'text-orange-500 border-orange-500';
       case 'medium': return 'text-yellow-500 border-yellow-500';
       default: return 'text-green-500 border-green-500';
-    }
-  };
-
-  const getNodeTypeIcon = (nodeType: string) => {
-    switch (nodeType) {
-      case 'emotion': return <Brain className="w-4 h-4" />;
-      case 'memory': return <Activity className="w-4 h-4" />;
-      case 'trigger': return <AlertTriangle className="w-4 h-4" />;
-      default: return <Zap className="w-4 h-4" />;
     }
   };
 
@@ -79,10 +44,17 @@ const NeuralPathwaysSidebar: React.FC<Props> = ({
     return Math.round(avgStrength * 100);
   };
 
-  // Helper function to find node labels for synaptic connections
-  const getNodeLabel = (nodeId: string) => {
-    const node = activeNodes.find(n => n.id === nodeId);
-    return node ? node.label : 'Unknown';
+  // Helper function to get active synaptic connections count
+  const getActiveSynapticCount = () => {
+    return synapticConnections.filter(conn => conn.strength > 0.5).length;
+  };
+
+  // Helper function to get most active node
+  const getMostActiveNode = () => {
+    if (activeNodes.length === 0) return null;
+    return activeNodes.reduce((max, node) => 
+      node.activation_level > max.activation_level ? node : max
+    );
   };
 
   return (
@@ -194,8 +166,122 @@ const NeuralPathwaysSidebar: React.FC<Props> = ({
                 {pathways.filter(p => isPathwayActive(p)).length}
               </div>
             </div>
+            <div className="bg-gray-800/30 p-2 rounded">
+              <div className="text-gray-400">Active Nodes</div>
+              <div className="text-white font-bold">{activeNodes.length}</div>
+            </div>
+            <div className="bg-gray-800/30 p-2 rounded">
+              <div className="text-gray-400">Synaptic Links</div>
+              <div className="text-white font-bold">{getActiveSynapticCount()}</div>
+            </div>
           </div>
         </div>
+
+        {/* Active Neural Nodes */}
+        {activeNodes.length > 0 && (
+          <div className="p-4 border-t border-gray-700">
+            <h3 className="text-sm font-semibold text-gray-300 mb-3">Active Neural Nodes</h3>
+            <div className="space-y-2 max-h-32 overflow-y-auto">
+              {activeNodes.slice(0, 5).map((node) => (
+                <motion.div
+                  key={node.id}
+                  className="bg-gradient-to-r from-purple-900/20 to-blue-900/20 rounded p-2 border border-purple-500/30"
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-medium text-purple-300">{node.type}</span>
+                    <div className="flex items-center gap-1">
+                      <motion.div
+                        className="w-1.5 h-1.5 bg-purple-400 rounded-full"
+                        animate={{ 
+                          scale: [1, 1.5, 1], 
+                          opacity: [0.5, 1, 0.5] 
+                        }}
+                        transition={{ 
+                          repeat: Infinity, 
+                          duration: 1 + (node.activation_level * 0.5) 
+                        }}
+                      />
+                      <span className="text-xs text-purple-200">
+                        {Math.round(node.activation_level * 100)}%
+                      </span>
+                    </div>
+                  </div>
+                  <div className="text-xs text-gray-400 mt-1">
+                    Position: ({node.position.x.toFixed(1)}, {node.position.y.toFixed(1)})
+                  </div>
+                </motion.div>
+              ))}
+              {activeNodes.length > 5 && (
+                <div className="text-xs text-gray-500 text-center">
+                  +{activeNodes.length - 5} more nodes
+                </div>
+              )}
+            </div>
+            
+            {/* Most Active Node Highlight */}
+            {getMostActiveNode() && (
+              <div className="mt-3 p-2 bg-gradient-to-r from-yellow-900/20 to-orange-900/20 rounded border border-yellow-500/30">
+                <div className="text-xs font-semibold text-yellow-300 mb-1">Most Active Node</div>
+                <div className="text-xs text-yellow-200">
+                  {getMostActiveNode()?.type} ({Math.round((getMostActiveNode()?.activation_level || 0) * 100)}%)
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Synaptic Connections */}
+        {synapticConnections.length > 0 && (
+          <div className="p-4 border-t border-gray-700">
+            <h3 className="text-sm font-semibold text-gray-300 mb-3">Synaptic Activity</h3>
+            <div className="space-y-2">
+              <div className="flex justify-between text-xs">
+                <span className="text-gray-400">Total Connections:</span>
+                <span className="text-white font-medium">{synapticConnections.length}</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className="text-gray-400">Strong Links ({'>'}50%):</span>
+                <span className="text-green-400 font-medium">{getActiveSynapticCount()}</span>
+              </div>
+              <div className="flex justify-between text-xs">
+                <span className="text-gray-400">Avg Strength:</span>
+                <span className="text-blue-400 font-medium">
+                  {synapticConnections.length > 0 
+                    ? Math.round((synapticConnections.reduce((sum, conn) => sum + conn.strength, 0) / synapticConnections.length) * 100)
+                    : 0}%
+                </span>
+              </div>
+              
+              {/* Connection Strength Visualization */}
+              <div className="mt-3">
+                <div className="text-xs text-gray-400 mb-2">Connection Strength Distribution</div>
+                <div className="flex gap-1 h-2">
+                  {Array.from({ length: 10 }, (_, i) => {
+                    const threshold = (i + 1) / 10;
+                    const count = synapticConnections.filter(conn => 
+                      conn.strength >= threshold - 0.1 && conn.strength < threshold
+                    ).length;
+                    const height = count > 0 ? Math.max(count / synapticConnections.length * 100, 10) : 0;
+                    
+                    return (
+                      <motion.div
+                        key={i}
+                        className="flex-1 bg-gradient-to-t from-cyan-600 to-cyan-400 rounded-sm"
+                        style={{ height: `${height}%` }}
+                        initial={{ height: 0 }}
+                        animate={{ height: `${height}%` }}
+                        transition={{ delay: i * 0.1, duration: 0.5 }}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </aside>
     </>
   );

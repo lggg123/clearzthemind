@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Heart, AlertTriangle, Brain, Zap, Play } from 'lucide-react';
+import { Heart, AlertTriangle, Brain, Zap } from 'lucide-react';
 import Link from 'next/link';
 
 export default function InvestmentPitch() {
@@ -239,17 +239,79 @@ export default function InvestmentPitch() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
-            className="flex flex-col md:flex-row gap-6 justify-center"
+            className="space-y-6"
           >
-            <Link 
-              href="/showcase" 
-              className="bg-green-500 hover:bg-green-600 text-black px-8 py-4 rounded-lg font-bold text-xl transition-all transform hover:scale-105"
-            >
-              See Live Demo
-            </Link>
-            <button className="bg-yellow-500 hover:bg-yellow-600 text-black px-8 py-4 rounded-lg font-bold text-xl transition-all transform hover:scale-105">
-              Schedule Meeting
-            </button>
+            {/* Primary Action Buttons */}
+            <div className="flex flex-col md:flex-row gap-4 justify-center">
+              <Link 
+                href="/showcase" 
+                className="bg-green-500 hover:bg-green-600 text-black px-8 py-4 rounded-lg font-bold text-xl transition-all transform hover:scale-105"
+              >
+                See Live Demo
+              </Link>
+              <Link
+                href="/waitlist"
+                className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-4 rounded-lg font-bold text-xl transition-all transform hover:scale-105"
+              >
+                Join Waitlist
+              </Link>
+            </div>
+
+            {/* Document & Presentation Buttons */}
+            <div className="flex flex-col md:flex-row gap-4 justify-center">
+              <Link
+                href="/frank-technical-deck.html"
+                className="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Download Technical Deck
+              </Link>
+              <Link
+                href="/executive-summary"
+                className="bg-cyan-500 hover:bg-cyan-600 text-black px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105"
+              >
+                Executive Summary
+              </Link>
+              <Link
+                href="/financials"
+                className="bg-emerald-500 hover:bg-emerald-600 text-black px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105"
+              >
+                View Financials
+              </Link>
+            </div>
+
+            {/* Presentation & Contact Buttons */}
+            <div className="flex flex-col md:flex-row gap-4 justify-center">
+              <Link
+                href="/pitch-video"
+                className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105"
+              >
+                Watch Pitch Video
+              </Link>
+              <Link
+                href="/company-presentation"
+                className="bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105"
+              >
+                Company Presentation
+              </Link>
+              <Link
+                href="/contact"
+                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105"
+              >
+                Contact Form
+              </Link>
+            </div>
+
+            {/* Direct Contact Button */}
+            <div className="flex justify-center pt-4">
+              <Link
+                href="mailto:contact@frank-robotics.com"
+                className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 border border-gray-500"
+              >
+                Email Us Directly
+              </Link>
+            </div>
           </motion.div>
         </div>
       </motion.section>
