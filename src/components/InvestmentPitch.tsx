@@ -42,10 +42,10 @@ export default function InvestmentPitch() {
         className="fixed top-8 left-8 z-50"
       >
         <Image 
-          src="/clearz-logo.svg" 
-          alt="ClearZ The Mind" 
-          width={180} 
-          height={54}
+          src="/frank-robotics-logo.svg" 
+          alt="FRANK Robotics" 
+          width={240} 
+          height={60}
           className="filter drop-shadow-2xl"
         />
       </motion.div>
@@ -349,16 +349,21 @@ export default function InvestmentPitch() {
           >
             <button 
               onClick={() => setShowDemo(true)}
-              className="px-12 py-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl text-xl font-bold hover:scale-105 transition-transform flex items-center gap-3 mx-auto"
+              className="px-12 py-6 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl text-xl font-bold hover:scale-105 transition-transform flex items-center gap-3 mx-auto shadow-2xl shadow-blue-500/25"
             >
               <Play className="w-6 h-6" />
               See FRANK in Action
             </button>
             
-            <button className="px-12 py-6 bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl text-xl font-bold hover:scale-105 transition-transform flex items-center gap-3 mx-auto">
+            <a 
+              href="/frank-technical-deck.html" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-12 py-6 bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl text-xl font-bold hover:scale-105 transition-transform flex items-center gap-3 mx-auto shadow-2xl shadow-green-500/25"
+            >
               <Download className="w-6 h-6" />
-              Download Deck
-            </button>
+              Technical Deck
+            </a>
           </motion.div>
 
           <motion.div
