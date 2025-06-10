@@ -59,6 +59,8 @@ export interface SynapticConnection {
 }
 
 export type NeuralPathway = {
+  crisis_risk_level: ReactNode;
+  activation_frequency: number;
   id: string;
   user_id: string;
   nodes: any[];

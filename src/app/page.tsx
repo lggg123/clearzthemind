@@ -1,5 +1,6 @@
 'use client'
 
+import InvestmentPitch from '@/components/InvestmentPitch';
 import { motion } from 'framer-motion';
 
 export default function App() {
