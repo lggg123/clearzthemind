@@ -103,7 +103,7 @@ export default function InvestmentPitch() {
                 </p>
                 <p className="text-xl text-gray-300 max-w-2xl mx-auto mt-8">
                   Mental health crisis is killing our youth, destroying families, 
-                  and costing society billions. The current system isn't working.
+                  and costing society billions. The current system isn&apos;t working.
                 </p>
               </motion.div>
             </div>
