@@ -271,7 +271,9 @@ export class NeuralPathwayEngine {
       crisis_risk_level: this.calculateCrisisRisk(nodes, pathwayConnections),
       activation_frequency: 0,
       created_at: now,
-      last_activated: now
+      last_activated: now,
+      updated_at: '',
+      label: ''
     };
 
     this.pathways.set(pathway.id, pathway);
