@@ -1,4 +1,4 @@
-import NavigationBar from '../components/NavigationBar';
+import NavigationBar from '../components/NavBar';
 import ExecutiveSummary from '../components/ExecutiveSummary';
 import Financials from '../components/Financials';
 import PitchVideo from '../components/PitchVideo';
