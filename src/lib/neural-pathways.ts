@@ -153,9 +153,11 @@ export function createBrainNetworkSnapshot(
     total_nodes: nodes.length,
     total_connections: connections.length,
     active_pathways: pathways.filter(p => p.activation_frequency > 0).length,
-    network_density: connections.length / (nodes.length * (nodes.length - 1) / 2),
-    average_activation: totalActivation / nodes.length,
+    network_density: connections.length > 0 ? connections.length / (nodes.length * (nodes.length - 1) / 2) : 0,
+    average_activation: nodes.length > 0 ? totalActivation / nodes.length : 0,
+    average_connection_strength: averageConnectionStrength, // Now using the calculated value
     dominant_emotion: dominantEmotion,
+    crisis_risk_level: crisisRisk, // Now using the calculated crisis risk
     crisis_indicators: crisisPathways.map(p => p.name),
     plasticity_score: calculateNetworkPlasticity(nodes, connections, pathways),
     created_at: now
@@ -290,7 +292,9 @@ export class NeuralPathwayEngine {
       );
 
       if (hasHarmfulNodes) {
-        const averageStrength = pathway.connections.reduce((sum, conn) => sum + conn.strength, 0) / pathway.connections.length;
+        const averageStrength = pathway.connections.length > 0 
+          ? pathway.connections.reduce((sum, conn) => sum + conn.strength, 0) / pathway.connections.length
+          : 0;
         
         if (averageStrength > 0.8 && pathway.activation_frequency > 3) {
           criticalRiskCount++;
