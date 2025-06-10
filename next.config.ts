@@ -74,11 +74,6 @@ const nextConfig: NextConfig = {
 
   // Compression
   compress: true,
-
-  // Experimental configuration for handling ESM modules like framer-motion
-  experimental: {
-    esmExternals: 'loose', // Ensures proper handling of ESM exports
-  },
 };
 
 export default nextConfig;
