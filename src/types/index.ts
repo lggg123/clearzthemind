@@ -65,8 +65,8 @@ export type NeuralPathway = {
   activation_frequency: number;
   id: string;
   user_id: string;
-  nodes: any[];
-  connections: any[];
+  nodes: NeuralNode[]; // Instead of any[]
+  connections: SynapticConnection[]; // Instead of any[]
   dominant_emotion: string;
   created_at: string;
   updated_at: string;

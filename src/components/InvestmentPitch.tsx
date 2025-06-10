@@ -9,7 +9,7 @@ import { Play, Download, Heart, AlertTriangle, Brain, Zap } from 'lucide-react';
 import Link from 'next/link';
 
 export default function InvestmentPitch() {
-  const [currentSection, setCurrentSection] = useState(0);
+  const [currentSection] = useState(0);
   const { scrollYProgress } = useScroll();
 
   // Heart monitor animation
@@ -37,19 +37,19 @@ export default function InvestmentPitch() {
   const opacity4 = useTransform(scrollYProgress, [0.45, 0.65], [0, 1]);
   const opacity5 = useTransform(scrollYProgress, [0.6, 0.8], [0, 1]);
 
-  const sections = [
-    'crisis',
-    'problem',
-    'solution',
-    'market',
-    'technology',
-    'business',
-    'team',
-    'ask',
-  ];
+  // const sections = [
+  //   'crisis',
+  //   'problem',
+  //   'solution',
+  //   'market',
+  //   'technology',
+  //   'business',
+  //   'team',
+  //   'ask',
+  // ];
 
   useEffect(() => {
-  let interval;
+  let interval: string | number | NodeJS.Timeout | undefined;
   if (currentSection === 0) {
     interval = setInterval(() => {
       setHeartRate((prev) => Math.min(prev + 2, 180));

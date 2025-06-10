@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import type { NeuralPathway } from '@/types';
 
@@ -9,7 +8,7 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   // Fetch pathways from the 'neural_pathways' table
   const { data, error } = await supabase
     .from('neural_pathways')
