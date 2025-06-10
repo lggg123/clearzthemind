@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Brain, X } from 'lucide-react';
 import styles from './NeuralPathwaysSidebar.module.css';
 import { NeuralNode, SynapticConnection, NeuralPathway } from '@/types';
 
 interface Props {
-  pathways: NeuralPathway[];
   activeNodes?: NeuralNode[];
   synapticConnections?: SynapticConnection[];
   currentEmotionalState?: string;
@@ -15,13 +14,39 @@ interface Props {
 }
 
 const NeuralPathwaysSidebar: React.FC<Props> = ({ 
-  pathways, 
   activeNodes = [],
   synapticConnections = [],
   currentEmotionalState = 'neutral',
   riskLevel = 'low'
 }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [pathways, setPathways] = useState<NeuralPathway[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch pathways data client-side
+  useEffect(() => {
+    const fetchPathways = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch('/api/neural-pathways');
+        if (!response.ok) {
+          throw new Error('Failed to fetch neural pathways');
+        }
+        const data = await response.json();
+        setPathways(Array.isArray(data) ? data : []);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching pathways:', err);
+        setError(err instanceof Error ? err.message : 'Unknown error');
+        setPathways([]); // Fallback to empty array
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPathways();
+  }, []);
 
   const getRiskLevelColor = (level: string) => {
     switch (level) {
@@ -110,20 +135,32 @@ const NeuralPathwaysSidebar: React.FC<Props> = ({
         {/* Active Pathways */}
         <div className="p-4">
           <h3 className="text-sm font-semibold text-gray-300 mb-3">Active Pathways</h3>
-          <ul className="space-y-2">
-            <AnimatePresence>
-              {pathways.map((pathway) => {
-                const isActive = isPathwayActive(pathway);
-                const strength = getPathwayStrength(pathway);
-                
-                return (
-                  <motion.li 
-                    key={pathway.id} 
-                    className={`bg-gray-800/50 rounded-lg p-3 border ${
-                      isActive ? 'border-blue-500/50' : 'border-gray-700'
-                    }`}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
+          
+          {isLoading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400"></div>
+              <span className="ml-2 text-sm text-gray-400">Loading pathways...</span>
+            </div>
+          ) : error ? (
+            <div className="text-center py-4">
+              <div className="text-sm text-red-400 mb-2">⚠️ Unable to load pathways</div>
+              <div className="text-xs text-gray-500">{error}</div>
+            </div>
+          ) : (
+            <ul className="space-y-2">
+              <AnimatePresence>
+                {pathways.length > 0 ? pathways.map((pathway) => {
+                  const isActive = isPathwayActive(pathway);
+                  const strength = getPathwayStrength(pathway);
+                  
+                  return (
+                    <motion.li 
+                      key={pathway.id} 
+                      className={`bg-gray-800/50 rounded-lg p-3 border ${
+                        isActive ? 'border-blue-500/50' : 'border-gray-700'
+                      }`}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
                     layout
                   >
@@ -145,11 +182,15 @@ const NeuralPathwaysSidebar: React.FC<Props> = ({
                     <div className="text-xs text-gray-500 mt-1">
                       Risk: {pathway.crisis_risk_level} | Emotion: {pathway.dominant_emotion}
                     </div>
-                  </motion.li>
-                );
-              })}
-            </AnimatePresence>
-          </ul>
+                  </motion.li>                  );
+                }) : (
+                  <li className="text-center py-4 text-gray-500 text-sm">
+                    No pathways available
+                  </li>
+                )}
+              </AnimatePresence>
+            </ul>
+          )}
         </div>
 
         {/* Network Status */}
