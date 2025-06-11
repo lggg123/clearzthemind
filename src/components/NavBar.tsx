@@ -21,31 +21,46 @@ const NavigationBar: React.FC = () => {
         text: isActive ? 'text-cyan-500' : 'text-gray-600 hover:text-cyan-500',
         glow: 'hover:shadow-cyan-500/25',
         border: 'bg-cyan-500',
-        style: { color: isActive ? '#06b6d4' : undefined }
+        style: { 
+          color: isActive ? '#06b6d4 !important' : '#4b5563',
+          transition: 'color 0.3s ease'
+        }
       },
       blue: {
         text: isActive ? 'text-blue-500' : 'text-gray-600 hover:text-blue-500',
         glow: 'hover:shadow-blue-500/25',
         border: 'bg-blue-500',
-        style: { color: isActive ? '#3b82f6' : undefined }
+        style: { 
+          color: isActive ? '#3b82f6 !important' : '#4b5563',
+          transition: 'color 0.3s ease'
+        }
       },
       purple: {
         text: isActive ? 'text-purple-500' : 'text-gray-600 hover:text-purple-500',
         glow: 'hover:shadow-purple-500/25',
         border: 'bg-purple-500',
-        style: { color: isActive ? '#a855f7' : undefined }
+        style: { 
+          color: isActive ? '#a855f7 !important' : '#4b5563',
+          transition: 'color 0.3s ease'
+        }
       },
       pink: {
         text: isActive ? 'text-pink-500' : 'text-gray-600 hover:text-pink-500',
         glow: 'hover:shadow-pink-500/25',
         border: 'bg-pink-500',
-        style: { color: isActive ? '#ec4899' : undefined }
+        style: { 
+          color: isActive ? '#ec4899 !important' : '#4b5563',
+          transition: 'color 0.3s ease'
+        }
       },
       green: {
         text: isActive ? 'text-green-500' : 'text-gray-600 hover:text-green-500',
         glow: 'hover:shadow-green-500/25',
         border: 'bg-green-500',
-        style: { color: isActive ? '#22c55e' : undefined }
+        style: { 
+          color: isActive ? '#22c55e !important' : '#4b5563',
+          transition: 'color 0.3s ease'
+        }
       }
     };
     return colors[color as keyof typeof colors] || colors.cyan;
@@ -89,6 +104,18 @@ const NavigationBar: React.FC = () => {
                 href={item.href}
                 className={`font-semibold transition-all duration-300 relative group px-4 py-2 rounded-xl ${colorClasses.text} ${colorClasses.glow} hover:shadow-lg hover:scale-105 hover:bg-white/80`}
                 style={colorClasses.style}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = item.color === 'cyan' ? '#06b6d4' :
+                                               item.color === 'blue' ? '#3b82f6' :
+                                               item.color === 'purple' ? '#a855f7' :
+                                               item.color === 'pink' ? '#ec4899' :
+                                               '#22c55e';
+                }}
+                onMouseLeave={(e) => {
+                  if (!isActive) {
+                    e.currentTarget.style.color = '#4b5563';
+                  }
+                }}
               >
                 <span className="relative z-10">{item.label}</span>
                 

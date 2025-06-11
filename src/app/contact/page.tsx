@@ -317,7 +317,7 @@ export default function ContactPage() {
                         href="mailto:contact@frank-robotics.com"
                         className="text-blue-400 hover:text-blue-300"
                       >
-                        contact@frank-robotics.com
+                        contact@frank-robotics.xyz
                       </a>
                     </div>
                   </div>

@@ -413,14 +413,14 @@ export default function InvestmentPitch() {
                   href="mailto:invest@frank-robotics.com" 
                   className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors duration-200"
                 >
-                  💎 invest@frank-robotics.com
+                  💎 invest@frank-robotics.xyz
                 </a>
                 <span className="hidden sm:block text-slate-500">|</span>
                 <a 
                   href="mailto:contact@frank-robotics.com" 
                   className="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors duration-200"
                 >
-                  ✉️ contact@frank-robotics.com
+                  ✉️ contact@frank-robotics.xyz
                 </a>
               </div>
             </div>
