@@ -2,12 +2,12 @@
 import { useState, useEffect } from 'react';
 import { Brain, Activity, Zap, X } from 'lucide-react';
 import { motion } from 'framer-motion';
-import type { NeuralPathway } from '@/types';
+import type { NeuralPathway, NeuralNode, SynapticConnection } from '@/types';
 import styles from './NeuralPathwaysSidebar.module.css';
 
 interface NeuralPathwaysSidebarProps {
-  activeNodes?: any[];
-  synapticConnections?: any[];
+  activeNodes?: NeuralNode[];
+  synapticConnections?: SynapticConnection[];
   currentEmotionalState?: string;
   riskLevel?: 'low' | 'medium' | 'high' | 'critical';
 }
@@ -59,28 +59,23 @@ export default function NeuralPathwaysSidebar({
 
   // Helper function to determine if a pathway is active
   const isPathwayActive = (pathway: NeuralPathway) => {
-    return pathway.activation_frequency > 0;
+    return pathway.activation_frequency && pathway.activation_frequency > 0;
   };
 
   // Helper function to get pathway strength as percentage
   const getPathwayStrength = (pathway: NeuralPathway) => {
-    if (pathway.connections.length === 0) return 0;
-    const avgStrength = pathway.connections.reduce((sum, conn) => sum + conn.strength, 0) / pathway.connections.length;
+    if (!pathway.connections || pathway.connections.length === 0) return 0;
+    const avgStrength = pathway.connections.reduce((sum, conn) => sum + (conn.strength || 0), 0) / pathway.connections.length;
     return Math.round(avgStrength * 100);
   };
 
-  // Helper function to get active synaptic connections count
-  const getActiveSynapticCount = () => {
-    return synapticConnections.filter(conn => conn.strength > 0.5).length;
-  };
-
-  // Helper function to get most active node
-  const getMostActiveNode = () => {
-    if (activeNodes.length === 0) return null;
-    return activeNodes.reduce((max, node) => 
-      node.activation_level > max.activation_level ? node : max
-    );
-  };
+  // Get stats for display
+  const activeSynapticCount = synapticConnections.filter(conn => (conn.strength || 0) > 0.5).length;
+  const mostActiveNode = activeNodes.length > 0 
+    ? activeNodes.reduce((max, node) => 
+        (node.activation_level || 0) > (max.activation_level || 0) ? node : max
+      )
+    : null;
 
   return (
     <div className={`${styles.sidebar} ${isCollapsed ? styles.collapsed : ''}`}>
@@ -128,6 +123,22 @@ export default function NeuralPathwaysSidebar({
             </motion.span>
           </div>
 
+          {/* Neural Activity Stats */}
+          {(activeNodes.length > 0 || synapticConnections.length > 0) && (
+            <div className="mt-4 p-3 bg-gray-800/50 rounded-lg border border-gray-700">
+              <h4 className="text-sm font-medium text-white mb-2">Neural Activity</h4>
+              <div className="space-y-1 text-xs text-gray-400">
+                <div>Active Nodes: {activeNodes.length}</div>
+                <div>Active Synapses: {activeSynapticCount}</div>
+                {mostActiveNode && (
+                  <div>
+                    Most Active: {mostActiveNode.label} ({Math.round((mostActiveNode.activation_level || 0) * 100)}%)
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
           {loading && (
             <div className="flex items-center justify-center p-4">
               <div className="w-6 h-6 border-2 border-blue-400/30 border-t-blue-400 rounded-full animate-spin" />
@@ -165,7 +176,7 @@ export default function NeuralPathwaysSidebar({
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium text-white">
-                        {pathway.name}
+                        {pathway.name || 'Unnamed Pathway'}
                       </span>
                       {isActive && (
                         <motion.div
@@ -179,7 +190,7 @@ export default function NeuralPathwaysSidebar({
                       Strength: {strength}%
                     </div>
                     <div className="text-xs text-gray-500 mt-1">
-                      Risk: {pathway.crisis_risk_level} | Emotion: {pathway.dominant_emotion}
+                      Risk: {pathway.crisis_risk_level || 'unknown'} | Emotion: {pathway.dominant_emotion || 'neutral'}
                     </div>
                   </motion.div>
                 );
@@ -196,9 +207,9 @@ export default function NeuralPathwaysSidebar({
               </h3>
               <div className="space-y-1 text-sm text-gray-300">
                 {activeNodes.slice(0, 5).map((node, index) => (
-                  <div key={index} className="flex items-center gap-2">
+                  <div key={node.id || index} className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                    <span>{node?.label || `Node ${index + 1}`}</span>
+                    <span>{node.label || `Node ${index + 1}`}</span>
                   </div>
                 ))}
                 {activeNodes.length > 5 && (
@@ -219,10 +230,10 @@ export default function NeuralPathwaysSidebar({
               </h3>
               <div className="space-y-1 text-sm text-gray-300">
                 {synapticConnections.slice(0, 3).map((connection, index) => (
-                  <div key={index} className="flex items-center gap-2">
+                  <div key={connection.id || index} className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
                     <span>
-                      {connection?.source || 'Unknown'} → {connection?.target || 'Unknown'}
+                      {connection.source_node_id || 'Unknown'} → {connection.target_node_id || 'Unknown'}
                     </span>
                   </div>
                 ))}
