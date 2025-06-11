@@ -339,7 +339,19 @@ export default function InvestmentPitch() {
             transition={{ duration: 0.8 }}
             className="text-7xl font-black mb-8 text-slate-100"
           >
-            Join the <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text animate-pulse">Revolution</span>
+            Join the <motion.span
+              animate={{
+                color: ["#fbbf24", "#f97316", "#ef4444", "#ec4899", "#a855f7", "#3b82f6", "#06b6d4", "#fbbf24"]
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="font-black"
+            >
+              Revolution
+            </motion.span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
