@@ -54,18 +54,46 @@ export default function InvestmentPitch() {
 
   return (
     <div className="bg-black text-white">
-      {/* Scroll Progress Indicator */}
-      <div className="fixed top-4 right-4 z-[200] bg-black/80 backdrop-blur-sm rounded-lg p-3 border border-gray-600">
-        <div className="text-sm text-gray-300 mb-2">Section {currentSection}/5</div>
-        <div className="w-24 h-2 bg-gray-700 rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-purple-400 rounded-full transition-all duration-300"
-            style={{ 
-              width: `${(currentSection / 5) * 100}%`
+      {/* Logo - Fixed position top-left */}
+      <motion.div 
+        className="fixed top-6 left-6 z-[200] flex items-center gap-3"
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.8, delay: 0.5 }}
+      >
+        <motion.div
+          className="relative"
+          animate={{
+            rotate: [0, 5, -5, 0],
+            scale: [1, 1.05, 1]
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
+          <Brain className="w-10 h-10 text-green-400" />
+          <motion.div
+            className="absolute inset-0 bg-green-400/20 rounded-full blur-lg"
+            animate={{
+              scale: [0.8, 1.2, 0.8],
+              opacity: [0.3, 0.7, 0.3]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut"
             }}
           />
+        </motion.div>
+        <div className="text-2xl font-black bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+          FRANK
         </div>
-      </div>
+        <div className="text-sm text-gray-400 font-medium">
+          Robotics
+        </div>
+      </motion.div>
 
       {/* Section 1: Crisis - Heart Monitor */}
       <section data-section="1" className="min-h-screen flex items-center justify-center relative">
