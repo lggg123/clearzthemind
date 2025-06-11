@@ -10,7 +10,6 @@ export default function InvestmentPitch() {
   const [isFlatlining, setIsFlatlining] = useState(false);
   const [heartRate, setHeartRate] = useState(72);
   const [showCrisisText, setShowCrisisText] = useState(false);
-  const [currentSection, setCurrentSection] = useState(1);
 
   useEffect(() => {
     const interval = setInterval(() => {
