@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from 'react';
-import { Brain, Activity, Zap, Menu, X } from 'lucide-react';
+import { Brain, Activity, Zap, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { NeuralPathway, NeuralNode, SynapticConnection } from '@/types';
 import styles from './NeuralPathwaysSidebar.module.css';

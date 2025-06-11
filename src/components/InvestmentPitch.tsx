@@ -29,29 +29,6 @@ export default function InvestmentPitch() {
     return () => clearInterval(interval);
   }, [isFlatlining]);
 
-  // Scroll tracking with intersection observer
-  useEffect(() => {
-    const sections = document.querySelectorAll('section[data-section]');
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const sectionNumber = parseInt(entry.target.getAttribute('data-section') || '1');
-            setCurrentSection(sectionNumber);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    sections.forEach((section) => observer.observe(section));
-
-    return () => {
-      sections.forEach((section) => observer.unobserve(section));
-    };
-  }, []);
-
   return (
     <div className="bg-black text-white">
       {/* Logo - Fixed position top-left */}
