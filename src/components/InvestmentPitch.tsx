@@ -361,81 +361,141 @@ export default function InvestmentPitch() {
             className="space-y-8"
           >
             {/* Primary Action Buttons */}
-            <div className="flex flex-col md:flex-row gap-6 justify-center">
-              <Link 
-                href="/showcase" 
-                className="bg-green-500 hover:bg-green-600 text-black px-8 py-4 rounded-lg font-bold text-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-green-500/25"
+            <div className="flex flex-col md:flex-row gap-6 justify-center mb-8">
+              <motion.div
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                🚀 See Live Demo
-              </Link>
-              <Link
-                href="/waitlist"
-                className="bg-purple-500 hover:bg-purple-600 text-white px-8 py-4 rounded-lg font-bold text-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-purple-500/25"
+                <Link 
+                  href="/showcase" 
+                  className="block bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-black px-8 py-4 mx-2 rounded-xl font-bold text-xl transition-all duration-300 shadow-xl hover:shadow-green-500/50 border-2 border-green-400/20 backdrop-blur-sm"
+                >
+                  🚀 See Live Demo
+                </Link>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                💝 Join Waitlist
-              </Link>
+                <Link
+                  href="/waitlist"
+                  className="block bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-8 py-4 mx-2 rounded-xl font-bold text-xl transition-all duration-300 shadow-xl hover:shadow-purple-500/50 border-2 border-purple-400/20 backdrop-blur-sm"
+                >
+                  💝 Join Waitlist
+                </Link>
+              </motion.div>
             </div>
 
             {/* Document & Presentation Buttons Row 1 */}
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <Link
-                href="/frank-technical-deck.html"
-                className="bg-yellow-500 hover:bg-yellow-600 text-black px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-yellow-500/25"
-                target="_blank"
-                rel="noopener noreferrer"
+            <div className="flex flex-col md:flex-row gap-4 justify-center mb-6">
+              <motion.div
+                whileHover={{ scale: 1.03, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                📊 Download Technical Deck
-              </Link>
-              <Link
-                href="/executive-summary"
-                className="bg-cyan-500 hover:bg-cyan-600 text-black px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-cyan-500/25"
+                <Link
+                  href="/frank-technical-deck.html"
+                  className="block bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black px-6 py-3 mx-2 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-yellow-500/40 border border-yellow-400/20"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  📊 Download Technical Deck
+                </Link>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.03, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                📈 Executive Summary
-              </Link>
-              <Link
-                href="/financials"
-                className="bg-emerald-500 hover:bg-emerald-600 text-black px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-emerald-500/25"
+                <Link
+                  href="/executive-summary"
+                  className="block bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-black px-6 py-3 mx-2 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-cyan-500/40 border border-cyan-400/20"
+                >
+                  📈 Executive Summary
+                </Link>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.03, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                💰 View Financials
-              </Link>
+                <Link
+                  href="/financials"
+                  className="block bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-black px-6 py-3 mx-2 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-emerald-500/40 border border-emerald-400/20"
+                >
+                  💰 View Financials
+                </Link>
+              </motion.div>
             </div>
 
             {/* Presentation & Contact Buttons Row 2 */}
-            <div className="flex flex-col md:flex-row gap-4 justify-center">
-              <Link
-                href="/pitch-video"
-                className="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-red-500/25"
+            <div className="flex flex-col md:flex-row gap-4 justify-center mb-6">
+              <motion.div
+                whileHover={{ scale: 1.03, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                🎥 Watch Pitch Video
-              </Link>
-              <Link
-                href="/company-presentation"
-                className="bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-indigo-500/25"
+                <Link
+                  href="/pitch-video"
+                  className="block bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-6 py-3 mx-2 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-red-500/40 border border-red-400/20"
+                >
+                  🎥 Watch Pitch Video
+                </Link>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.03, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                📋 Company Presentation
-              </Link>
-              <Link
-                href="/contact"
-                className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-blue-500/25"
+                <Link
+                  href="/company-presentation"
+                  className="block bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white px-6 py-3 mx-2 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-indigo-500/40 border border-indigo-400/20"
+                >
+                  📋 Company Presentation
+                </Link>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.03, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                📞 Contact Form
-              </Link>
+                <Link
+                  href="/contact"
+                  className="block bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-3 mx-2 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-blue-500/40 border border-blue-400/20"
+                >
+                  📞 Contact Form
+                </Link>
+              </motion.div>
             </div>
 
             {/* Direct Contact & Investment Buttons */}
-            <div className="flex flex-col md:flex-row gap-4 justify-center pt-4">
-              <Link
-                href="mailto:contact@frank-robotics.com"
-                className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 border border-gray-500 shadow-lg hover:shadow-gray-600/25"
+            <div className="flex flex-col md:flex-row gap-4 justify-center mb-8">
+              <motion.div
+                whileHover={{ scale: 1.03, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                ✉️ Email Us Directly
-              </Link>
-              <Link
-                href="mailto:invest@frank-robotics.com?subject=Investment%20Inquiry"
-                className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black px-6 py-3 rounded-lg font-bold text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-orange-500/25"
+                <Link
+                  href="mailto:contact@frank-robotics.com"
+                  className="block bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-white px-6 py-3 mx-2 rounded-lg font-bold text-lg transition-all duration-300 border border-gray-500/20 shadow-lg hover:shadow-gray-600/40"
+                >
+                  ✉️ Email Us Directly
+                </Link>
+              </motion.div>
+              <motion.div
+                whileHover={{ scale: 1.03, y: -1 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
-                💎 Investment Inquiry
-              </Link>
+                <Link
+                  href="mailto:invest@frank-robotics.com?subject=Investment%20Inquiry"
+                  className="block bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 hover:from-yellow-600 hover:via-orange-600 hover:to-red-600 text-black px-6 py-3 mx-2 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-orange-500/50 border border-orange-400/20"
+                >
+                  💎 Investment Inquiry
+                </Link>
+              </motion.div>
             </div>
 
             {/* Call to Action Message */}
