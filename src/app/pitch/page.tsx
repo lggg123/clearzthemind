@@ -164,7 +164,7 @@ export default function PitchPage() {
               </h4>
               <p className="text-gray-600 text-center text-lg">
                 FRANK combines cutting-edge AI with empathetic design to provide 
-                immediate, personalized mental health support when it's needed most.
+                immediate, personalized mental health support when it&apos;s needed most.
               </p>
             </motion.div>
           </div>

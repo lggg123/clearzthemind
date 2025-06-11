@@ -277,6 +277,22 @@ html, body {
   .border-pulse-pink { border-color: var(--pulse-pink); }
 }
 
+/* Floating particles animation for navbar */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.6;
+  }
+  33% {
+    transform: translateY(-10px) rotate(120deg);
+    opacity: 1;
+  }
+  66% {
+    transform: translateY(-5px) rotate(240deg);
+    opacity: 0.8;
+  }
+}
+
 /* iPad Air Portrait */
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   .grid-ipad-portrait {

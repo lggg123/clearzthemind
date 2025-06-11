@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
 const openai = new OpenAI({
-  apiKey: process.env.GEMINI_API_KEY,
+  apiKey: process.env.GEMINI_API_KEY || 'dummy-key-for-build',
   baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai/',
 });
 
@@ -12,6 +12,16 @@ export async function POST(request: NextRequest) {
 
     if (!message || typeof message !== 'string') {
       return NextResponse.json({ error: 'Message is required' }, { status: 400 });
+    }
+
+    // Check if API key is available
+    if (!process.env.GEMINI_API_KEY || process.env.GEMINI_API_KEY === 'dummy-key-for-build') {
+      return NextResponse.json({ 
+        error: 'AI service temporarily unavailable',
+        reply: "I'm FRANK, your mental health companion. I'm currently offline for maintenance, but I'm here to help you. Please reach out to a mental health professional if you need immediate support.",
+        riskLevel: 'low',
+        needsIntervention: false
+      }, { status: 503 });
     }
 
     // Crisis detection keywords
@@ -25,7 +35,7 @@ export async function POST(request: NextRequest) {
     const crisisDetected = crisisKeywords.some(keyword => lowerMessage.includes(keyword));
 
     // Build conversation context from previous messages
-    const conversationHistory = messages.map((msg: any) => ({
+    const conversationHistory = messages.map((msg: { role: string; content: string }) => ({
       role: msg.role === 'user' ? 'user' : 'assistant',
       content: msg.content
     }));
