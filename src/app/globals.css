@@ -2,6 +2,121 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Remove any global color overrides that might be interfering */
+/* Make sure these don't exist or are commented out: */
+/*
+* {
+  color: black !important;
+}
+*/
+
+/* Ensure Tailwind colors work properly */
+html, body {
+  background-color: #ffffff;
+  color: #111827;
+}
+
+/* Force white background for white pages */
+body.white-page {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+}
+
+/* Force black background for black pages */
+body.black-page {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* Ensure color utilities work */
+.text-cyan-500 {
+  color: #06b6d4 !important;
+}
+
+.text-pink-500 {
+  color: #ec4899 !important;
+}
+
+.text-purple-500 {
+  color: #a855f7 !important;
+}
+
+.text-green-500 {
+  color: #22c55e !important;
+}
+
+.text-sky-500 {
+  color: #0ea5e9 !important;
+}
+
+.text-blue-500 {
+  color: #3b82f6 !important;
+}
+
+/* Ensure gradient backgrounds work */
+.bg-gradient-to-t {
+  background-image: linear-gradient(to top, var(--tw-gradient-stops)) !important;
+}
+
+.from-cyan-400 {
+  --tw-gradient-from: #22d3ee !important;
+  --tw-gradient-to: rgb(34 211 238 / 0) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.to-cyan-500 {
+  --tw-gradient-to: #06b6d4 !important;
+}
+
+.from-blue-400 {
+  --tw-gradient-from: #60a5fa !important;
+  --tw-gradient-to: rgb(96 165 250 / 0) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.to-blue-500 {
+  --tw-gradient-to: #3b82f6 !important;
+}
+
+.from-purple-400 {
+  --tw-gradient-from: #c084fc !important;
+  --tw-gradient-to: rgb(192 132 252 / 0) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.to-purple-500 {
+  --tw-gradient-to: #a855f7 !important;
+}
+
+.from-pink-400 {
+  --tw-gradient-from: #f472b6 !important;
+  --tw-gradient-to: rgb(244 114 182 / 0) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.to-pink-500 {
+  --tw-gradient-to: #ec4899 !important;
+}
+
+.from-emerald-400 {
+  --tw-gradient-from: #34d399 !important;
+  --tw-gradient-to: rgb(52 211 153 / 0) !important;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
+}
+
+.to-emerald-500 {
+  --tw-gradient-to: #10b981 !important;
+}
+
+html, body {
+  background-color: white;
+}
+
+/* Ensure no global black backgrounds */
+* {
+  box-sizing: border-box;
+}
+
 @layer base {
   :root {
     --background: 222.2 84% 4.9%;

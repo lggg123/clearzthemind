@@ -30,7 +30,7 @@ export default function InvestmentPitch() {
 
   return (
     <div className="bg-black text-white">
-      {/* Logo - Fixed position top-left */}
+      {/* Logo - Enhanced with better colors */}
       <motion.div 
         className="fixed top-6 left-6 z-[200] flex items-center gap-3"
         initial={{ opacity: 0, x: -20 }}
@@ -49,9 +49,9 @@ export default function InvestmentPitch() {
             ease: "easeInOut"
           }}
         >
-          <Brain className="w-10 h-10 text-green-400" />
+          <Brain className="w-10 h-10 text-emerald-400" />
           <motion.div
-            className="absolute inset-0 bg-green-400/20 rounded-full blur-lg"
+            className="absolute inset-0 bg-emerald-400/20 rounded-full blur-lg"
             animate={{
               scale: [0.8, 1.2, 0.8],
               opacity: [0.3, 0.7, 0.3]
@@ -63,17 +63,17 @@ export default function InvestmentPitch() {
             }}
           />
         </motion.div>
-        <div className="text-2xl font-black bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
+        <div className="text-2xl font-black text-emerald-400">
           FRANK
         </div>
-        <div className="text-sm text-gray-400 font-medium">
+        <div className="text-sm text-slate-400 font-medium">
           Robotics
         </div>
       </motion.div>
 
-      {/* Section 1: Crisis - Heart Monitor */}
+      {/* Section 1: Crisis - Enhanced with warmer crisis colors */}
       <section data-section="1" className="min-h-screen flex items-center justify-center relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-red-900/20 to-black"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-rose-900/30 via-red-900/20 to-slate-900"></div>
         <div className="text-center z-10 px-8">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
@@ -96,15 +96,15 @@ export default function InvestmentPitch() {
             >
               <Heart
                 className={`w-32 h-32 mx-auto mb-4 ${
-                  isFlatlining ? 'text-red-500' : 'text-red-400'
+                  isFlatlining ? 'text-red-500' : 'text-rose-400'
                 }`}
               />
             </motion.div>
             <motion.div 
-              className="text-6xl font-mono font-bold text-red-400"
+              className="text-6xl font-mono font-bold text-rose-400"
               animate={isFlatlining ? { 
-                color: ["#ef4444", "#dc2626", "#b91c1c"],
-                textShadow: ["0 0 10px #ef4444", "0 0 20px #dc2626", "0 0 10px #ef4444"]
+                color: ["#fb7185", "#ef4444", "#dc2626"],
+                textShadow: ["0 0 10px #fb7185", "0 0 20px #ef4444", "0 0 10px #fb7185"]
               } : {}}
               transition={{ duration: 0.3, repeat: Infinity }}
             >
@@ -114,7 +114,7 @@ export default function InvestmentPitch() {
               <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="text-red-500 text-2xl font-bold mt-4 animate-pulse"
+                className="text-red-400 text-2xl font-bold mt-4 animate-pulse"
               >
                 ⚠️ FLATLINE DETECTED ⚠️
               </motion.div>
@@ -127,9 +127,9 @@ export default function InvestmentPitch() {
             className="space-y-4"
           >
             <motion.h1 
-              className="text-5xl font-black"
+              className="text-5xl font-black text-slate-100"
               animate={showCrisisText ? {
-                color: ["#ffffff", "#ef4444", "#ffffff"],
+                color: ["#f1f5f9", "#ef4444", "#f1f5f9"],
                 textShadow: ["0 0 0px transparent", "0 0 20px #ef4444", "0 0 0px transparent"]
               } : {}}
               transition={{ duration: 1, repeat: Infinity }}
@@ -137,13 +137,13 @@ export default function InvestmentPitch() {
               Someone Dies by Suicide
             </motion.h1>
             <motion.p 
-              className="text-3xl text-red-400 font-bold"
+              className="text-3xl text-orange-400 font-bold"
               animate={showCrisisText ? { scale: [1, 1.1, 1] } : {}}
               transition={{ duration: 0.8, repeat: Infinity }}
             >
               Every 11 Minutes
             </motion.p>
-            <p className="text-xl text-gray-300 max-w-2xl mx-auto mt-8">
+            <p className="text-xl text-slate-300 max-w-2xl mx-auto mt-8">
               Mental health crisis is killing our youth, destroying families, 
               and costing society billions. The current system isn&apos;t working.
             </p>
@@ -151,14 +151,14 @@ export default function InvestmentPitch() {
         </div>
       </section>
 
-      {/* Section 2: The Problem */}
-      <section data-section="2" className="min-h-screen flex items-center justify-center px-8">
+      {/* Section 2: Enhanced Problem Section with rounded borders */}
+      <section data-section="2" className="min-h-screen flex items-center justify-center px-8 bg-slate-950 rounded-t-3xl">
         <div className="max-w-6xl mx-auto text-center">
           <motion.h2
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-7xl font-black mb-8"
+            className="text-7xl font-black mb-8 text-slate-100"
           >
             The System Is <span className="text-red-500">BROKEN</span>
           </motion.h2>
@@ -168,29 +168,29 @@ export default function InvestmentPitch() {
             transition={{ delay: 0.3, duration: 0.8 }}
             className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left"
           >
-            <div className="bg-gray-900/50 p-6 rounded-lg border border-red-500/30">
-              <AlertTriangle className="w-12 h-12 text-red-400 mb-4" />
-              <h3 className="text-2xl font-bold text-red-400 mb-4">Accessibility Crisis</h3>
-              <ul className="space-y-2 text-gray-300">
+            <div className="bg-slate-800/60 p-6 rounded-2xl border border-rose-500/30 backdrop-blur-sm">
+              <AlertTriangle className="w-12 h-12 text-rose-400 mb-4" />
+              <h3 className="text-2xl font-bold text-rose-300 mb-4">Accessibility Crisis</h3>
+              <ul className="space-y-2 text-slate-300">
                 <li>• 6-month wait times</li>
                 <li>• $200+ per session</li>
                 <li>• Limited availability</li>
                 <li>• Geographic barriers</li>
               </ul>
             </div>
-            <div className="bg-gray-900/50 p-6 rounded-lg border border-red-500/30">
-              <AlertTriangle className="w-12 h-12 text-red-400 mb-4" />
-              <h3 className="text-2xl font-bold text-red-400 mb-4">Outdated Methods</h3>
-              <ul className="space-y-2 text-gray-300">
+            <div className="bg-slate-800/60 p-6 rounded-2xl border border-amber-500/30 backdrop-blur-sm">
+              <AlertTriangle className="w-12 h-12 text-amber-400 mb-4" />
+              <h3 className="text-2xl font-bold text-amber-300 mb-4">Outdated Methods</h3>
+              <ul className="space-y-2 text-slate-300">
                 <li>• One-size-fits-all therapy</li>
                 <li>• No real-time crisis detection</li>
                 <li>• Reactive, not proactive</li>
               </ul>
             </div>
-            <div className="bg-gray-900/50 p-6 rounded-lg border border-red-500/30">
-              <AlertTriangle className="w-12 h-12 text-red-400 mb-4" />
-              <h3 className="text-2xl font-bold text-red-400 mb-4">Growing Demand</h3>
-              <ul className="space-y-2 text-gray-300">
+            <div className="bg-slate-800/60 p-6 rounded-2xl border border-orange-500/30 backdrop-blur-sm">
+              <AlertTriangle className="w-12 h-12 text-orange-400 mb-4" />
+              <h3 className="text-2xl font-bold text-orange-300 mb-4">Growing Demand</h3>
+              <ul className="space-y-2 text-slate-300">
                 <li>• 50% increase in teen suicide</li>
                 <li>• 30% of adults need help</li>
                 <li>• Crisis calls up 600%</li>
@@ -200,25 +200,21 @@ export default function InvestmentPitch() {
         </div>
       </section>
 
-      {/* Section 3: Solution */}
-      <section data-section="3" className="min-h-screen flex items-center justify-center px-8">
+      {/* Section 3: Enhanced Solution Section with rounded borders */}
+      <section data-section="3" className="min-h-screen flex items-center justify-center px-8 bg-gradient-to-b from-slate-950 to-slate-900 rounded-t-3xl">
         <div className="max-w-6xl mx-auto text-center">
           <motion.h2
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-7xl font-black mb-8"
+            className="text-7xl font-black mb-8 text-slate-100"
           >
             Meet <motion.span 
-              className="text-green-400"
+              className="text-emerald-400"
               animate={{
-                textShadow: [
-                  "0 0 20px #4ade80",
-                  "0 0 40px #4ade80",
-                  "0 0 20px #4ade80"
-                ]
+                color: ["#34d399", "#22d3ee", "#3b82f6", "#34d399"]
               }}
-              transition={{ duration: 2, repeat: Infinity }}
+              transition={{ duration: 3, repeat: Infinity }}
             >
               FRANK
             </motion.span>
@@ -227,7 +223,7 @@ export default function InvestmentPitch() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-2xl text-gray-300 mb-8"
+            className="text-2xl text-slate-300 mb-8"
           >
             Friendly Robotic Anti-Nihilism Kompanion
           </motion.div>
@@ -237,7 +233,7 @@ export default function InvestmentPitch() {
             transition={{ delay: 0.5, duration: 0.8 }}
             className="grid grid-cols-1 md:grid-cols-2 gap-8 text-left"
           >
-            <div className="bg-green-900/20 p-6 rounded-lg border border-green-400/30">
+            <div className="bg-emerald-900/20 p-6 rounded-2xl border border-emerald-400/30 backdrop-blur-sm">
               <motion.div
                 animate={{ 
                   scale: [1, 1.1, 1],
@@ -245,17 +241,17 @@ export default function InvestmentPitch() {
                 }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               >
-                <Brain className="w-12 h-12 text-green-400 mb-4" />
+                <Brain className="w-12 h-12 text-emerald-400 mb-4" />
               </motion.div>
-              <h3 className="text-2xl font-bold text-green-400 mb-4">AI-Powered Crisis Detection</h3>
-              <ul className="space-y-2 text-gray-300">
+              <h3 className="text-2xl font-bold text-emerald-300 mb-4">AI-Powered Crisis Detection</h3>
+              <ul className="space-y-2 text-slate-300">
                 <li>• Real-time emotional analysis</li>
                 <li>• Neural pathway mapping</li>
                 <li>• Predictive intervention</li>
                 <li>• 24/7 availability</li>
               </ul>
             </div>
-            <div className="bg-blue-900/20 p-6 rounded-lg border border-blue-400/30">
+            <div className="bg-cyan-900/20 p-6 rounded-2xl border border-cyan-400/30 backdrop-blur-sm">
               <motion.div
                 animate={{ 
                   scale: [1, 1.2, 1],
@@ -263,10 +259,10 @@ export default function InvestmentPitch() {
                 }}
                 transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               >
-                <Zap className="w-12 h-12 text-blue-400 mb-4" />
+                <Zap className="w-12 h-12 text-cyan-400 mb-4" />
               </motion.div>
-              <h3 className="text-2xl font-bold text-blue-400 mb-4">Personalized Treatment</h3>
-              <ul className="space-y-2 text-gray-300">
+              <h3 className="text-2xl font-bold text-cyan-300 mb-4">Personalized Treatment</h3>
+              <ul className="space-y-2 text-slate-300">
                 <li>• Individual neural patterns</li>
                 <li>• Adaptive therapy protocols</li>
                 <li>• Multi-modal intervention</li>
@@ -277,16 +273,16 @@ export default function InvestmentPitch() {
         </div>
       </section>
 
-      {/* Section 4: Market */}
-      <section data-section="4" className="min-h-screen flex items-center justify-center px-8">
+      {/* Section 4: Enhanced Market Section with rounded borders */}
+      <section data-section="4" className="min-h-screen flex items-center justify-center px-8 bg-gradient-to-b from-slate-900 to-indigo-950 rounded-t-3xl">
         <div className="max-w-6xl mx-auto text-center">
           <motion.h2
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-7xl font-black mb-8"
+            className="text-7xl font-black mb-8 text-slate-100"
           >
-            Massive <span className="text-purple-400">Market</span>
+            Massive <span className="text-violet-400">Market</span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -294,19 +290,19 @@ export default function InvestmentPitch() {
             transition={{ delay: 0.3, duration: 0.8 }}
             className="grid grid-cols-1 md:grid-cols-3 gap-8"
           >
-            <div className="bg-purple-900/20 p-8 rounded-lg border border-purple-400/30">
+            <div className="bg-violet-900/20 p-8 rounded-xl border border-violet-400/30 backdrop-blur-sm">
               <motion.div 
-                className="text-5xl font-black text-purple-400 mb-4"
+                className="text-5xl font-black text-violet-400 mb-4"
                 initial={{ scale: 0, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
               >
                 $240B
               </motion.div>
-              <div className="text-xl text-white font-bold mb-2">Mental Health Market</div>
-              <div className="text-gray-300">Growing 25% annually</div>
+              <div className="text-xl text-slate-100 font-bold mb-2">Mental Health Market</div>
+              <div className="text-slate-300">Growing 25% annually</div>
             </div>
-            <div className="bg-purple-900/20 p-8 rounded-lg border border-purple-400/30">
+            <div className="bg-purple-900/20 p-8 rounded-xl border border-purple-400/30 backdrop-blur-sm">
               <motion.div 
                 className="text-5xl font-black text-purple-400 mb-4"
                 initial={{ scale: 0, opacity: 0 }}
@@ -315,41 +311,41 @@ export default function InvestmentPitch() {
               >
                 970M
               </motion.div>
-              <div className="text-xl text-white font-bold mb-2">People Affected</div>
-              <div className="text-gray-300">Worldwide mental health issues</div>
+              <div className="text-xl text-slate-100 font-bold mb-2">People Affected</div>
+              <div className="text-slate-300">Worldwide mental health issues</div>
             </div>
-            <div className="bg-purple-900/20 p-8 rounded-lg border border-purple-400/30">
+            <div className="bg-fuchsia-900/20 p-8 rounded-xl border border-fuchsia-400/30 backdrop-blur-sm">
               <motion.div 
-                className="text-5xl font-black text-purple-400 mb-4"
+                className="text-5xl font-black text-fuchsia-400 mb-4"
                 initial={{ scale: 0, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.4, type: "spring", bounce: 0.4 }}
               >
                 $4.2T
               </motion.div>
-              <div className="text-xl text-white font-bold mb-2">Economic Impact</div>
-              <div className="text-gray-300">Lost productivity annually</div>
+              <div className="text-xl text-slate-100 font-bold mb-2">Economic Impact</div>
+              <div className="text-slate-300">Lost productivity annually</div>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Section 5: Ask - The Call to Action with All Buttons */}
-      <section data-section="5" className="min-h-screen flex items-center justify-center px-8 py-16">
+      {/* Section 5: Simplified CTA Section with only 3 essential buttons */}
+      <section data-section="5" className="min-h-screen flex items-center justify-center px-8 py-16 bg-gradient-to-b from-indigo-950 to-slate-950">
         <div className="max-w-5xl mx-auto text-center">
           <motion.h2
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-7xl font-black mb-8"
+            className="text-7xl font-black mb-8 text-slate-100"
           >
-            Join the <span className="text-yellow-400">Revolution</span>
+            Join the <span className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent">Revolution</span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-3xl text-gray-300 mb-12"
+            className="text-3xl text-slate-300 mb-12"
           >
             We&apos;re raising $10M Series A to save lives and transform mental healthcare
           </motion.div>
@@ -360,8 +356,8 @@ export default function InvestmentPitch() {
             transition={{ delay: 0.5, duration: 0.8 }}
             className="space-y-8"
           >
-            {/* Primary Action Buttons */}
-            <div className="flex flex-col md:flex-row gap-6 justify-center mb-8">
+            {/* Three Essential Action Buttons */}
+            <div className="flex flex-col lg:flex-row gap-6 justify-center items-center">
               <motion.div
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
@@ -369,144 +365,64 @@ export default function InvestmentPitch() {
               >
                 <Link 
                   href="/showcase" 
-                  className="block bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-black px-8 py-4 mx-2 rounded-xl font-bold text-xl transition-all duration-300 shadow-xl hover:shadow-green-500/50 border-2 border-green-400/20 backdrop-blur-sm"
+                  className="block bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 hover:from-emerald-600 hover:via-green-600 hover:to-teal-600 text-slate-900 px-8 py-4 rounded-xl font-bold text-xl transition-all duration-300 shadow-xl hover:shadow-emerald-500/50 backdrop-blur-sm min-w-[280px] text-center"
                 >
                   🚀 See Live Demo
                 </Link>
               </motion.div>
+
               <motion.div
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
                 <Link
-                  href="/waitlist"
-                  className="block bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white px-8 py-4 mx-2 rounded-xl font-bold text-xl transition-all duration-300 shadow-xl hover:shadow-purple-500/50 border-2 border-purple-400/20 backdrop-blur-sm"
-                >
-                  💝 Join Waitlist
-                </Link>
-              </motion.div>
-            </div>
-
-            {/* Document & Presentation Buttons Row 1 */}
-            <div className="flex flex-col md:flex-row gap-4 justify-center mb-6">
-              <motion.div
-                whileHover={{ scale: 1.03, y: -1 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              >
-                <Link
                   href="/frank-technical-deck.html"
-                  className="block bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black px-6 py-3 mx-2 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-yellow-500/40 border border-yellow-400/20"
+                  className="block bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 hover:from-violet-600 hover:via-purple-600 hover:to-fuchsia-600 text-white px-8 py-4 rounded-xl font-bold text-xl transition-all duration-300 shadow-xl hover:shadow-purple-500/50 backdrop-blur-sm min-w-[280px] text-center"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  📊 Download Technical Deck
+                  📊 Download Investment Deck
                 </Link>
               </motion.div>
+
               <motion.div
-                whileHover={{ scale: 1.03, y: -1 }}
+                whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
                 <Link
-                  href="/executive-summary"
-                  className="block bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-black px-6 py-3 mx-2 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-cyan-500/40 border border-cyan-400/20"
+                  href="/pitch"
+                  className="block bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 hover:from-yellow-600 hover:via-orange-600 hover:to-red-600 text-slate-900 px-8 py-4 rounded-xl font-bold text-xl transition-all duration-300 shadow-xl hover:shadow-orange-500/50 backdrop-blur-sm min-w-[280px] text-center"
                 >
-                  📈 Executive Summary
-                </Link>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.03, y: -1 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              >
-                <Link
-                  href="/financials"
-                  className="block bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-black px-6 py-3 mx-2 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-emerald-500/40 border border-emerald-400/20"
-                >
-                  💰 View Financials
+                  🎯 See Pitch Page
                 </Link>
               </motion.div>
             </div>
 
-            {/* Presentation & Contact Buttons Row 2 */}
-            <div className="flex flex-col md:flex-row gap-4 justify-center mb-6">
-              <motion.div
-                whileHover={{ scale: 1.03, y: -1 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              >
-                <Link
-                  href="/pitch-video"
-                  className="block bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-6 py-3 mx-2 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-red-500/40 border border-red-400/20"
-                >
-                  🎥 Watch Pitch Video
-                </Link>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.03, y: -1 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              >
-                <Link
-                  href="/company-presentation"
-                  className="block bg-gradient-to-r from-indigo-500 to-indigo-600 hover:from-indigo-600 hover:to-indigo-700 text-white px-6 py-3 mx-2 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-indigo-500/40 border border-indigo-400/20"
-                >
-                  📋 Company Presentation
-                </Link>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.03, y: -1 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              >
-                <Link
-                  href="/contact"
-                  className="block bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-6 py-3 mx-2 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-blue-500/40 border border-blue-400/20"
-                >
-                  📞 Contact Form
-                </Link>
-              </motion.div>
-            </div>
-
-            {/* Direct Contact & Investment Buttons */}
-            <div className="flex flex-col md:flex-row gap-4 justify-center mb-8">
-              <motion.div
-                whileHover={{ scale: 1.03, y: -1 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              >
-                <Link
-                  href="mailto:contact@frank-robotics.com"
-                  className="block bg-gradient-to-r from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700 text-white px-6 py-3 mx-2 rounded-lg font-bold text-lg transition-all duration-300 border border-gray-500/20 shadow-lg hover:shadow-gray-600/40"
-                >
-                  ✉️ Email Us Directly
-                </Link>
-              </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.03, y: -1 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ type: "spring", stiffness: 400, damping: 17 }}
-              >
-                <Link
-                  href="mailto:invest@frank-robotics.com?subject=Investment%20Inquiry"
-                  className="block bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 hover:from-yellow-600 hover:via-orange-600 hover:to-red-600 text-black px-6 py-3 mx-2 rounded-lg font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-orange-500/50 border border-orange-400/20"
-                >
-                  💎 Investment Inquiry
-                </Link>
-              </motion.div>
-            </div>
-
-            {/* Call to Action Message */}
-            <div className="bg-gradient-to-r from-purple-900/30 to-pink-900/30 p-6 rounded-xl border border-purple-500/30 mt-8">
-              <p className="text-xl text-gray-200 mb-4">
-                <strong>Ready to save lives and transform mental healthcare?</strong>
+            {/* Simple Contact Information */}
+            <div className="bg-gradient-to-r from-slate-800/50 to-slate-900/50 p-8 rounded-xl border border-slate-600/30 mt-12 backdrop-blur-sm">
+              <p className="text-xl text-slate-200 mb-4">
+                <strong>Ready to invest in the future of mental healthcare?</strong>
               </p>
-              <p className="text-gray-300">
-                Contact us today to learn more about investment opportunities, partnerships, 
-                or early access to FRANK&apos;s revolutionary mental health platform.
+              <p className="text-slate-300 mb-6">
+                Contact us today to learn more about investment opportunities and early access to FRANK&apos;s revolutionary platform.
               </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a 
+                  href="mailto:invest@frank-robotics.com" 
+                  className="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors duration-200"
+                >
+                  💎 invest@frank-robotics.com
+                </a>
+                <span className="hidden sm:block text-slate-500">|</span>
+                <a 
+                  href="mailto:contact@frank-robotics.com" 
+                  className="text-cyan-400 hover:text-cyan-300 font-semibold transition-colors duration-200"
+                >
+                  ✉️ contact@frank-robotics.com
+                </a>
+              </div>
             </div>
           </motion.div>
         </div>
