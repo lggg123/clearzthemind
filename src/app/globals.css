@@ -2,119 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Remove any global color overrides that might be interfering */
-/* Make sure these don't exist or are commented out: */
-/*
+/* Ensure no global color overrides interfere with Tailwind */
 * {
-  color: black !important;
+  box-sizing: border-box;
 }
-*/
 
-/* Ensure Tailwind colors work properly */
-html, body {
+/* Let components control their own background and text colors */
+html {
+  background-color: #ffffff;
+}
+
+/* Allow pages to set their own background colors */
+body.white-page {
   background-color: #ffffff;
   color: #111827;
 }
 
-/* Force white background for white pages */
-body.white-page {
-  background-color: #ffffff !important;
-  color: #111827 !important;
-}
-
-/* Force black background for black pages */
 body.black-page {
-  background-color: #000000 !important;
-  color: #ffffff !important;
-}
-
-/* Ensure color utilities work */
-.text-cyan-500 {
-  color: #06b6d4 !important;
-}
-
-.text-pink-500 {
-  color: #ec4899 !important;
-}
-
-.text-purple-500 {
-  color: #a855f7 !important;
-}
-
-.text-green-500 {
-  color: #22c55e !important;
-}
-
-.text-sky-500 {
-  color: #0ea5e9 !important;
-}
-
-.text-blue-500 {
-  color: #3b82f6 !important;
-}
-
-/* Ensure gradient backgrounds work */
-.bg-gradient-to-t {
-  background-image: linear-gradient(to top, var(--tw-gradient-stops)) !important;
-}
-
-.from-cyan-400 {
-  --tw-gradient-from: #22d3ee !important;
-  --tw-gradient-to: rgb(34 211 238 / 0) !important;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
-}
-
-.to-cyan-500 {
-  --tw-gradient-to: #06b6d4 !important;
-}
-
-.from-blue-400 {
-  --tw-gradient-from: #60a5fa !important;
-  --tw-gradient-to: rgb(96 165 250 / 0) !important;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
-}
-
-.to-blue-500 {
-  --tw-gradient-to: #3b82f6 !important;
-}
-
-.from-purple-400 {
-  --tw-gradient-from: #c084fc !important;
-  --tw-gradient-to: rgb(192 132 252 / 0) !important;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
-}
-
-.to-purple-500 {
-  --tw-gradient-to: #a855f7 !important;
-}
-
-.from-pink-400 {
-  --tw-gradient-from: #f472b6 !important;
-  --tw-gradient-to: rgb(244 114 182 / 0) !important;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
-}
-
-.to-pink-500 {
-  --tw-gradient-to: #ec4899 !important;
-}
-
-.from-emerald-400 {
-  --tw-gradient-from: #34d399 !important;
-  --tw-gradient-to: rgb(52 211 153 / 0) !important;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
-}
-
-.to-emerald-500 {
-  --tw-gradient-to: #10b981 !important;
-}
-
-html, body {
-  background-color: white;
-}
-
-/* Ensure no global black backgrounds */
-* {
-  box-sizing: border-box;
+  background-color: #000000;
+  color: #ffffff;
 }
 
 @layer base {
@@ -126,7 +32,7 @@ html, body {
     --muted: 217.2 32.6% 17.5%;
     --muted-foreground: 215.4 16.3% 56.9%;
     --destructive: 0 62.8% 30.6%;
-    --border: 217.2 32.6% 17.5%;
+    /* Remove conflicting border variable */
     --input: 217.2 32.6% 17.5%;
     --ring: 262.1 83.3% 57.8%;
 
@@ -138,13 +44,7 @@ html, body {
     --gray: #666;
   }
 
-  body {
-    background-color: var(--deep-black);
-    color: var(--pure-white);
-    font-family: var(--font-geist-sans), system-ui, sans-serif;
-  }
-
-  /* Neural Network Background */
+  /* Enhanced Neural Network Background */
   .neural-network {
     position: absolute;
     width: 100%;
@@ -152,6 +52,21 @@ html, body {
     background: radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 20%, rgba(255, 0, 102, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 40% 80%, rgba(0, 212, 255, 0.05) 0%, transparent 50%);
+  }
+
+  /* Enhanced glassmorphism effects */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+
+  .glass-card-dark {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7);
   }
 }
 
@@ -167,6 +82,58 @@ html, body {
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+  }
+
+  .text-gradient-neon {
+    background: linear-gradient(45deg, #00d4ff, #ff0066, #00ff88);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.5));
+  }
+
+  .glow-card {
+    position: relative;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+      0 8px 32px 0 rgba(0, 0, 0, 0.37),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .glow-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.3), transparent);
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+  }
+
+  .neon-border {
+    position: relative;
+    border: 2px solid transparent;
+    background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.9)) padding-box,
+                linear-gradient(45deg, #00d4ff, #ff0066, #00ff88) border-box;
+    box-shadow: 
+      0 0 20px rgba(0, 212, 255, 0.3),
+      inset 0 0 20px rgba(0, 212, 255, 0.1);
+  }
+
+  .hover-glow {
+    transition: all 0.3s ease;
+  }
+
+  .hover-glow:hover {
+    box-shadow: 
+      0 0 40px rgba(0, 212, 255, 0.4),
+      0 0 60px rgba(255, 0, 102, 0.2),
+      inset 0 0 20px rgba(0, 212, 255, 0.1);
+    transform: translateY(-5px);
   }
 
   /* iPad Air optimized components */
@@ -265,7 +232,7 @@ html, body {
     }
   }
 
-  /* Color utilities */
+  /* Enhanced color utilities */
   .bg-deep-black { background-color: var(--deep-black); }
   .bg-electric-blue { background-color: var(--electric-blue); }
   .bg-pulse-pink { background-color: var(--pulse-pink); }
@@ -275,6 +242,194 @@ html, body {
   .text-pure-white { color: var(--pure-white); }
   .border-electric-blue { border-color: var(--electric-blue); }
   .border-pulse-pink { border-color: var(--pulse-pink); }
+
+  /* Enhanced glow utilities */
+  .text-glow-blue {
+    color: #00d4ff;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.3);
+  }
+
+  .text-glow-pink {
+    color: #ff0066;
+    text-shadow: 0 0 10px rgba(255, 0, 102, 0.5), 0 0 20px rgba(255, 0, 102, 0.3);
+  }
+
+  .text-glow-green {
+    color: #00ff88;
+    text-shadow: 0 0 10px rgba(0, 255, 136, 0.5), 0 0 20px rgba(0, 255, 136, 0.3);
+  }
+
+  .box-glow-blue {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), 0 0 40px rgba(0, 212, 255, 0.1);
+  }
+
+  .box-glow-pink {
+    box-shadow: 0 0 20px rgba(255, 0, 102, 0.3), 0 0 40px rgba(255, 0, 102, 0.1);
+  }
+
+  .box-glow-green {
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.3), 0 0 40px rgba(0, 255, 136, 0.1);
+  }
+
+  /* Force Tailwind border colors and rounded corners to work properly */
+  .border-rose-400 {
+    border-color: #fb7185 !important;
+  }
+
+  .border-amber-400 {
+    border-color: #fbbf24 !important;
+  }
+
+  .border-orange-400 {
+    border-color: #fb923c !important;
+  }
+
+  .border-emerald-400 {
+    border-color: #34d399 !important;
+  }
+
+  .border-cyan-400 {
+    border-color: #22d3ee !important;
+  }
+
+  .border-violet-400 {
+    border-color: #a78bfa !important;
+  }
+
+  .border-purple-400 {
+    border-color: #c4b5fd !important;
+  }
+
+  .border-fuchsia-400 {
+    border-color: #e879f9 !important;
+  }
+
+  /* Ensure rounded corners work */
+  .rounded-3xl {
+    border-radius: 1.5rem !important;
+  }
+
+  /* Ensure border width works */
+  .border-4 {
+    border-width: 4px !important;
+  }
+
+  /* Hover border colors */
+  .hover\:border-rose-300:hover {
+    border-color: #fda4af !important;
+  }
+
+  .hover\:border-amber-300:hover {
+    border-color: #fcd34d !important;
+  }
+
+  .hover\:border-orange-300:hover {
+    border-color: #fdba74 !important;
+  }
+
+  .hover\:border-emerald-300:hover {
+    border-color: #6ee7b7 !important;
+  }
+
+  .hover\:border-cyan-300:hover {
+    border-color: #67e8f9 !important;
+  }
+
+  .hover\:border-violet-300:hover {
+    border-color: #c4b5fd !important;
+  }
+
+  .hover\:border-purple-300:hover {
+    border-color: #d8b4fe !important;
+  }
+
+  .hover\:border-fuchsia-300:hover {
+    border-color: #f0abfc !important;
+  }
+
+  /* Force padding utilities to work properly */
+  .p-12 {
+    padding: 3rem !important;
+  }
+
+  .p-16 {
+    padding: 4rem !important;
+  }
+
+  .p-20 {
+    padding: 5rem !important;
+  }
+
+  /* Specific overrides for market section cards */
+  .market-card-spacing {
+    padding: 5rem !important;
+    margin: 1rem !important;
+  }
+
+  /* Force text size utilities to work properly */
+  .text-xl {
+    font-size: 1.25rem !important;
+    line-height: 1.75rem !important;
+  }
+
+  .text-2xl {
+    font-size: 1.5rem !important;
+    line-height: 2rem !important;
+  }
+
+  .text-3xl {
+    font-size: 1.875rem !important;
+    line-height: 2.25rem !important;
+  }
+
+  .text-4xl {
+    font-size: 2.25rem !important;
+    line-height: 2.5rem !important;
+  }
+
+  .text-6xl {
+    font-size: 3.75rem !important;
+    line-height: 1 !important;
+  }
+
+  .text-8xl {
+    font-size: 6rem !important;
+    line-height: 1 !important;
+  }
+
+  /* Force icon sizes */
+  .w-20 {
+    width: 5rem !important;
+  }
+
+  .h-20 {
+    height: 5rem !important;
+  }
+
+  .w-24 {
+    width: 6rem !important;
+  }
+
+  .h-24 {
+    height: 6rem !important;
+  }
+
+  /* Force margin utilities */
+  .mb-8 {
+    margin-bottom: 2rem !important;
+  }
+
+  .mb-10 {
+    margin-bottom: 2.5rem !important;
+  }
+
+  .space-y-4 > * + * {
+    margin-top: 1rem !important;
+  }
+
+  .space-y-5 > * + * {
+    margin-top: 1.25rem !important;
+  }
 }
 
 /* Floating particles animation for navbar */
@@ -319,4 +474,172 @@ html, body {
   .chat-container-ipad {
     height: calc(100vh - 180px);
   }
+}
+
+/* Force black background for investment pitch */
+.bg-black {
+  background-color: #000000 !important;
+}
+
+.text-white {
+  color: #ffffff !important;
+}
+
+/* Ensure investment pitch container styling */
+.investment-pitch-container {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+  min-height: 100vh !important;
+}
+
+/* Subtle text styling improvements for investment pitch */
+.investment-pitch-container h1,
+.investment-pitch-container h2,
+.investment-pitch-container h3 {
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+/* Responsive text sizing */
+.investment-pitch-container .text-5xl {
+  font-size: 3rem;
+  line-height: 1.1;
+}
+
+.investment-pitch-container .text-7xl {
+  font-size: 4.5rem;
+  line-height: 1;
+}
+
+/* Subtle text shadows for readability */
+.investment-pitch-container h1,
+.investment-pitch-container h2 {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Section spacing for floating navbar */
+.investment-pitch-container section {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  position: relative;
+}
+
+/* First section can use normal spacing */
+.investment-pitch-container section:first-of-type {
+  padding-top: 2rem;
+}
+
+/* Responsive floating navbar - only for investment pitch */
+@media (max-width: 768px) {
+  .investment-pitch-container nav {
+    top: 1rem !important;
+    left: 1rem !important;
+    right: 1rem !important;
+    transform: none !important;
+    width: calc(100% - 2rem) !important;
+  }
+  
+  .investment-pitch-container nav > div {
+    padding: 0.75rem 1rem !important;
+  }
+  
+  .investment-pitch-container section {
+    padding-top: 1rem;
+  }
+}
+
+/* Ensure proper spacing for all content */
+.investment-pitch-container .text-center {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* Better visual hierarchy */
+.investment-pitch-container section .max-w-6xl,
+.investment-pitch-container section .max-w-5xl {
+  margin-top: 2rem;
+}
+
+/* Centered floating navbar styling - only for investment pitch */
+.investment-pitch-container nav {
+  position: absolute !important;
+  top: 2rem !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(107, 114, 128, 0.5) !important;
+  border-radius: 1rem !important;
+  width: auto !important;
+  max-width: none !important;
+  margin-bottom: 6rem !important;
+}
+
+.investment-pitch-container nav > div {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 1rem 2rem !important;
+  width: auto !important;
+  max-width: none !important;
+}
+
+/* Default navbar styling for other pages */
+nav:not(.investment-pitch-container nav) {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  transform: none !important;
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.5) !important;
+  border-radius: 0 !important;
+  width: 100% !important;
+}
+
+/* Logo styling - for floating navbar on investment pitch only */
+.investment-pitch-container nav .flex.items-center.gap-3 span:first-of-type {
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  color: #ffffff !important;
+}
+
+.investment-pitch-container nav .flex.items-center.gap-3 span:last-of-type {
+  font-size: 0.75rem !important;
+  color: #9ca3af !important;
+}
+
+/* Navigation links for floating navbar on investment pitch only */
+.investment-pitch-container nav .flex.gap-8 a {
+  font-weight: 500 !important;
+  padding: 0.5rem 0.75rem !important;
+  border-radius: 0.5rem !important;
+  transition: all 0.3s ease !important;
+  color: #d1d5db !important;
+}
+
+.investment-pitch-container nav .flex.gap-8 a:hover {
+  transform: scale(1.05) !important;
+  background-color: rgba(31, 41, 55, 0.3) !important;
+}
+
+/* Default navbar styling for other pages - let component control colors */
+nav:not(.investment-pitch-container nav) .flex.items-center.gap-3 {
+  flex-shrink: 0 !important;
+}
+
+nav:not(.investment-pitch-container nav) .flex.gap-8 {
+  display: flex !important;
+  gap: 2rem !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex: 1 !important;
+}
+
+/* Brain icon */
+nav .w-6.h-6 {
+  width: 1.5rem !important;
+  height: 1.5rem !important;
 }

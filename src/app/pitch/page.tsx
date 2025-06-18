@@ -12,7 +12,7 @@ export default function PitchPage() {
       <NavigationBar />
 
       {/* Hero Section */}
-      <section className="pt-24 pb-16 px-6 bg-gradient-to-b from-cyan-50 to-white">
+      <section className="pt-32 pb-16 px-6 bg-gradient-to-b from-cyan-50 to-white">
         <div className="max-w-6xl mx-auto text-center">
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
