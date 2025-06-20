@@ -39,12 +39,13 @@ export const metadata: Metadata = {
   },
 };
 
-// Create a viewport export to fix the metadata warning
+// Create a viewport export to fix the metadata warning and improve mobile behavior
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  viewportFit: 'cover',
 }
 
 export default function RootLayout({
@@ -55,7 +56,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="bg-white min-h-screen w-full">
+        <div className="bg-white min-h-screen w-full max-w-full overflow-x-hidden">
           <NeuralPathwaysSidebar />
           {children}
         </div>
