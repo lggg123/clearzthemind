@@ -14,22 +14,31 @@ export default function InvestmentPitch() {
   useEffect(() => {
     const interval = setInterval(() => {
       setHeartRate((prev) => {
-        const newRate = Math.min(prev + 3, 200);
-        if (newRate > 160 && !isFlatlining) {
+        const newRate = Math.min(prev + 4, 200);
+        if (newRate >= 180 && !isFlatlining) {
           setTimeout(() => {
             setIsFlatlining(true);
             setShowCrisisText(true);
-          }, 2000);
+          }, 1000);
         }
         return newRate;
       });
-    }, 150);
+    }, 100);
 
     return () => clearInterval(interval);
   }, [isFlatlining]);
 
   return (
-    <div className="investment-pitch-container bg-black text-white" style={{ backgroundColor: '#000000', color: '#ffffff', minHeight: '100vh' }}>
+    <div 
+      className="investment-pitch-container bg-black text-white" 
+      style={{ 
+        backgroundColor: '#000000 !important', 
+        color: '#ffffff !important', 
+        minHeight: '100vh',
+        position: 'relative',
+        zIndex: 1
+      }}
+    >
       {/* Section 1: Crisis - Enhanced with warmer crisis colors */}
       <section data-section="1" className="min-h-screen flex items-center justify-center relative py-20">
         <div className="absolute inset-0 bg-gradient-to-b from-rose-900/30 via-red-900/20 to-slate-900"></div>
@@ -60,7 +69,7 @@ export default function InvestmentPitch() {
               />
             </motion.div>
             <motion.div 
-              className="text-6xl font-mono font-bold text-rose-400"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-mono font-bold text-rose-400"
               animate={isFlatlining ? { 
                 color: ["#fb7185", "#ef4444", "#dc2626"],
                 textShadow: ["0 0 10px #fb7185", "0 0 20px #ef4444", "0 0 10px #fb7185"]
@@ -69,6 +78,55 @@ export default function InvestmentPitch() {
             >
               {isFlatlining ? '0' : heartRate} BPM
             </motion.div>
+
+            {/* Heart Rate Line Animation */}
+            <div className="w-96 h-20 mx-auto mt-6 bg-black/50 rounded-lg border border-rose-400/30 overflow-hidden relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-rose-400/10 to-transparent"></div>
+              <svg className="w-full h-full" viewBox="0 0 400 80">
+                <motion.path
+                  d={isFlatlining ? 
+                    "M0,40 L400,40" : // Flat line when flatlining
+                    "M0,40 L50,40 L55,20 L65,60 L75,10 L85,70 L95,40 L400,40" // Heart rhythm
+                  }
+                  stroke={isFlatlining ? "#ef4444" : "#fb7185"}
+                  strokeWidth="3"
+                  fill="none"
+                  initial={{ pathLength: 0 }}
+                  animate={{ 
+                    pathLength: 1,
+                    strokeDasharray: isFlatlining ? "0" : "5,5",
+                    strokeDashoffset: isFlatlining ? 0 : [0, -10]
+                  }}
+                  transition={{ 
+                    pathLength: { duration: 2, repeat: Infinity },
+                    strokeDashoffset: isFlatlining ? {} : { duration: 1, repeat: Infinity, ease: "linear" }
+                  }}
+                  style={{
+                    filter: isFlatlining ? 
+                      `drop-shadow(0 0 10px #ef4444) drop-shadow(0 0 20px #ef4444)` :
+                      `drop-shadow(0 0 5px #fb7185)`
+                  }}
+                />
+                {/* Pulse dot */}
+                {!isFlatlining && (
+                  <motion.circle
+                    cx="50"
+                    cy="40"
+                    r="3"
+                    fill="#fb7185"
+                    animate={{
+                      cx: [50, 400],
+                      opacity: [1, 1, 0]
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "linear"
+                    }}
+                  />
+                )}
+              </svg>
+            </div>
             {isFlatlining && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.5 }}
@@ -86,7 +144,7 @@ export default function InvestmentPitch() {
             className="space-y-4"
           >
             <motion.h1 
-              className="text-5xl font-black text-slate-100"
+              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-slate-100"
               animate={showCrisisText ? {
                 color: ["#f1f5f9", "#ef4444", "#f1f5f9"],
                 textShadow: ["0 0 0px transparent", "0 0 20px #ef4444", "0 0 0px transparent"]
@@ -362,18 +420,18 @@ export default function InvestmentPitch() {
               className="relative group"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-violet-600 to-purple-600 rounded-3xl blur-xl opacity-25 group-hover:opacity-35 transition-opacity duration-300" />
-              <div className="relative bg-gradient-to-br from-violet-950/90 via-slate-900/90 to-slate-950/90 market-card-spacing rounded-3xl backdrop-blur-sm border-4 border-violet-400 hover:border-violet-300 shadow-2xl shadow-violet-500/30 overflow-hidden transition-all duration-300" style={{ padding: '5rem' }}>
+              <div className="relative bg-gradient-to-br from-violet-950/90 via-slate-900/90 to-slate-950/90 market-card-spacing rounded-3xl backdrop-blur-sm border-4 border-violet-400 hover:border-violet-300 shadow-2xl shadow-violet-500/30 overflow-hidden transition-all duration-300 p-6 sm:p-12 lg:p-20">
                 <div className="absolute -top-6 -right-6 w-32 h-32 bg-violet-400/20 rounded-full blur-2xl" />
-                <DollarSign className="w-20 h-20 text-violet-400 mb-8 relative z-10" />
+                <DollarSign className="w-12 sm:w-16 lg:w-20 h-12 sm:h-16 lg:h-20 text-violet-400 mb-8 relative z-10" />
                 <motion.div 
-                  className="text-8xl font-black text-violet-400 mb-6 relative z-10"
+                  className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black text-violet-400 mb-6 relative z-10"
                   initial={{ scale: 0, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
                 >
                   $240B
                 </motion.div>
-                <div className="text-3xl text-slate-100 font-bold mb-4 relative z-10">Mental Health Market</div>
+                <div className="text-2xl sm:text-3xl lg:text-4xl text-slate-100 font-bold mb-4 relative z-10">Mental Health Market</div>
                 <div className="text-slate-300 text-xl relative z-10">Growing 25% annually</div>
               </div>
             </motion.div>
@@ -385,18 +443,18 @@ export default function InvestmentPitch() {
               className="relative group"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-fuchsia-600 rounded-3xl blur-xl opacity-25 group-hover:opacity-35 transition-opacity duration-300" />
-              <div className="relative bg-gradient-to-br from-purple-950/90 via-slate-900/90 to-slate-950/90 market-card-spacing rounded-3xl backdrop-blur-sm border-4 border-purple-400 hover:border-purple-300 shadow-2xl shadow-purple-500/30 overflow-hidden transition-all duration-300" style={{ padding: '5rem' }}>
+              <div className="relative bg-gradient-to-br from-purple-950/90 via-slate-900/90 to-slate-950/90 market-card-spacing rounded-3xl backdrop-blur-sm border-4 border-purple-400 hover:border-purple-300 shadow-2xl shadow-purple-500/30 overflow-hidden transition-all duration-300 p-6 sm:p-12 lg:p-20">
                 <div className="absolute -top-6 -right-6 w-32 h-32 bg-purple-400/20 rounded-full blur-2xl" />
-                <Users className="w-20 h-20 text-purple-400 mb-8 relative z-10" />
+                <Users className="w-12 sm:w-16 lg:w-20 h-12 sm:h-16 lg:h-20 text-purple-400 mb-8 relative z-10" />
                 <motion.div 
-                  className="text-8xl font-black text-purple-400 mb-6 relative z-10"
+                  className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black text-purple-400 mb-6 relative z-10"
                   initial={{ scale: 0, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.8, delay: 0.2, type: "spring", bounce: 0.4 }}
                 >
                   970M
                 </motion.div>
-                <div className="text-3xl text-slate-100 font-bold mb-4 relative z-10">People Affected</div>
+                <div className="text-2xl sm:text-3xl lg:text-4xl text-slate-100 font-bold mb-4 relative z-10">People Affected</div>
                 <div className="text-slate-300 text-xl relative z-10">Worldwide mental health issues</div>
               </div>
             </motion.div>
@@ -408,18 +466,18 @@ export default function InvestmentPitch() {
               className="relative group"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-fuchsia-600 to-pink-600 rounded-3xl blur-xl opacity-25 group-hover:opacity-35 transition-opacity duration-300" />
-              <div className="relative bg-gradient-to-br from-fuchsia-950/90 via-slate-900/90 to-slate-950/90 market-card-spacing rounded-3xl backdrop-blur-sm border-4 border-fuchsia-400 hover:border-fuchsia-300 shadow-2xl shadow-fuchsia-500/30 overflow-hidden transition-all duration-300" style={{ padding: '5rem' }}>
+              <div className="relative bg-gradient-to-br from-fuchsia-950/90 via-slate-900/90 to-slate-950/90 market-card-spacing rounded-3xl backdrop-blur-sm border-4 border-fuchsia-400 hover:border-fuchsia-300 shadow-2xl shadow-fuchsia-500/30 overflow-hidden transition-all duration-300 p-6 sm:p-12 lg:p-20">
                 <div className="absolute -top-6 -right-6 w-32 h-32 bg-fuchsia-400/20 rounded-full blur-2xl" />
-                <TrendingUp className="w-20 h-20 text-fuchsia-400 mb-8 relative z-10" />
+                <TrendingUp className="w-12 sm:w-16 lg:w-20 h-12 sm:h-16 lg:h-20 text-fuchsia-400 mb-8 relative z-10" />
                 <motion.div 
-                  className="text-8xl font-black text-fuchsia-400 mb-6 relative z-10"
+                  className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black text-fuchsia-400 mb-6 relative z-10"
                   initial={{ scale: 0, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.8, delay: 0.4, type: "spring", bounce: 0.4 }}
                 >
                   $4.2T
                 </motion.div>
-                <div className="text-3xl text-slate-100 font-bold mb-4 relative z-10">Economic Impact</div>
+                <div className="text-2xl sm:text-3xl lg:text-4xl text-slate-100 font-bold mb-4 relative z-10">Economic Impact</div>
                 <div className="text-slate-300 text-xl relative z-10">Lost productivity annually</div>
               </div>
             </motion.div>
@@ -434,7 +492,7 @@ export default function InvestmentPitch() {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-7xl font-black mb-8 text-center text-slate-100"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 sm:mb-8 text-center text-slate-100"
           >
             Join the <motion.span
               animate={{
@@ -454,7 +512,7 @@ export default function InvestmentPitch() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8 }}
-            className="text-3xl text-slate-300 mb-12 text-center"
+            className="text-xl sm:text-2xl md:text-3xl text-slate-300 mb-8 sm:mb-12 text-center px-4"
           >
             We&apos;re raising $10M Series A to save lives and transform mental healthcare
           </motion.div>
@@ -466,17 +524,35 @@ export default function InvestmentPitch() {
             className="space-y-8"
           >
             {/* Three Essential Action Buttons */}
-            <div className="flex flex-col lg:flex-row gap-6 justify-center items-center">
+            <div className="flex flex-col gap-4 sm:flex-row sm:gap-3 justify-center items-center px-4 max-w-2xl mx-auto">
               <motion.div
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                className="w-full sm:w-auto sm:max-w-[140px]"
               >
                 <Link 
                   href="/showcase" 
-                  className="block bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500 hover:from-emerald-600 hover:via-green-600 hover:to-teal-600 text-slate-900 px-8 py-4 rounded-xl font-bold text-xl transition-all duration-300 shadow-xl hover:shadow-emerald-500/50 backdrop-blur-sm min-w-[280px] text-center"
+                  className="block px-3 sm:px-4 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 shadow-xl backdrop-blur-sm w-full text-center whitespace-nowrap min-w-0"
+                  style={{
+                    background: 'linear-gradient(135deg, #10b981, #059669, #047857)',
+                    color: '#0f172a',
+                    textDecoration: 'none',
+                    boxShadow: '0 25px 50px -12px rgba(16, 185, 129, 0.5)',
+                    border: '2px solid rgba(16, 185, 129, 0.3)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #059669, #047857, #065f46)';
+                    e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(16, 185, 129, 0.7)';
+                    e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #10b981, #059669, #047857)';
+                    e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(16, 185, 129, 0.5)';
+                    e.currentTarget.style.transform = 'translateY(0px) scale(1)';
+                  }}
                 >
-                  🚀 See Live Demo
+                  🚀 Live Demo
                 </Link>
               </motion.div>
 
@@ -484,14 +560,32 @@ export default function InvestmentPitch() {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                className="w-full sm:w-auto sm:max-w-[140px]"
               >
                 <Link
                   href="/frank-technical-deck.html"
-                  className="block bg-gradient-to-r from-violet-500 via-purple-500 to-fuchsia-500 hover:from-violet-600 hover:via-purple-600 hover:to-fuchsia-600 text-white px-8 py-4 rounded-xl font-bold text-xl transition-all duration-300 shadow-xl hover:shadow-purple-500/50 backdrop-blur-sm min-w-[280px] text-center"
+                  className="block px-3 sm:px-4 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 shadow-xl backdrop-blur-sm w-full text-center whitespace-nowrap min-w-0"
+                  style={{
+                    background: 'linear-gradient(135deg, #8b5cf6, #7c3aed, #6d28d9)',
+                    color: '#ffffff',
+                    textDecoration: 'none',
+                    boxShadow: '0 25px 50px -12px rgba(139, 92, 246, 0.5)',
+                    border: '2px solid rgba(139, 92, 246, 0.3)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #7c3aed, #6d28d9, #5b21b6)';
+                    e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(139, 92, 246, 0.7)';
+                    e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #8b5cf6, #7c3aed, #6d28d9)';
+                    e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(139, 92, 246, 0.5)';
+                    e.currentTarget.style.transform = 'translateY(0px) scale(1)';
+                  }}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  📊 Download Investment Deck
+                  📊 Pitch Deck
                 </Link>
               </motion.div>
 
@@ -499,12 +593,30 @@ export default function InvestmentPitch() {
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                className="w-full sm:w-auto sm:max-w-[140px]"
               >
                 <Link
                   href="/pitch"
-                  className="block bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 hover:from-yellow-600 hover:via-orange-600 hover:to-red-600 text-slate-900 px-8 py-4 rounded-xl font-bold text-xl transition-all duration-300 shadow-xl hover:shadow-orange-500/50 backdrop-blur-sm min-w-[280px] text-center"
+                  className="block px-3 sm:px-4 py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base transition-all duration-300 shadow-xl backdrop-blur-sm w-full text-center whitespace-nowrap min-w-0"
+                  style={{
+                    background: 'linear-gradient(135deg, #f59e0b, #d97706, #b45309)',
+                    color: '#0f172a',
+                    textDecoration: 'none',
+                    boxShadow: '0 25px 50px -12px rgba(245, 158, 11, 0.5)',
+                    border: '2px solid rgba(245, 158, 11, 0.3)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #d97706, #b45309, #92400e)';
+                    e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(245, 158, 11, 0.7)';
+                    e.currentTarget.style.transform = 'translateY(-2px) scale(1.05)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #f59e0b, #d97706, #b45309)';
+                    e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(245, 158, 11, 0.5)';
+                    e.currentTarget.style.transform = 'translateY(0px) scale(1)';
+                  }}
                 >
-                  🎯 See Pitch Page
+                  🎯 Pitch Page
                 </Link>
               </motion.div>
             </div>
@@ -516,33 +628,65 @@ export default function InvestmentPitch() {
               className="relative group mt-16"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-slate-700 to-slate-800 rounded-3xl blur-xl opacity-30 group-hover:opacity-40 transition-opacity duration-300" />
-              <div className="relative bg-gradient-to-br from-slate-800/80 via-slate-900/80 to-slate-950/80 p-12 rounded-3xl backdrop-blur-sm border-4 border-emerald-400 hover:border-emerald-300 shadow-2xl shadow-emerald-500/30 transition-all duration-300">
+              <div className="relative bg-gradient-to-br from-slate-800/80 via-slate-900/80 to-slate-950/80 p-6 sm:p-8 lg:p-12 rounded-3xl backdrop-blur-sm border-4 border-emerald-400 hover:border-emerald-300 shadow-2xl shadow-emerald-500/30 transition-all duration-300">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-emerald-500/10 to-purple-500/10 rounded-full blur-3xl" />
                 <div className="relative z-10">
-                  <p className="text-3xl text-slate-200 mb-8 font-bold text-center" style={{ fontSize: '1.875rem' }}>
+                  <p className="text-xl sm:text-2xl lg:text-3xl text-slate-200 mb-8 font-bold text-center">
                     Ready to invest in the future of mental healthcare?
                   </p>
-                  <p className="text-slate-300 mb-10 text-xl text-center max-w-2xl mx-auto" style={{ fontSize: '1.25rem' }}>
+                  <p className="text-slate-300 mb-10 text-base sm:text-lg lg:text-xl text-center max-w-2xl mx-auto">
                     Contact us today to learn more about investment opportunities and early access to FRANK&apos;s revolutionary platform.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                     <motion.a 
                       href="mailto:invest@frank-robotics.xyz" 
-                      className="flex items-center gap-2 bg-gradient-to-r from-emerald-500/20 to-emerald-600/20 px-6 py-3 rounded-xl border border-emerald-400/30 hover:border-emerald-400/50 transition-all duration-200"
+                      className="flex items-center gap-2 px-6 py-3 rounded-xl transition-all duration-200"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2))',
+                        border: '2px solid rgba(16, 185, 129, 0.3)',
+                        textDecoration: 'none',
+                        color: '#10b981'
+                      }}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.border = '2px solid rgba(16, 185, 129, 0.5)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.3))';
+                        e.currentTarget.style.boxShadow = '0 10px 30px rgba(16, 185, 129, 0.3)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.border = '2px solid rgba(16, 185, 129, 0.3)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2))';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}
                     >
-                      <span className="text-2xl">💎</span>
-                      <span className="text-emerald-400 font-semibold text-lg">invest@frank-robotics.xyz</span>
+                      <span className="text-xl sm:text-2xl">💎</span>
+                      <span style={{ color: '#10b981', fontWeight: '600', fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)' }}>invest@frank-robotics.xyz</span>
                     </motion.a>
                     <motion.a 
                       href="mailto:contact@frank-robotics.xyz" 
-                      className="flex items-center gap-2 bg-gradient-to-r from-cyan-500/20 to-cyan-600/20 px-6 py-3 rounded-xl border border-cyan-400/30 hover:border-cyan-400/50 transition-all duration-200"
+                      className="flex items-center gap-2 px-6 py-3 rounded-xl transition-all duration-200"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(8, 145, 178, 0.2))',
+                        border: '2px solid rgba(6, 182, 212, 0.3)',
+                        textDecoration: 'none',
+                        color: '#06b6d4'
+                      }}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.border = '2px solid rgba(6, 182, 212, 0.5)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(8, 145, 178, 0.3))';
+                        e.currentTarget.style.boxShadow = '0 10px 30px rgba(6, 182, 212, 0.3)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.border = '2px solid rgba(6, 182, 212, 0.3)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(8, 145, 178, 0.2))';
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}
                     >
-                      <span className="text-2xl">✉️</span>
-                      <span className="text-cyan-400 font-semibold text-lg">contact@frank-robotics.xyz</span>
+                      <span className="text-xl sm:text-2xl">✉️</span>
+                      <span style={{ color: '#06b6d4', fontWeight: '600', fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)' }}>contact@frank-robotics.xyz</span>
                     </motion.a>
                   </div>
                 </div>
