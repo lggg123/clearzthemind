@@ -424,15 +424,16 @@ export default function InvestmentPitch() {
                 <div className="absolute -top-6 -right-6 w-32 h-32 bg-violet-400/20 rounded-full blur-2xl" />
                 <DollarSign className="w-12 sm:w-16 lg:w-20 h-12 sm:h-16 lg:h-20 text-violet-400 mb-8 relative z-10" />
                 <motion.div 
-                  className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black text-violet-400 mb-6 relative z-10"
+                  className="text-4xl sm:text-6xl lg:text-8xl font-black text-violet-400 mb-6 relative z-10 whitespace-nowrap"
+                  style={{ minWidth: 0, width: '100%' }}
                   initial={{ scale: 0, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.8, type: "spring", bounce: 0.4 }}
                 >
                   $240B
                 </motion.div>
-                <div className="text-2xl sm:text-3xl lg:text-4xl text-slate-100 font-bold mb-4 relative z-10">Mental Health Market</div>
-                <div className="text-slate-300 text-xl relative z-10">Growing 25% annually</div>
+                <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-slate-100 font-bold mb-4 relative z-10">Mental Health Market</div>
+                <div className="text-slate-300 text-base md:text-lg relative z-10">Growing 25% annually</div>
               </div>
             </motion.div>
 
@@ -447,15 +448,16 @@ export default function InvestmentPitch() {
                 <div className="absolute -top-6 -right-6 w-32 h-32 bg-purple-400/20 rounded-full blur-2xl" />
                 <Users className="w-12 sm:w-16 lg:w-20 h-12 sm:h-16 lg:h-20 text-purple-400 mb-8 relative z-10" />
                 <motion.div 
-                  className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black text-purple-400 mb-6 relative z-10"
+                  className="text-4xl sm:text-6xl lg:text-8xl font-black text-purple-400 mb-6 relative z-10 whitespace-nowrap"
+                  style={{ minWidth: 0, width: '100%' }}
                   initial={{ scale: 0, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.8, delay: 0.2, type: "spring", bounce: 0.4 }}
                 >
                   970M
                 </motion.div>
-                <div className="text-2xl sm:text-3xl lg:text-4xl text-slate-100 font-bold mb-4 relative z-10">People Affected</div>
-                <div className="text-slate-300 text-xl relative z-10">Worldwide mental health issues</div>
+                <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-slate-100 font-bold mb-4 relative z-10">People Affected</div>
+                <div className="text-slate-300 text-base md:text-lg relative z-10">Worldwide mental health issues</div>
               </div>
             </motion.div>
 
@@ -470,15 +472,16 @@ export default function InvestmentPitch() {
                 <div className="absolute -top-6 -right-6 w-32 h-32 bg-fuchsia-400/20 rounded-full blur-2xl" />
                 <TrendingUp className="w-12 sm:w-16 lg:w-20 h-12 sm:h-16 lg:h-20 text-fuchsia-400 mb-8 relative z-10" />
                 <motion.div 
-                  className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black text-fuchsia-400 mb-6 relative z-10"
+                  className="text-4xl sm:text-6xl lg:text-8xl font-black text-fuchsia-400 mb-6 relative z-10 whitespace-nowrap"
+                  style={{ minWidth: 0, width: '100%' }}
                   initial={{ scale: 0, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.8, delay: 0.4, type: "spring", bounce: 0.4 }}
                 >
                   $4.2T
                 </motion.div>
-                <div className="text-2xl sm:text-3xl lg:text-4xl text-slate-100 font-bold mb-4 relative z-10">Economic Impact</div>
-                <div className="text-slate-300 text-xl relative z-10">Lost productivity annually</div>
+                <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-slate-100 font-bold mb-4 relative z-10">Economic Impact</div>
+                <div className="text-slate-300 text-base md:text-lg relative z-10">Lost productivity annually</div>
               </div>
             </motion.div>
           </motion.div>
@@ -640,53 +643,51 @@ export default function InvestmentPitch() {
                   <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                     <motion.a 
                       href="mailto:invest@frank-robotics.xyz" 
-                      className="flex items-center gap-2 px-6 py-3 rounded-xl transition-all duration-200"
+                      className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl transition-all duration-200"
                       style={{
-                        background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2))',
-                        border: '2px solid rgba(16, 185, 129, 0.3)',
+                        background: 'linear-gradient(135deg, #22c55e, #16a34a)',
                         textDecoration: 'none',
-                        color: '#10b981'
+                        color: '#ffffff',
+                        boxShadow: '0 25px 50px -12px rgba(34, 197, 94, 0.5)',
+                        minWidth: '240px'
                       }}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.border = '2px solid rgba(16, 185, 129, 0.5)';
-                        e.currentTarget.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(5, 150, 105, 0.3))';
-                        e.currentTarget.style.boxShadow = '0 10px 30px rgba(16, 185, 129, 0.3)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #16a34a, #15803d)';
+                        e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(22, 197, 94, 0.7)';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.border = '2px solid rgba(16, 185, 129, 0.3)';
-                        e.currentTarget.style.background = 'linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(5, 150, 105, 0.2))';
-                        e.currentTarget.style.boxShadow = 'none';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+                        e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(34, 197, 94, 0.5)';
                       }}
                     >
                       <span className="text-xl sm:text-2xl">💎</span>
-                      <span style={{ color: '#10b981', fontWeight: '600', fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)' }}>invest@frank-robotics.xyz</span>
+                      <span style={{ color: '#ffffff', fontWeight: '600', fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)' }}>invest@frank-robotics.xyz</span>
                     </motion.a>
                     <motion.a 
                       href="mailto:contact@frank-robotics.xyz" 
-                      className="flex items-center gap-2 px-6 py-3 rounded-xl transition-all duration-200"
+                      className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl transition-all duration-200"
                       style={{
-                        background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(8, 145, 178, 0.2))',
-                        border: '2px solid rgba(6, 182, 212, 0.3)',
+                        background: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
                         textDecoration: 'none',
-                        color: '#06b6d4'
+                        color: '#ffffff',
+                        boxShadow: '0 25px 50px -12px rgba(6, 182, 212, 0.5)',
+                        minWidth: '220px'
                       }}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.border = '2px solid rgba(6, 182, 212, 0.5)';
-                        e.currentTarget.style.background = 'linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(8, 145, 178, 0.3))';
-                        e.currentTarget.style.boxShadow = '0 10px 30px rgba(6, 182, 212, 0.3)';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #0e7490, #1e3a8a)';
+                        e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(6, 182, 212, 0.7)';
                       }}
                       onMouseLeave={(e) => {
-                        e.currentTarget.style.border = '2px solid rgba(6, 182, 212, 0.3)';
-                        e.currentTarget.style.background = 'linear-gradient(135deg, rgba(6, 182, 212, 0.2), rgba(8, 145, 178, 0.2))';
-                        e.currentTarget.style.boxShadow = 'none';
+                        e.currentTarget.style.background = 'linear-gradient(135deg, #06b6d4, #3b82f6)';
+                        e.currentTarget.style.boxShadow = '0 25px 50px -12px rgba(6, 182, 212, 0.5)';
                       }}
                     >
                       <span className="text-xl sm:text-2xl">✉️</span>
-                      <span style={{ color: '#06b6d4', fontWeight: '600', fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)' }}>contact@frank-robotics.xyz</span>
+                      <span style={{ color: '#ffffff', fontWeight: '600', fontSize: 'clamp(0.875rem, 2.5vw, 1.125rem)' }}>contact@frank-robotics.xyz</span>
                     </motion.a>
                   </div>
                 </div>

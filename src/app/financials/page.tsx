@@ -24,7 +24,7 @@ export default function FinancialsPage() {
       <NavigationBar />
 
       {/* Main Content - Financials Component */}
-      <div className="pt-20 bg-white">
+      <div className="bg-white">
         <Financials />
       </div>
 

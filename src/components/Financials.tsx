@@ -139,7 +139,7 @@ const Financials: React.FC = () => {
   };
 
   return (
-    <section className="py-20 px-6 bg-white">
+    <section className="pt-26 pb-20 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -203,17 +203,17 @@ const Financials: React.FC = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 hover:shadow-xl hover:border-sky-200 transition-all duration-300 group"
+                className="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 hover:shadow-xl hover:border-sky-200 transition-all duration-300 group text-center"
               >
-                <div className="text-4xl font-black text-sky-500 mb-3 group-hover:scale-110 transition-transform" style={{ color: '#0ea5e9' }}>
+                <div className="text-4xl font-black text-sky-500 mb-4 group-hover:scale-110 transition-transform text-center" style={{ color: '#0ea5e9' }}>
                   {card.value}
                 </div>
-                <div className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-4">
+                <div className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-6 text-center">
                   {card.label}
                 </div>
                 
-                {/* Light Blue Progress Bar */}
-                <div className="w-full bg-gray-200 rounded-full h-3 mb-4 overflow-hidden">
+                {/* Light Blue Progress Bar - Centered */}
+                <div className="w-full bg-gray-200 rounded-full h-3 mb-6 overflow-hidden mx-auto">
                   <motion.div
                     initial={{ width: 0 }}
                     whileInView={{ width: card.barWidth }}
@@ -222,7 +222,7 @@ const Financials: React.FC = () => {
                   />
                 </div>
                 
-                <div className="text-gray-600 text-sm">{card.detail}</div>
+                <div className="text-gray-600 text-sm text-center leading-relaxed">{card.detail}</div>
               </motion.div>
             ))}
           </div>

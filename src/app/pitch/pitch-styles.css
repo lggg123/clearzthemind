@@ -1,0 +1,174 @@
+/* Enhanced CTA Button Styles for Override-Proof Text Visibility */
+
+/* Keyframes for animated gradients and glows */
+@keyframes gradient-shift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    text-shadow: 
+      0 0 10px currentColor,
+      0 0 20px currentColor,
+      0 0 30px currentColor,
+      0 2px 4px rgba(0, 0, 0, 0.9),
+      0 4px 8px rgba(0, 0, 0, 0.8);
+  }
+  50% {
+    text-shadow: 
+      0 0 15px currentColor,
+      0 0 30px currentColor,
+      0 0 45px currentColor,
+      0 2px 4px rgba(0, 0, 0, 0.9),
+      0 4px 8px rgba(0, 0, 0, 0.8);
+  }
+}
+
+@keyframes icon-glow {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px currentColor) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+  }
+  50% {
+    filter: drop-shadow(0 0 15px currentColor) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9));
+  }
+}
+
+/* Override-proof button text styles */
+.cta-button-text {
+  color: #ffffff !important;
+  font-weight: 900 !important;
+  letter-spacing: 0.05em !important;
+  -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.1) !important;
+  animation: glow-pulse 2s ease-in-out infinite !important;
+}
+
+/* Cyan theme (Experience FRANK Live) */
+.cta-button-text.cyan {
+  color: #ffffff !important;
+  -webkit-text-stroke: 0.5px rgba(34, 211, 238, 0.3) !important;
+  text-shadow: 
+    0 0 10px rgba(34, 211, 238, 1),
+    0 0 20px rgba(34, 211, 238, 0.8),
+    0 0 30px rgba(34, 211, 238, 0.6),
+    0 2px 4px rgba(0, 0, 0, 0.9),
+    0 4px 8px rgba(0, 0, 0, 0.8),
+    2px 2px 4px rgba(0, 0, 0, 0.9) !important;
+  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.8)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9)) !important;
+}
+
+/* Pink theme (Investment Opportunity / Invest Now) */
+.cta-button-text.pink {
+  color: #ffffff !important;
+  -webkit-text-stroke: 0.5px rgba(236, 72, 153, 0.3) !important;
+  text-shadow: 
+    0 0 10px rgba(236, 72, 153, 1),
+    0 0 20px rgba(236, 72, 153, 0.8),
+    0 0 30px rgba(236, 72, 153, 0.6),
+    0 2px 4px rgba(0, 0, 0, 0.9),
+    0 4px 8px rgba(0, 0, 0, 0.8),
+    2px 2px 4px rgba(0, 0, 0, 0.9) !important;
+  filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.8)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9)) !important;
+}
+
+/* Emerald theme (Experience FRANK) */
+.cta-button-text.emerald {
+  color: #ffffff !important;
+  -webkit-text-stroke: 0.5px rgba(16, 185, 129, 0.3) !important;
+  text-shadow: 
+    0 0 10px rgba(16, 185, 129, 1),
+    0 0 20px rgba(16, 185, 129, 0.8),
+    0 0 30px rgba(16, 185, 129, 0.6),
+    0 2px 4px rgba(0, 0, 0, 0.9),
+    0 4px 8px rgba(0, 0, 0, 0.8),
+    2px 2px 4px rgba(0, 0, 0, 0.9) !important;
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.8)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9)) !important;
+}
+
+/* Amber theme (View Financials) */
+.cta-button-text.amber {
+  color: #ffffff !important;
+  -webkit-text-stroke: 0.5px rgba(245, 158, 11, 0.3) !important;
+  text-shadow: 
+    0 0 10px rgba(245, 158, 11, 1),
+    0 0 20px rgba(245, 158, 11, 0.8),
+    0 0 30px rgba(245, 158, 11, 0.6),
+    0 2px 4px rgba(0, 0, 0, 0.9),
+    0 4px 8px rgba(0, 0, 0, 0.8),
+    2px 2px 4px rgba(0, 0, 0, 0.9) !important;
+  filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.8)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9)) !important;
+}
+
+/* Icon glow effects */
+.cta-icon {
+  color: #ffffff !important;
+  animation: icon-glow 2s ease-in-out infinite !important;
+}
+
+.cta-icon.cyan {
+  filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.8)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9)) !important;
+}
+
+.cta-icon.pink {
+  filter: drop-shadow(0 0 8px rgba(236, 72, 153, 0.8)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9)) !important;
+}
+
+.cta-icon.emerald {
+  filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.8)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9)) !important;
+}
+
+.cta-icon.amber {
+  filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.8)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.9)) !important;
+}
+
+/* Additional border glow for buttons */
+.cta-button-border {
+  position: relative;
+  border: 2px solid transparent !important;
+}
+
+.cta-button-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  padding: 2px;
+  background: linear-gradient(45deg, transparent, currentColor, transparent);
+  border-radius: inherit;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: xor;
+  opacity: 0.3;
+  animation: gradient-shift 3s ease infinite;
+}
+
+/* Hover enhancements */
+.cta-button:hover .cta-button-text {
+  animation-duration: 1s !important;
+}
+
+.cta-button:hover .cta-icon {
+  animation-duration: 1s !important;
+  transform: scale(1.1) !important;
+}
+
+/* Focus states for accessibility */
+.cta-button:focus {
+  outline: 3px solid rgba(255, 255, 255, 0.5) !important;
+  outline-offset: 2px !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .cta-button-text {
+    font-size: 1rem !important;
+    letter-spacing: 0.025em !important;
+  }
+  
+  .cta-icon {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+  }
+}

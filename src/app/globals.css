@@ -781,12 +781,28 @@ nav:not(.investment-pitch-container nav) .flex.items-center.gap-3 {
   flex-shrink: 0 !important;
 }
 
-nav:not(.investment-pitch-container nav) .flex.gap-8 {
-  display: flex !important;
-  gap: 2rem !important;
-  align-items: center !important;
-  justify-content: center !important;
-  flex: 1 !important;
+/* Desktop navigation - only show on desktop */
+@media (min-width: 768px) {
+  nav:not(.investment-pitch-container nav) .desktop-nav-links {
+    display: flex !important;
+    gap: 2rem !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 1 !important;
+  }
+}
+
+/* Mobile navigation button - only show on mobile */
+@media (max-width: 767px) {
+  nav:not(.investment-pitch-container nav) .mobile-menu-btn {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 768px) {
+  nav:not(.investment-pitch-container nav) .mobile-menu-btn {
+    display: none !important;
+  }
 }
 
 /* Brain icon */
