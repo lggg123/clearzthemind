@@ -439,6 +439,25 @@ body.black-page {
     height: 6rem !important;
   }
 
+  /* Responsive icon size overrides for investment pitch */
+  @media (min-width: 640px) {
+    .investment-pitch-container .sm\:w-16 {
+      width: 4rem !important;
+    }
+    .investment-pitch-container .sm\:h-16 {
+      height: 4rem !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .investment-pitch-container .lg\:w-20 {
+      width: 5rem !important;
+    }
+    .investment-pitch-container .lg\:h-20 {
+      height: 5rem !important;
+    }
+  }
+
   /* Force margin utilities */
   .mb-8 {
     margin-bottom: 2rem !important;
