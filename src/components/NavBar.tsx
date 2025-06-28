@@ -131,17 +131,17 @@ const NavigationBar: React.FC = () => {
         }}
       >
         <div 
-          className="relative max-w-7xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center w-full"
+          className="relative max-w-7xl mx-auto px-4 sm:px-6 py-3 w-full"
           style={{
-            display: 'flex',
-            justifyContent: 'space-between',
+            display: 'grid',
+            gridTemplateColumns: '1fr auto 1fr',
             alignItems: 'center',
             width: '100%',
             padding: '0.75rem 1rem'
           }}
         >
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group flex-shrink-0 no-underline nav-link" style={{ textDecoration: 'none !important' }}>
+          {/* Logo - Left Side */}
+          <Link href="/" className="flex items-center gap-3 group flex-shrink-0 no-underline nav-link justify-self-start" style={{ textDecoration: 'none !important' }}>
             <div className="relative">
               <Brain 
                 className="w-7 h-7 text-cyan-400 group-hover:scale-110 group-hover:rotate-12 transition-all duration-300" 
@@ -184,8 +184,8 @@ const NavigationBar: React.FC = () => {
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <div className="desktop-nav-links hidden md:flex gap-10 items-center justify-center flex-1">
+          {/* Desktop Navigation Links - Center */}
+          <div className="desktop-nav-links hidden md:flex gap-10 items-center justify-center">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               const colorClasses = getColorClasses(item.color, isActive);
@@ -243,7 +243,7 @@ const NavigationBar: React.FC = () => {
                     {item.label}
                   </span>
                   
-                  {/* Enhanced Glow background on hover with multiple layers */}
+                  {/* ...existing glow and particle effects... */}
                   <div className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-500"
                        style={{ 
                          background: `radial-gradient(ellipse at center, ${
@@ -271,7 +271,6 @@ const NavigationBar: React.FC = () => {
                          `
                        }} />
                   
-                  {/* Floating particles effect */}
                   <div className="absolute inset-0 pointer-events-none rounded-xl overflow-hidden">
                     {[...Array(3)].map((_, i) => (
                       <div
@@ -291,7 +290,6 @@ const NavigationBar: React.FC = () => {
                     ))}
                   </div>
                   
-                  {/* Active indicator */}
                   {isActive && (
                     <>
                       <div 
@@ -332,28 +330,29 @@ const NavigationBar: React.FC = () => {
             })}
           </div>
 
-          {/* Mobile Menu Button - Properly centered */}
-          <div className="flex md:hidden justify-center items-center flex-1">
-            <button
-              className="mobile-menu-btn flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 hover:from-cyan-100 hover:to-blue-100 border border-cyan-200 hover:border-cyan-300 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              aria-label="Toggle mobile menu"
-              style={{
-                background: 'linear-gradient(135deg, rgba(236, 254, 255, 0.8) 0%, rgba(219, 234, 254, 0.8) 100%)',
-                border: '1px solid rgba(34, 211, 238, 0.3)',
-                boxShadow: '0 4px 12px rgba(34, 211, 238, 0.15)',
-                position: 'relative'
-              }}
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6 text-cyan-600 group-hover:text-cyan-700 transition-colors duration-200" />
-              ) : (
-                <Menu className="w-6 h-6 text-cyan-600 group-hover:text-cyan-700 transition-colors duration-200" />
-              )}
-              {/* Subtle glow effect */}
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-cyan-400/10 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </button>
-          </div>
+          {/* Mobile Menu Button - Truly Centered */}
+          <button
+            className="mobile-menu-btn flex md:hidden items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 hover:from-cyan-100 hover:to-blue-100 border border-cyan-200 hover:border-cyan-300 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group justify-self-center"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle mobile menu"
+            style={{
+              background: 'linear-gradient(135deg, rgba(236, 254, 255, 0.8) 0%, rgba(219, 234, 254, 0.8) 100%)',
+              border: '1px solid rgba(34, 211, 238, 0.3)',
+              boxShadow: '0 4px 12px rgba(34, 211, 238, 0.15)',
+              position: 'relative'
+            }}
+          >
+            {isMobileMenuOpen ? (
+              <X className="w-6 h-6 text-cyan-600 group-hover:text-cyan-700 transition-colors duration-200" />
+            ) : (
+              <Menu className="w-6 h-6 text-cyan-600 group-hover:text-cyan-700 transition-colors duration-200" />
+            )}
+            {/* Subtle glow effect */}
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-cyan-400/10 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </button>
+
+          {/* Empty space on right to balance the grid */}
+          <div className="hidden md:block"></div>
         </div>
       </nav>
 
