@@ -5,13 +5,10 @@ import Link from 'next/link';
 import { Sparkles, Star, TrendingUp, Brain, Heart, Users, DollarSign, Zap } from 'lucide-react';
 import './pitch-styles.css';
 import NavigationBar from '@/components/NavBar';
-import ClientMotionWrapper from '@/components/ClientMotionWrapper';
-import MotionProvider from '@/components/MotionProvider';
 
 export default function PitchPage() {
   return (
-    <MotionProvider>
-      <div className="bg-black text-white min-h-screen relative overflow-hidden">
+    <div className="bg-black text-white min-h-screen relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
@@ -32,22 +29,6 @@ export default function PitchPage() {
           />
         ))}
       </div>
-
-      {/* Custom CSS for animations */}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(180deg); }
-        }
-        @keyframes pulse-glow {
-          0%, 100% { box-shadow: 0 0 20px rgba(34, 211, 238, 0.3); }
-          50% { box-shadow: 0 0 40px rgba(34, 211, 238, 0.6); }
-        }
-        @keyframes gradient-shift {
-          0%, 100% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-        }
-      `}</style>
 
       {/* Navigation */}
       <NavigationBar />
@@ -178,6 +159,7 @@ export default function PitchPage() {
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8 }}
             className="text-6xl md:text-7xl font-black text-center mb-16"
           >
@@ -192,12 +174,17 @@ export default function PitchPage() {
               URGENT
             </span>
           </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <ClientMotionWrapper
-              initial={{ opacity: 0, y: 50, rotateX: 15 }}
-              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="group relative bg-gradient-to-br from-red-900/30 to-red-800/20 backdrop-blur border border-red-500/30 p-10 rounded-3xl shadow-2xl hover:shadow-red-500/30 transition-all duration-500 hover:scale-105"
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
+            <motion.div
+              whileHover={{ y: -10, scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="group relative bg-gradient-to-br from-red-900/30 to-red-800/20 backdrop-blur border border-red-500/30 p-10 rounded-3xl shadow-2xl hover:shadow-red-500/30 transition-all duration-500"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-red-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative z-10 text-center">
@@ -207,13 +194,12 @@ export default function PitchPage() {
                 <h3 className="text-3xl font-black text-red-400 mb-6">1 Death Every 11 Minutes</h3>
                 <p className="text-gray-300 text-lg leading-relaxed">Suicide rates have increased 50% among teens in the last decade. The current system is failing our most vulnerable.</p>
               </div>
-            </ClientMotionWrapper>
+            </motion.div>
             
-            <ClientMotionWrapper
-              initial={{ opacity: 0, y: 50, rotateX: 15 }}
-              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="group relative bg-gradient-to-br from-orange-900/30 to-orange-800/20 backdrop-blur border border-orange-500/30 p-10 rounded-3xl shadow-2xl hover:shadow-orange-500/30 transition-all duration-500 hover:scale-105"
+            <motion.div
+              whileHover={{ y: -10, scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="group relative bg-gradient-to-br from-orange-900/30 to-orange-800/20 backdrop-blur border border-orange-500/30 p-10 rounded-3xl shadow-2xl hover:shadow-orange-500/30 transition-all duration-500"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative z-10 text-center">
@@ -223,13 +209,12 @@ export default function PitchPage() {
                 <h3 className="text-3xl font-black text-orange-400 mb-6">970M People Affected</h3>
                 <p className="text-gray-300 text-lg leading-relaxed">Nearly 1 billion people worldwide suffer from mental health issues, with limited access to effective treatment.</p>
               </div>
-            </ClientMotionWrapper>
+            </motion.div>
             
-            <ClientMotionWrapper
-              initial={{ opacity: 0, y: 50, rotateX: 15 }}
-              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="group relative bg-gradient-to-br from-yellow-900/30 to-yellow-800/20 backdrop-blur border border-yellow-500/30 p-10 rounded-3xl shadow-2xl hover:shadow-yellow-500/30 transition-all duration-500 hover:scale-105"
+            <motion.div
+              whileHover={{ y: -10, scale: 1.02 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="group relative bg-gradient-to-br from-yellow-900/30 to-yellow-800/20 backdrop-blur border border-yellow-500/30 p-10 rounded-3xl shadow-2xl hover:shadow-yellow-500/30 transition-all duration-500"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               <div className="relative z-10 text-center">
@@ -239,8 +224,8 @@ export default function PitchPage() {
                 <h3 className="text-3xl font-black text-yellow-400 mb-6">$4.2T Economic Impact</h3>
                 <p className="text-gray-300 text-lg leading-relaxed">Mental health issues cost the global economy trillions in lost productivity and healthcare expenses annually.</p>
               </div>
-            </ClientMotionWrapper>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
@@ -251,6 +236,7 @@ export default function PitchPage() {
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8 }}
             className="text-6xl md:text-7xl font-black text-center mb-16"
           >
@@ -272,6 +258,7 @@ export default function PitchPage() {
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.3 }}
               transition={{ duration: 0.8 }}
               className="space-y-8 text-center lg:text-left"
             >
@@ -287,18 +274,23 @@ export default function PitchPage() {
               >
                 AI-Powered Crisis Detection
               </h3>
-              <div className="space-y-6">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="space-y-6"
+              >
                 {[
                   { icon: Zap, text: "Real-time emotional analysis through voice, text, and behavioral patterns", color: "cyan" },
                   { icon: Brain, text: "Neural pathway mapping for personalized intervention strategies", color: "purple" },
                   { icon: Heart, text: "24/7 availability with instant crisis response protocols", color: "pink" },
                   { icon: TrendingUp, text: "Predictive analytics to prevent crises before they occur", color: "green" }
                 ].map((item, index) => (
-                  <ClientMotionWrapper
+                  <motion.div
                     key={index}
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    whileHover={{ x: 10, scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     className="flex items-start gap-4 group justify-center lg:justify-start"
                   >
                     <div className={`w-12 h-12 bg-gradient-to-br from-${item.color}-500 to-${item.color}-600 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform shadow-lg`}>
@@ -307,14 +299,15 @@ export default function PitchPage() {
                     <span className="text-gray-300 text-xl leading-relaxed group-hover:text-white transition-colors text-left max-w-md">
                       {item.text}
                     </span>
-                  </ClientMotionWrapper>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             </motion.div>
             
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: false, amount: 0.3 }}
               transition={{ duration: 0.8 }}
               className="relative"
             >
@@ -345,6 +338,7 @@ export default function PitchPage() {
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8 }}
             className="text-6xl md:text-7xl font-black mb-16"
           >
@@ -362,18 +356,23 @@ export default function PitchPage() {
               Market Opportunity
             </span>
           </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          >
             {[
               { value: "$240B", label: "Mental Health Market", desc: "Growing 25% annually with increasing demand", color: "purple" },
               { value: "$50B", label: "Digital Health TAM", desc: "Total addressable market for AI solutions", color: "pink" },
               { value: "$10M", label: "Series A Funding", desc: "Investment needed to save millions of lives", color: "cyan" }
             ].map((item, index) => (
-              <ClientMotionWrapper
+              <motion.div
                 key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: index * 0.1 }}
-                className={`group relative bg-gradient-to-br from-${item.color}-900/30 to-${item.color}-800/20 backdrop-blur border border-${item.color}-500/30 p-12 rounded-3xl shadow-2xl hover:shadow-${item.color}-500/30 transition-all duration-500 hover:scale-105`}
+                whileHover={{ scale: 1.05, y: -10 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className={`group relative bg-gradient-to-br from-${item.color}-900/30 to-${item.color}-800/20 backdrop-blur border border-${item.color}-500/30 p-12 rounded-3xl shadow-2xl hover:shadow-${item.color}-500/30 transition-all duration-500`}
               >
                 <div className={`absolute inset-0 bg-gradient-to-br from-${item.color}-500/10 to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
                 <div className="relative z-10">
@@ -383,9 +382,9 @@ export default function PitchPage() {
                   <h3 className="text-2xl font-bold text-white mb-4">{item.label}</h3>
                   <p className="text-gray-300 text-lg">{item.desc}</p>
                 </div>
-              </ClientMotionWrapper>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -396,6 +395,7 @@ export default function PitchPage() {
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8 }}
             className="text-6xl md:text-7xl font-black mb-8"
           >
@@ -417,6 +417,7 @@ export default function PitchPage() {
           <motion.p
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-2xl text-gray-300 mb-12 leading-relaxed"
           >
@@ -425,6 +426,7 @@ export default function PitchPage() {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="flex flex-col lg:flex-row gap-8 justify-center items-center max-w-6xl mx-auto"
           >
@@ -533,6 +535,5 @@ export default function PitchPage() {
         </div>
       </section>
       </div>
-    </MotionProvider>
   );
 }

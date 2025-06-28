@@ -16,12 +16,39 @@ export default function ClientMotionWrapper({
   ...motionProps 
 }: ClientMotionWrapperProps) {
   const [isMounted, setIsMounted] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
+    // Add a small delay to ensure all hydration is complete
+    const timer = setTimeout(() => {
+      setIsMounted(true);
+    }, 50); // Increased delay slightly
+    
+    return () => clearTimeout(timer);
   }, []);
 
-  const MotionComponent = motion[as] as React.ComponentType<MotionProps & { className?: string }>;
+  // Error boundary fallback
+  if (hasError) {
+    if (as === 'div') {
+      return <div className={className}>{children}</div>;
+    }
+    if (as === 'section') {
+      return <section className={className}>{children}</section>;
+    }
+    if (as === 'h1') {
+      return <h1 className={className}>{children}</h1>;
+    }
+    if (as === 'h2') {
+      return <h2 className={className}>{children}</h2>;
+    }
+    if (as === 'h3') {
+      return <h3 className={className}>{children}</h3>;
+    }
+    if (as === 'p') {
+      return <p className={className}>{children}</p>;
+    }
+    return <div className={className}>{children}</div>;
+  }
 
   if (!isMounted) {
     // Render a static version during SSR and initial hydration
@@ -47,10 +74,47 @@ export default function ClientMotionWrapper({
     return <div className={className}>{children}</div>;
   }
 
-  // Render with motion after hydration
-  return (
-    <MotionComponent className={className} {...motionProps}>
-      {children}
-    </MotionComponent>
-  );
+  try {
+    const MotionComponent = motion[as] as React.ComponentType<MotionProps & { className?: string }>;
+
+    // Create a safe version of motionProps to prevent re-rendering on deployment
+    const safeMotionProps = {
+      ...motionProps,
+      // Ensure viewport props are properly set
+      ...(motionProps.whileInView && {
+        viewport: { once: true, amount: 0.2 }
+      })
+    };
+
+    // Render with motion after hydration
+    return (
+      <MotionComponent className={className} {...safeMotionProps}>
+        {children}
+      </MotionComponent>
+    );
+  } catch (error) {
+    console.warn('Motion component error, falling back to static:', error);
+    setHasError(true);
+    
+    // Immediate fallback
+    if (as === 'div') {
+      return <div className={className}>{children}</div>;
+    }
+    if (as === 'section') {
+      return <section className={className}>{children}</section>;
+    }
+    if (as === 'h1') {
+      return <h1 className={className}>{children}</h1>;
+    }
+    if (as === 'h2') {
+      return <h2 className={className}>{children}</h2>;
+    }
+    if (as === 'h3') {
+      return <h3 className={className}>{children}</h3>;
+    }
+    if (as === 'p') {
+      return <p className={className}>{children}</p>;
+    }
+    return <div className={className}>{children}</div>;
+  }
 }

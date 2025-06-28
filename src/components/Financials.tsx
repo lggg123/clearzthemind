@@ -145,6 +145,7 @@ const Financials: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
@@ -166,6 +167,7 @@ const Financials: React.FC = () => {
                 key={metric.label}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className={`bg-white p-8 rounded-3xl shadow-lg border border-gray-100 text-center hover:shadow-xl ${colors.border} transition-all duration-300 group`}
               >
@@ -188,6 +190,7 @@ const Financials: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
           transition={{ duration: 0.8 }}
           className="mb-20"
         >
@@ -202,6 +205,7 @@ const Financials: React.FC = () => {
                 key={card.label}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 className="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 hover:shadow-xl hover:border-sky-200 transition-all duration-300 group text-center"
               >
@@ -217,6 +221,7 @@ const Financials: React.FC = () => {
                   <motion.div
                     initial={{ width: 0 }}
                     whileInView={{ width: card.barWidth }}
+                    viewport={{ once: false, amount: 0.2 }}
                     transition={{ duration: 1.5, delay: index * 0.2 }}
                     className="h-full bg-gradient-to-r from-sky-300 to-sky-500 rounded-full"
                   />
@@ -232,6 +237,7 @@ const Financials: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
           transition={{ duration: 0.8 }}
           className="mb-20"
         >
@@ -324,6 +330,7 @@ const Financials: React.FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
           transition={{ duration: 0.8 }}
           className="mb-20"
         >
@@ -394,6 +401,7 @@ const Financials: React.FC = () => {
                 key={milestone.phase}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, amount: 0.2 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ 
                   scale: 1.05,
@@ -467,6 +475,7 @@ const Financials: React.FC = () => {
                       <motion.div
                         initial={{ width: 0 }}
                         whileInView={{ width: `${(index + 1) * 20}%` }}
+                        viewport={{ once: false, amount: 0.2 }}
                         transition={{ duration: 1.5, delay: index * 0.2 }}
                         className={`h-full rounded-full bg-gradient-to-r ${milestone.bgGradient} group-hover:animate-pulse`}
                       />
@@ -514,6 +523,7 @@ const Financials: React.FC = () => {
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.8, delay: 0.5 }}
             className="mt-12 bg-gradient-to-r from-gray-50 to-cyan-50 rounded-3xl p-8 border border-gray-200"
           >
