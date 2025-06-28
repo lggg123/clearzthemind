@@ -6,6 +6,11 @@ const nextConfig: NextConfig = {
   // Server external packages (moved from experimental)
   serverExternalPackages: ['@supabase/supabase-js'],
 
+  // Experimental features for better SSR with motion
+  experimental: {
+    optimizePackageImports: ['framer-motion'],
+  },
+
   // Image optimization
   images: {
     remotePatterns: [

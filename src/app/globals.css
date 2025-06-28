@@ -826,10 +826,20 @@ nav:not(.investment-pitch-container nav) .flex.items-center.gap-3 {
   }
 }
 
-/* Mobile navigation button - only show on mobile */
+/* Mobile navigation button - ensure it's always visible */
 @media (max-width: 767px) {
-  nav:not(.investment-pitch-container nav) .mobile-menu-btn {
+  .mobile-menu-btn {
     display: flex !important;
+    position: relative !important;
+    margin-left: auto !important;
+    z-index: 1001 !important;
+  }
+  
+  /* Force display even on investment pitch page */
+  .investment-pitch-container nav .mobile-menu-btn {
+    display: flex !important;
+    position: relative !important;
+    margin-left: auto !important;
   }
 }
 

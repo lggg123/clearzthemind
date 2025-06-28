@@ -5,10 +5,13 @@ import Link from 'next/link';
 import { Sparkles, Star, TrendingUp, Brain, Heart, Users, DollarSign, Zap } from 'lucide-react';
 import './pitch-styles.css';
 import NavigationBar from '@/components/NavBar';
+import ClientMotionWrapper from '@/components/ClientMotionWrapper';
+import MotionProvider from '@/components/MotionProvider';
 
 export default function PitchPage() {
   return (
-    <div className="bg-black text-white min-h-screen relative overflow-hidden">
+    <MotionProvider>
+      <div className="bg-black text-white min-h-screen relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
@@ -190,7 +193,7 @@ export default function PitchPage() {
             </span>
           </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <motion.div
+            <ClientMotionWrapper
               initial={{ opacity: 0, y: 50, rotateX: 15 }}
               whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
               transition={{ duration: 0.8, delay: 0.1 }}
@@ -204,9 +207,9 @@ export default function PitchPage() {
                 <h3 className="text-3xl font-black text-red-400 mb-6">1 Death Every 11 Minutes</h3>
                 <p className="text-gray-300 text-lg leading-relaxed">Suicide rates have increased 50% among teens in the last decade. The current system is failing our most vulnerable.</p>
               </div>
-            </motion.div>
+            </ClientMotionWrapper>
             
-            <motion.div
+            <ClientMotionWrapper
               initial={{ opacity: 0, y: 50, rotateX: 15 }}
               whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -220,9 +223,9 @@ export default function PitchPage() {
                 <h3 className="text-3xl font-black text-orange-400 mb-6">970M People Affected</h3>
                 <p className="text-gray-300 text-lg leading-relaxed">Nearly 1 billion people worldwide suffer from mental health issues, with limited access to effective treatment.</p>
               </div>
-            </motion.div>
+            </ClientMotionWrapper>
             
-            <motion.div
+            <ClientMotionWrapper
               initial={{ opacity: 0, y: 50, rotateX: 15 }}
               whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
@@ -236,7 +239,7 @@ export default function PitchPage() {
                 <h3 className="text-3xl font-black text-yellow-400 mb-6">$4.2T Economic Impact</h3>
                 <p className="text-gray-300 text-lg leading-relaxed">Mental health issues cost the global economy trillions in lost productivity and healthcare expenses annually.</p>
               </div>
-            </motion.div>
+            </ClientMotionWrapper>
           </div>
         </div>
       </section>
@@ -291,7 +294,7 @@ export default function PitchPage() {
                   { icon: Heart, text: "24/7 availability with instant crisis response protocols", color: "pink" },
                   { icon: TrendingUp, text: "Predictive analytics to prevent crises before they occur", color: "green" }
                 ].map((item, index) => (
-                  <motion.div
+                  <ClientMotionWrapper
                     key={index}
                     initial={{ opacity: 0, x: -30 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -304,7 +307,7 @@ export default function PitchPage() {
                     <span className="text-gray-300 text-xl leading-relaxed group-hover:text-white transition-colors text-left max-w-md">
                       {item.text}
                     </span>
-                  </motion.div>
+                  </ClientMotionWrapper>
                 ))}
               </div>
             </motion.div>
@@ -365,7 +368,7 @@ export default function PitchPage() {
               { value: "$50B", label: "Digital Health TAM", desc: "Total addressable market for AI solutions", color: "pink" },
               { value: "$10M", label: "Series A Funding", desc: "Investment needed to save millions of lives", color: "cyan" }
             ].map((item, index) => (
-              <motion.div
+              <ClientMotionWrapper
                 key={index}
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -380,7 +383,7 @@ export default function PitchPage() {
                   <h3 className="text-2xl font-bold text-white mb-4">{item.label}</h3>
                   <p className="text-gray-300 text-lg">{item.desc}</p>
                 </div>
-              </motion.div>
+              </ClientMotionWrapper>
             ))}
           </div>
         </div>
@@ -529,6 +532,7 @@ export default function PitchPage() {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </MotionProvider>
   );
 }

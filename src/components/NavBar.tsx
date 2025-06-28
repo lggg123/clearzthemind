@@ -80,6 +80,33 @@ const NavigationBar: React.FC = () => {
           0%, 100% { opacity: 0.8; }
           50% { opacity: 1; }
         }
+
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+          from { 
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          to { 
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        @keyframes slideInItem {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
         
         /* Ensure no underlines anywhere */
         a, a:hover, a:focus, a:active, a:visited {
@@ -305,16 +332,17 @@ const NavigationBar: React.FC = () => {
             })}
           </div>
 
-          {/* Mobile Menu Button (mobile only, centered with enhanced styling) */}
+          {/* Mobile Menu Button - Enhanced with better positioning */}
           <button
-            className="mobile-menu-btn flex md:hidden absolute top-3 left-1/2 transform -translate-x-1/2 items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 hover:from-cyan-100 hover:to-blue-100 border border-cyan-200 hover:border-cyan-300 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group"
+            className="mobile-menu-btn flex md:hidden items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 hover:from-cyan-100 hover:to-blue-100 border border-cyan-200 hover:border-cyan-300 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group ml-auto"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle mobile menu"
             style={{
               background: 'linear-gradient(135deg, rgba(236, 254, 255, 0.8) 0%, rgba(219, 234, 254, 0.8) 100%)',
               border: '1px solid rgba(34, 211, 238, 0.3)',
               boxShadow: '0 4px 12px rgba(34, 211, 238, 0.15)',
-              display: 'flex'
+              display: 'flex !important',
+              position: 'relative'
             }}
           >
             {isMobileMenuOpen ? (
@@ -328,18 +356,48 @@ const NavigationBar: React.FC = () => {
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay - Full Screen */}
       {isMobileMenuOpen && (
         <div 
-          className="fixed inset-0 z-[999] bg-black/50 backdrop-blur-sm md:hidden"
+          className="fixed inset-0 z-[999] bg-black/80 backdrop-blur-md md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
+          style={{
+            animation: 'fadeIn 0.3s ease-out'
+          }}
         >
           <div 
-            className="fixed top-0 right-0 h-full w-64 bg-white/95 backdrop-blur-md shadow-2xl transform transition-transform duration-300"
+            className="fixed inset-0 bg-white/95 backdrop-blur-xl shadow-2xl flex flex-col items-center justify-center transform transition-all duration-300"
             onClick={(e) => e.stopPropagation()}
+            style={{
+              animation: 'slideIn 0.3s ease-out'
+            }}
           >
-            <div className="flex flex-col p-6 pt-20">
-              {navItems.map((item) => {
+            {/* Close Button */}
+            <button
+              className="absolute top-6 right-6 w-12 h-12 rounded-xl bg-gradient-to-br from-red-50 to-red-100 hover:from-red-100 hover:to-red-200 border border-red-200 hover:border-red-300 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group flex items-center justify-center"
+              onClick={() => setIsMobileMenuOpen(false)}
+              aria-label="Close mobile menu"
+              style={{
+                background: 'linear-gradient(135deg, rgba(254, 226, 226, 0.8) 0%, rgba(252, 165, 165, 0.8) 100%)',
+                border: '1px solid rgba(239, 68, 68, 0.3)',
+                boxShadow: '0 4px 12px rgba(239, 68, 68, 0.15)'
+              }}
+            >
+              <X className="w-6 h-6 text-red-600 group-hover:text-red-700 transition-colors duration-200" />
+            </button>
+
+            {/* Logo Section */}
+            <div className="mb-12 text-center">
+              <div className="flex items-center justify-center gap-3 mb-4">
+                <Brain className="w-12 h-12 text-cyan-500" style={{ filter: 'drop-shadow(0 0 12px rgba(34, 211, 238, 0.4))' }} />
+                <span className="text-4xl font-black text-slate-900">FRANK</span>
+              </div>
+              <p className="text-gray-600 text-lg">Robotics</p>
+            </div>
+
+            {/* Navigation Links */}
+            <div className="flex flex-col items-center space-y-6 w-full max-w-sm px-8">
+              {navItems.map((item, index) => {
                 const isActive = pathname === item.href;
                 const colorClasses = getColorClasses(item.color, isActive);
                 
@@ -347,11 +405,11 @@ const NavigationBar: React.FC = () => {
                   <Link
                     key={item.id}
                     href={item.href}
-                    className={`font-semibold py-4 px-5 rounded-xl mb-3 transition-all duration-300 ${colorClasses.text} no-underline hover:scale-105 transform-gpu nav-link`}
+                    className={`w-full text-center font-bold py-4 px-8 rounded-2xl transition-all duration-300 ${colorClasses.text} no-underline hover:scale-105 transform-gpu nav-link text-xl`}
                     style={{
                       ...colorClasses.style,
-                      fontWeight: '600',
-                      fontSize: '1rem',
+                      fontWeight: '700',
+                      fontSize: '1.25rem',
                       letterSpacing: '0.025em',
                       textDecoration: 'none !important',
                       textTransform: 'uppercase',
@@ -360,42 +418,38 @@ const NavigationBar: React.FC = () => {
                                                   item.color === 'blue' ? 'rgba(96, 165, 250, 0.15)' :
                                                   item.color === 'purple' ? 'rgba(192, 132, 252, 0.15)' :
                                                   item.color === 'pink' ? 'rgba(244, 114, 182, 0.15)' :
-                                                  'rgba(74, 222, 128, 0.15)'}` : 'transparent',
-                      borderLeft: isActive ? `3px solid ${
+                                                  'rgba(74, 222, 128, 0.15)'}` : 'rgba(255, 255, 255, 0.1)',
+                      border: isActive ? `2px solid ${
                         item.color === 'cyan' ? '#22d3ee' :
                         item.color === 'blue' ? '#60a5fa' :
                         item.color === 'purple' ? '#c084fc' :
                         item.color === 'pink' ? '#f472b6' :
                         '#4ade80'
-                      }` : '3px solid transparent'
+                      }` : '2px solid rgba(0, 0, 0, 0.1)',
+                      boxShadow: isActive ? `0 8px 24px ${
+                        item.color === 'cyan' ? 'rgba(34, 211, 238, 0.3)' :
+                        item.color === 'blue' ? 'rgba(96, 165, 250, 0.3)' :
+                        item.color === 'purple' ? 'rgba(192, 132, 252, 0.3)' :
+                        item.color === 'pink' ? 'rgba(244, 114, 182, 0.3)' :
+                        'rgba(74, 222, 128, 0.3)'
+                      }` : '0 4px 12px rgba(0, 0, 0, 0.1)',
+                      animation: `slideInItem 0.3s ease-out ${index * 0.1}s both`
                     }}
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <span style={{ textDecoration: 'none !important' }}>
                       {item.label}
                     </span>
-                    {isActive && (
-                      <div 
-                        className="w-2 h-2 rounded-full ml-auto animate-pulse"
-                        style={{
-                          background: item.color === 'cyan' ? '#22d3ee' :
-                                     item.color === 'blue' ? '#60a5fa' :
-                                     item.color === 'purple' ? '#c084fc' :
-                                     item.color === 'pink' ? '#f472b6' :
-                                     '#4ade80',
-                          boxShadow: `0 0 8px ${
-                            item.color === 'cyan' ? 'rgba(34, 211, 238, 0.6)' :
-                            item.color === 'blue' ? 'rgba(96, 165, 250, 0.6)' :
-                            item.color === 'purple' ? 'rgba(192, 132, 252, 0.6)' :
-                            item.color === 'pink' ? 'rgba(244, 114, 182, 0.6)' :
-                            'rgba(74, 222, 128, 0.6)'
-                          }`
-                        }}
-                      />
-                    )}
                   </Link>
                 );
               })}
+            </div>
+
+            {/* Bottom Text */}
+            <div className="mt-12 text-center">
+              <p className="text-gray-500 text-sm">
+                Revolutionizing Mental Healthcare
+              </p>
             </div>
           </div>
         </div>
