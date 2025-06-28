@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Send, AlertTriangle, Activity, Brain, Zap } from 'lucide-react';
+import { Send, AlertTriangle, Activity, Brain, Zap, MessageSquare } from 'lucide-react';
 import FrankAvatar from './FrankAvatar';
 import { Message } from '@/types';
 
@@ -449,47 +449,128 @@ export default function ChatInterface() {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input */}
+        {/* Enhanced Input Area */}
         <motion.div 
-          className="flex gap-2 md:gap-3 p-3 rounded-xl bg-white/50 backdrop-blur-sm border border-white/20"
+          className="p-4 md:p-6 lg:p-8 rounded-2xl bg-gradient-to-r from-white/60 via-white/50 to-white/60 backdrop-blur-md border border-white/30 shadow-xl"
           whileHover={{ scale: 1.01 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <div className="flex-1 relative">
-            <motion.input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && !e.shiftKey && sendMessage()}
-              placeholder="Tell me what's really going on..."
-              className="w-full px-4 md:px-5 py-3 md:py-4 rounded-xl bg-white/80 border border-white/30 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all text-sm md:text-base placeholder-gray-500"
-              disabled={isLoading}
-              whileFocus={{ scale: 1.01 }}
-            />
-            {input.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-xs text-gray-400"
-              >
-                {input.length}/500
-              </motion.div>
-            )}
+          {/* Input Section Header */}
+          <div className="flex items-center gap-3 mb-4 md:mb-6">
+            <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+              <MessageSquare className="w-4 h-4 md:w-5 md:h-5 text-white" />
+            </div>
+            <div>
+              <h3 className="text-lg md:text-xl font-bold text-gray-800">Share what&apos;s on your mind</h3>
+              <p className="text-sm md:text-base text-gray-600">FRANK is here to listen and support you</p>
+            </div>
           </div>
-          <motion.button
-            onClick={sendMessage}
-            disabled={isLoading || !input.trim()}
-            className="px-4 md:px-6 py-3 md:py-4 rounded-xl bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-blue-500/25"
-            whileHover={{ scale: isLoading || !input.trim() ? 1 : 1.05 }}
-            whileTap={{ scale: isLoading || !input.trim() ? 1 : 0.95 }}
+
+          <div className="flex flex-col md:flex-row gap-4 md:gap-6">
+            {/* Enhanced Text Input */}
+            <div className="flex-1 relative">
+              <motion.textarea
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                  }
+                }}
+                placeholder="Tell me what's really going on... I'm here to listen without judgment. Take your time and share as much or as little as you'd like."
+                className="w-full h-24 md:h-32 lg:h-40 px-5 md:px-6 lg:px-7 py-4 md:py-5 lg:py-6 rounded-2xl bg-white/90 border-2 border-white/40 focus:outline-none focus:ring-4 focus:ring-blue-500/30 focus:border-blue-500/60 transition-all text-base md:text-lg lg:text-xl placeholder-gray-500 resize-none leading-relaxed shadow-inner"
+                style={{
+                  fontSize: 'clamp(16px, 2.5vw, 20px)',
+                  lineHeight: '1.6'
+                }}
+                disabled={isLoading}
+                whileFocus={{ scale: 1.01 }}
+              />
+              
+              {/* Character Count and Tips */}
+              <div className="absolute bottom-3 right-3 flex items-center gap-3">
+                {input.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-sm text-gray-500 bg-white/70 px-2 py-1 rounded-full"
+                  >
+                    {input.length}/1000
+                  </motion.div>
+                )}
+                
+                {/* Helpful Tips */}
+                <motion.div
+                  className="text-xs text-gray-400 bg-white/60 px-3 py-1 rounded-full hidden md:block"
+                  animate={{ opacity: [0.6, 1, 0.6] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  Press Enter to send • Shift+Enter for new line
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Enhanced Send Button */}
+            <div className="flex flex-col justify-between">
+              <motion.button
+                onClick={sendMessage}
+                disabled={isLoading || !input.trim()}
+                className="w-full md:w-auto px-6 md:px-8 lg:px-10 py-4 md:py-5 lg:py-6 rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 text-white hover:from-blue-600 hover:via-purple-600 hover:to-cyan-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-xl shadow-blue-500/30 font-bold text-base md:text-lg lg:text-xl min-h-[60px] md:min-h-[80px] lg:min-h-[100px] flex items-center justify-center gap-3"
+                whileHover={{ 
+                  scale: isLoading || !input.trim() ? 1 : 1.05,
+                  boxShadow: "0 20px 40px rgba(59, 130, 246, 0.4)"
+                }}
+                whileTap={{ scale: isLoading || !input.trim() ? 1 : 0.95 }}
+              >
+                <motion.div
+                  animate={isLoading ? { rotate: 360 } : {}}
+                  transition={isLoading ? { duration: 1, repeat: Infinity, ease: "linear" } : {}}
+                >
+                  <Send className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7" />
+                </motion.div>
+                <span className="hidden md:inline">
+                  {isLoading ? 'Thinking...' : 'Send Message'}
+                </span>
+              </motion.button>
+
+              {/* Quick Suggestion Buttons for Desktop/Tablet */}
+              <div className="hidden md:flex flex-col gap-2 mt-4">
+                <p className="text-xs text-gray-500 text-center mb-2">Quick starts:</p>
+                {[
+                  "I'm feeling overwhelmed",
+                  "I need someone to talk to",
+                  "Help me understand my emotions"
+                ].map((suggestion, index) => (
+                  <motion.button
+                    key={suggestion}
+                    onClick={() => setInput(suggestion)}
+                    className="text-xs px-3 py-2 rounded-full bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 hover:from-blue-100 hover:to-purple-100 hover:text-blue-700 transition-all border border-gray-200 hover:border-blue-300"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 + index * 0.1 }}
+                  >
+                    {suggestion}
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Encouragement Text */}
+          <motion.div
+            className="mt-4 md:mt-6 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8 }}
           >
-            <motion.div
-              animate={isLoading ? { rotate: 360 } : {}}
-              transition={isLoading ? { duration: 1, repeat: Infinity, ease: "linear" } : {}}
-            >
-              <Send className="w-4 h-4 md:w-5 md:h-5" />
-            </motion.div>
-          </motion.button>
+            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+              Remember: This is a safe space. Share as much or as little as you&apos;re comfortable with. 
+              <span className="text-blue-600 font-medium"> FRANK is here to support you.</span>
+            </p>
+          </motion.div>
         </motion.div>
 
         {/* Crisis Resources */}

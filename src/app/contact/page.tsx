@@ -95,6 +95,28 @@ export default function ContactPage() {
         .no-underline:hover {
           text-decoration: none !important;
         }
+        /* Force override any background color classes */
+        .bg-green-400 {
+          background-color: #4ade80 !important;
+        }
+        .bg-cyan-400 {
+          background-color: #22d3ee !important;
+        }
+        .bg-purple-400 {
+          background-color: #c084fc !important;
+        }
+        .text-green-400 {
+          color: #4ade80 !important;
+        }
+        .text-cyan-400 {
+          color: #22d3ee !important;
+        }
+        .text-purple-400 {
+          color: #c084fc !important;
+        }
+        .text-blue-400 {
+          color: #60a5fa !important;
+        }
       `}</style>
       <div className="min-h-screen bg-black text-white">
       {/* Header */}
@@ -338,31 +360,31 @@ export default function ContactPage() {
             >
               {/* Direct Contact */}
               <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-700">
-                <h3 className="text-2xl font-bold text-blue-400 mb-6">Direct Contact</h3>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3">
+                <h3 className="text-2xl font-bold text-blue-400 mb-6 text-center">Direct Contact</h3>
+                <div className="space-y-4 flex flex-col items-center">
+                  <div className="flex items-center gap-3 w-full justify-center">
                     <Mail className="w-5 h-5 text-blue-400" />
-                    <div>
+                    <div className="text-center">
                       <div className="text-white font-semibold">Email</div>
                       <a 
                         href="mailto:contact@frank-robotics.xyz"
                         className="text-blue-400 hover:text-blue-300 transition-colors no-underline"
-                        style={{ textDecoration: 'none', color: '#60a5fa' }}
+                        style={{ textDecoration: 'none !important', color: '#60a5fa !important' }}
                       >
                         contact@frank-robotics.xyz
                       </a>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 w-full justify-center">
                     <Building className="w-5 h-5 text-blue-400" />
-                    <div>
+                    <div className="text-center">
                       <div className="text-white font-semibold">Company</div>
                       <div className="text-gray-400">FRANK Robotics Inc.</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 w-full justify-center">
                     <MapPin className="w-5 h-5 text-blue-400" />
-                    <div>
+                    <div className="text-center">
                       <div className="text-white font-semibold">Location</div>
                       <div className="text-gray-400">United States</div>
                     </div>
@@ -372,7 +394,7 @@ export default function ContactPage() {
 
               {/* Response Times */}
               <div className="bg-gray-900/50 p-6 rounded-xl border border-gray-700">
-                <h3 className="text-2xl font-bold text-green-400 mb-4">Response Times</h3>
+                <h3 className="text-2xl font-bold text-green-400 mb-4 text-center">Response Times</h3>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
                     <span className="text-gray-300">Investment Inquiries</span>
@@ -396,25 +418,37 @@ export default function ContactPage() {
                   <Link
                     href="/showcase"
                     className="flex items-center gap-2 text-green-400 hover:text-green-300 transition-colors p-3 rounded-lg hover:bg-green-400/10 w-full justify-center no-underline"
-                    style={{ textDecoration: 'none', color: '#4ade80' }}
+                    style={{ 
+                      textDecoration: 'none !important', 
+                      color: '#4ade80 !important',
+                      backgroundColor: 'rgba(74, 222, 128, 0.1)'
+                    }}
                   >
-                    <div className="w-2 h-2 bg-green-400 rounded-full" />
+                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#4ade80' }} />
                     Schedule a Live Demo
                   </Link>
                   <Link
                     href="/executive-summary"
                     className="flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors p-3 rounded-lg hover:bg-cyan-400/10 w-full justify-center no-underline"
-                    style={{ textDecoration: 'none', color: '#22d3ee' }}
+                    style={{ 
+                      textDecoration: 'none !important', 
+                      color: '#22d3ee !important',
+                      backgroundColor: 'rgba(34, 211, 238, 0.1)'
+                    }}
                   >
-                    <div className="w-2 h-2 bg-cyan-400 rounded-full" />
+                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#22d3ee' }} />
                     View Executive Summary
                   </Link>
                   <Link
                     href="/waitlist"
                     className="flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors p-3 rounded-lg hover:bg-purple-400/10 w-full justify-center no-underline"
-                    style={{ textDecoration: 'none', color: '#c084fc' }}
+                    style={{ 
+                      textDecoration: 'none !important', 
+                      color: '#c084fc !important',
+                      backgroundColor: 'rgba(192, 132, 252, 0.1)'
+                    }}
                   >
-                    <div className="w-2 h-2 bg-purple-400 rounded-full" />
+                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: '#c084fc' }} />
                     Join Early Access List
                   </Link>
                 </div>
