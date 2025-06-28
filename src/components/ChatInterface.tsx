@@ -160,9 +160,7 @@ export default function ChatInterface() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  return (
+  };  return (
     <>
       <style jsx>{`
         .custom-scrollbar::-webkit-scrollbar {
@@ -180,48 +178,55 @@ export default function ChatInterface() {
           background: rgba(59, 130, 246, 0.7);
         }
       `}</style>
-      <div className="flex h-[500px] md:h-[600px] lg:h-[650px] w-full glass-morphism rounded-2xl p-4 md:p-6 relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-cyan-500/5"></div>
-        {neuralActivity.pathwayActive && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-cyan-500/10"
-          />
-        )}
-        {/* Floating particles */}
-        {Array.from({ length: 8 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-blue-400/30 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -20, 0],
-              opacity: [0.3, 0.8, 0.3],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
-      </div>
+      
+      <div className={`
+        flex h-screen sm:h-[500px] md:h-[600px] lg:h-[650px] w-full glass-morphism rounded-none sm:rounded-2xl p-2 sm:p-4 md:p-6 relative overflow-hidden
+        max-sm:fixed max-sm:inset-0 max-sm:z-50 max-sm:bg-black/95 max-sm:backdrop-blur-xl
+      `}>
+        {/* Animated Background */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-cyan-500/5"></div>
+          {neuralActivity.pathwayActive && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-cyan-500/10"
+            />
+          )}
+          {/* Floating particles */}
+          {Array.from({ length: 8 }).map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-blue-400/30 rounded-full hidden md:block"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+              }}
+              animate={{
+                y: [0, -20, 0],
+                opacity: [0.3, 0.8, 0.3],
+              }}
+              transition={{
+                duration: 3 + Math.random() * 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
+        </div>
 
-      {/* Main Chat Column */}
-      <div className="flex flex-col flex-1 relative">
-        {/* Header */}
-        <motion.div 
-          className="flex items-center justify-between mb-4 md:mb-6 p-3 rounded-xl bg-white/50 backdrop-blur-sm border border-white/20"
-          whileHover={{ scale: 1.01 }}
-          transition={{ type: "spring", stiffness: 300 }}
-        >
+        {/* Main Chat Column */}
+        <div className="flex flex-col flex-1 relative max-sm:h-full">
+          {/* Header */}
+          <motion.div 
+            className={`
+              flex items-center justify-between mb-3 sm:mb-4 md:mb-6 p-2 sm:p-3 rounded-xl bg-white/50 backdrop-blur-sm border border-white/20
+              max-sm:sticky max-sm:top-0 max-sm:z-10 max-sm:bg-black/90 max-sm:border-white/10
+            `}
+            whileHover={{ scale: 1.01 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
           <div className="flex items-center gap-3 md:gap-4">
             <motion.div
               whileHover={{ scale: 1.1, rotate: 5 }}
@@ -314,7 +319,7 @@ export default function ChatInterface() {
         </motion.div>
 
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto space-y-3 md:space-y-4 mb-3 md:mb-4 px-1 custom-scrollbar">
+        <div className="flex-1 overflow-y-auto space-y-2 sm:space-y-3 md:space-y-4 mb-3 md:mb-4 px-1 custom-scrollbar max-sm:pb-32">
           <AnimatePresence mode="popLayout">
             {messages.length === 0 && (
               <motion.div
@@ -377,7 +382,7 @@ export default function ChatInterface() {
               >
                 <motion.div
                   whileHover={{ scale: 1.02 }}
-                  className={`max-w-[85%] md:max-w-[70%] p-3 md:p-4 rounded-2xl relative ${
+                  className={`max-w-[90%] sm:max-w-[85%] md:max-w-[70%] p-2 sm:p-3 md:p-4 rounded-2xl relative text-sm sm:text-base ${
                     message.role === 'user'
                       ? 'bg-gradient-to-br from-blue-500 to-purple-600 text-white ml-auto shadow-lg shadow-blue-500/20'
                       : 'bg-white/70 backdrop-blur-sm border border-white/20 shadow-lg'
@@ -451,22 +456,22 @@ export default function ChatInterface() {
 
         {/* Enhanced Input Area */}
         <motion.div 
-          className="p-4 md:p-6 lg:p-8 rounded-2xl bg-gradient-to-r from-white/60 via-white/50 to-white/60 backdrop-blur-md border border-white/30 shadow-xl"
+          className="p-2 sm:p-4 md:p-6 lg:p-8 rounded-t-2xl sm:rounded-2xl bg-gradient-to-r from-white/60 via-white/50 to-white/60 backdrop-blur-md border border-white/30 shadow-xl max-sm:fixed max-sm:bottom-0 max-sm:left-0 max-sm:right-0 max-sm:z-20 max-sm:bg-black/90 max-sm:border-white/10"
           whileHover={{ scale: 1.01 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
           {/* Input Section Header */}
-          <div className="flex items-center gap-3 mb-4 md:mb-6">
-            <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-              <MessageSquare className="w-4 h-4 md:w-5 md:h-5 text-white" />
+          <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-4 md:mb-6">
+            <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+              <MessageSquare className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white" />
             </div>
             <div>
-              <h3 className="text-lg md:text-xl font-bold text-gray-800">Share what&apos;s on your mind</h3>
-              <p className="text-sm md:text-base text-gray-600">FRANK is here to listen and support you</p>
+              <h3 className="text-base sm:text-lg md:text-xl font-bold text-gray-100 sm:text-gray-800">Share what&apos;s on your mind</h3>
+              <p className="text-xs sm:text-sm md:text-base text-gray-300 sm:text-gray-600">FRANK is here to listen and support you</p>
             </div>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-4 md:gap-6">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6">
             {/* Enhanced Text Input */}
             <div className="flex-1 relative">
               <motion.textarea
@@ -479,7 +484,7 @@ export default function ChatInterface() {
                   }
                 }}
                 placeholder="Tell me what's really going on... I'm here to listen without judgment. Take your time and share as much or as little as you'd like."
-                className="w-full h-24 md:h-32 lg:h-40 px-5 md:px-6 lg:px-7 py-4 md:py-5 lg:py-6 rounded-2xl bg-white/90 border-2 border-white/40 focus:outline-none focus:ring-4 focus:ring-blue-500/30 focus:border-blue-500/60 transition-all text-base md:text-lg lg:text-xl placeholder-gray-500 resize-none leading-relaxed shadow-inner"
+                className="w-full h-20 sm:h-24 md:h-32 lg:h-40 px-3 sm:px-5 md:px-6 lg:px-7 py-3 sm:py-4 md:py-5 lg:py-6 rounded-2xl bg-white/90 border-2 border-white/40 focus:outline-none focus:ring-4 focus:ring-blue-500/30 focus:border-blue-500/60 transition-all text-sm sm:text-base md:text-lg lg:text-xl placeholder-gray-500 resize-none leading-relaxed shadow-inner max-sm:bg-white/95 max-sm:text-gray-800"
                 style={{
                   fontSize: 'clamp(16px, 2.5vw, 20px)',
                   lineHeight: '1.6'
@@ -489,12 +494,12 @@ export default function ChatInterface() {
               />
               
               {/* Character Count and Tips */}
-              <div className="absolute bottom-3 right-3 flex items-center gap-3">
+              <div className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 flex items-center gap-2 sm:gap-3">
                 {input.length > 0 && (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="text-sm text-gray-500 bg-white/70 px-2 py-1 rounded-full"
+                    className="text-xs sm:text-sm text-gray-500 bg-white/70 px-2 py-1 rounded-full"
                   >
                     {input.length}/1000
                   </motion.div>
@@ -502,7 +507,7 @@ export default function ChatInterface() {
                 
                 {/* Helpful Tips */}
                 <motion.div
-                  className="text-xs text-gray-400 bg-white/60 px-3 py-1 rounded-full hidden md:block"
+                  className="text-xs text-gray-400 bg-white/60 px-2 sm:px-3 py-1 rounded-full hidden sm:block"
                   animate={{ opacity: [0.6, 1, 0.6] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 >
@@ -512,11 +517,11 @@ export default function ChatInterface() {
             </div>
 
             {/* Enhanced Send Button */}
-            <div className="flex flex-col justify-between">
+            <div className="flex flex-row sm:flex-col justify-between">
               <motion.button
                 onClick={sendMessage}
                 disabled={isLoading || !input.trim()}
-                className="w-full md:w-auto px-6 md:px-8 lg:px-10 py-4 md:py-5 lg:py-6 rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 text-white hover:from-blue-600 hover:via-purple-600 hover:to-cyan-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-xl shadow-blue-500/30 font-bold text-base md:text-lg lg:text-xl min-h-[60px] md:min-h-[80px] lg:min-h-[100px] flex items-center justify-center gap-3"
+                className="flex-1 sm:flex-none sm:w-full md:w-auto px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 lg:py-6 rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 text-white hover:from-blue-600 hover:via-purple-600 hover:to-cyan-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-xl shadow-blue-500/30 font-bold text-sm sm:text-base md:text-lg lg:text-xl min-h-[50px] sm:min-h-[60px] md:min-h-[80px] lg:min-h-[100px] flex items-center justify-center gap-2 sm:gap-3"
                 whileHover={{ 
                   scale: isLoading || !input.trim() ? 1 : 1.05,
                   boxShadow: "0 20px 40px rgba(59, 130, 246, 0.4)"
@@ -527,10 +532,13 @@ export default function ChatInterface() {
                   animate={isLoading ? { rotate: 360 } : {}}
                   transition={isLoading ? { duration: 1, repeat: Infinity, ease: "linear" } : {}}
                 >
-                  <Send className="w-5 h-5 md:w-6 md:h-6 lg:w-7 lg:h-7" />
+                  <Send className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7" />
                 </motion.div>
-                <span className="hidden md:inline">
+                <span className="hidden sm:inline">
                   {isLoading ? 'Thinking...' : 'Send Message'}
+                </span>
+                <span className="sm:hidden">
+                  {isLoading ? 'Thinking...' : 'Send'}
                 </span>
               </motion.button>
 
@@ -556,19 +564,37 @@ export default function ChatInterface() {
                   </motion.button>
                 ))}
               </div>
+              
+              {/* Quick Suggestion Buttons for Mobile */}
+              <div className="flex sm:hidden gap-2 mt-3 ml-3">
+                <motion.button
+                  onClick={() => setInput("I'm feeling overwhelmed")}
+                  className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700 border border-gray-200"
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Overwhelmed
+                </motion.button>
+                <motion.button
+                  onClick={() => setInput("I need someone to talk to")}
+                  className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700 border border-gray-200"
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Need to talk
+                </motion.button>
+              </div>
             </div>
           </div>
 
           {/* Encouragement Text */}
           <motion.div
-            className="mt-4 md:mt-6 text-center"
+            className="mt-2 sm:mt-4 md:mt-6 text-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.8 }}
           >
-            <p className="text-sm md:text-base text-gray-600 leading-relaxed">
+            <p className="text-xs sm:text-sm md:text-base text-gray-300 sm:text-gray-600 leading-relaxed">
               Remember: This is a safe space. Share as much or as little as you&apos;re comfortable with. 
-              <span className="text-blue-600 font-medium"> FRANK is here to support you.</span>
+              <span className="text-blue-400 sm:text-blue-600 font-medium"> FRANK is here to support you.</span>
             </p>
           </motion.div>
         </motion.div>
@@ -643,8 +669,8 @@ export default function ChatInterface() {
         </AnimatePresence>
       </div>
 
-      {/* Neural Pathway Sidebar */}
-      <div className="w-64 hidden lg:block">
+      {/* Neural Pathway Sidebar - Hidden on Mobile */}
+      <div className="w-64 hidden lg:block md:mr-4">
         <motion.div 
           className="bg-gradient-to-br from-gray-900/80 to-blue-900/60 backdrop-blur-md border border-gray-700/50 rounded-xl p-4 h-full relative overflow-hidden"
           initial={{ opacity: 0, x: 20 }}

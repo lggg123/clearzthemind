@@ -47,7 +47,7 @@ export default function ShowcasePage() {
     switch (activeComponent) {
       case 'chat':
         return (
-          <div className="h-full">
+          <div className="h-full max-sm:fixed max-sm:inset-0 max-sm:z-50">
             <ChatInterface />
           </div>
         );
