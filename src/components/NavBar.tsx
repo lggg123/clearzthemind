@@ -332,35 +332,35 @@ const NavigationBar: React.FC = () => {
             })}
           </div>
 
-          {/* Mobile Menu Button - Centered with proper positioning */}
-          <button
-            className="mobile-menu-btn flex md:hidden items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 hover:from-cyan-100 hover:to-blue-100 border border-cyan-200 hover:border-cyan-300 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label="Toggle mobile menu"
-            style={{
-              background: 'linear-gradient(135deg, rgba(236, 254, 255, 0.8) 0%, rgba(219, 234, 254, 0.8) 100%)',
-              border: '1px solid rgba(34, 211, 238, 0.3)',
-              boxShadow: '0 4px 12px rgba(34, 211, 238, 0.15)',
-              display: 'flex !important',
-              position: 'relative',
-              marginLeft: 'auto'
-            }}
-          >
-            {isMobileMenuOpen ? (
-              <X className="w-6 h-6 text-cyan-600 group-hover:text-cyan-700 transition-colors duration-200" />
-            ) : (
-              <Menu className="w-6 h-6 text-cyan-600 group-hover:text-cyan-700 transition-colors duration-200" />
-            )}
-            {/* Subtle glow effect */}
-            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-cyan-400/10 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </button>
+          {/* Mobile Menu Button - Properly centered */}
+          <div className="flex md:hidden justify-center items-center flex-1">
+            <button
+              className="mobile-menu-btn flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 hover:from-cyan-100 hover:to-blue-100 border border-cyan-200 hover:border-cyan-300 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle mobile menu"
+              style={{
+                background: 'linear-gradient(135deg, rgba(236, 254, 255, 0.8) 0%, rgba(219, 234, 254, 0.8) 100%)',
+                border: '1px solid rgba(34, 211, 238, 0.3)',
+                boxShadow: '0 4px 12px rgba(34, 211, 238, 0.15)',
+                position: 'relative'
+              }}
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6 text-cyan-600 group-hover:text-cyan-700 transition-colors duration-200" />
+              ) : (
+                <Menu className="w-6 h-6 text-cyan-600 group-hover:text-cyan-700 transition-colors duration-200" />
+              )}
+              {/* Subtle glow effect */}
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-cyan-400/10 to-blue-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </button>
+          </div>
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay - Full Screen with higher z-index */}
+      {/* Mobile Menu Overlay - Full Screen with opaque background */}
       {isMobileMenuOpen && (
         <div 
-          className="fixed inset-0 z-[1100] bg-black/80 backdrop-blur-md md:hidden"
+          className="fixed inset-0 z-[1100] md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
           style={{
             animation: 'fadeIn 0.3s ease-out',
@@ -368,19 +368,22 @@ const NavigationBar: React.FC = () => {
             left: 0,
             right: 0,
             bottom: 0,
-            position: 'fixed'
+            position: 'fixed',
+            width: '100vw',
+            height: '100vh',
+            backgroundColor: '#ffffff',
+            backgroundImage: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)'
           }}
         >
           <div 
-            className="fixed inset-0 bg-white/95 backdrop-blur-xl shadow-2xl flex flex-col items-center justify-center transform transition-all duration-300"
+            className="w-full h-full flex flex-col items-center justify-center transform transition-all duration-300"
             onClick={(e) => e.stopPropagation()}
             style={{
               animation: 'slideIn 0.3s ease-out',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              position: 'fixed'
+              width: '100%',
+              height: '100%',
+              backgroundColor: '#ffffff',
+              position: 'relative'
             }}
           >
             {/* Close Button */}
