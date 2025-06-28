@@ -157,18 +157,22 @@ const Financials: React.FC = () => {
         </motion.div>
 
         {/* Key Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-          {metrics.map((metric, index) => {
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.2 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20"
+        >
+          {metrics.map((metric) => {
             const IconComponent = metric.icon;
             const colors = colorClasses[metric.color as keyof typeof colorClasses];
             
             return (
               <motion.div
                 key={metric.label}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ y: -10, scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 className={`bg-white p-8 rounded-3xl shadow-lg border border-gray-100 text-center hover:shadow-xl ${colors.border} transition-all duration-300 group`}
               >
                 <div className={`w-16 h-16 ${colors.bg} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
@@ -184,7 +188,7 @@ const Financials: React.FC = () => {
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
         {/* Revenue Cards */}
         <motion.div
@@ -199,14 +203,18 @@ const Financials: React.FC = () => {
             <p className="text-xl text-gray-600">SaaS-like margins with hardware defensibility</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          >
             {revenueCards.map((card, index) => (
               <motion.div
                 key={card.label}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                whileHover={{ y: -10, scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 className="bg-white p-8 rounded-3xl shadow-lg border border-gray-100 hover:shadow-xl hover:border-sky-200 transition-all duration-300 group text-center"
               >
                 <div className="text-4xl font-black text-sky-500 mb-4 group-hover:scale-110 transition-transform text-center" style={{ color: '#0ea5e9' }}>
@@ -220,8 +228,7 @@ const Financials: React.FC = () => {
                 <div className="w-full bg-gray-200 rounded-full h-3 mb-6 overflow-hidden mx-auto">
                   <motion.div
                     initial={{ width: 0 }}
-                    whileInView={{ width: card.barWidth }}
-                    viewport={{ once: false, amount: 0.2 }}
+                    animate={{ width: card.barWidth }}
                     transition={{ duration: 1.5, delay: index * 0.2 }}
                     className="h-full bg-gradient-to-r from-sky-300 to-sky-500 rounded-full"
                   />
@@ -230,7 +237,7 @@ const Financials: React.FC = () => {
                 <div className="text-gray-600 text-sm text-center leading-relaxed">{card.detail}</div>
               </motion.div>
             ))}
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* Revenue Chart - FIXED VERSION */}
@@ -339,7 +346,13 @@ const Financials: React.FC = () => {
             <p className="text-xl text-gray-600">5,000 units per major deployment phase</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6"
+          >
             {[
               {
                 phase: 'Phase 1',
@@ -399,14 +412,11 @@ const Financials: React.FC = () => {
             ].map((milestone, index) => (
               <motion.div
                 key={milestone.phase}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: false, amount: 0.2 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ 
                   scale: 1.05,
                   y: -10
                 }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
                 className={`bg-white p-6 rounded-3xl shadow-lg border ${milestone.borderColor} hover:shadow-2xl transition-all duration-300 group relative overflow-hidden cursor-pointer`}
                 style={{
                   boxShadow: '0 10px 30px rgba(0, 0, 0, 0.1)',
@@ -474,8 +484,7 @@ const Financials: React.FC = () => {
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <motion.div
                         initial={{ width: 0 }}
-                        whileInView={{ width: `${(index + 1) * 20}%` }}
-                        viewport={{ once: false, amount: 0.2 }}
+                        animate={{ width: `${(index + 1) * 20}%` }}
                         transition={{ duration: 1.5, delay: index * 0.2 }}
                         className={`h-full rounded-full bg-gradient-to-r ${milestone.bgGradient} group-hover:animate-pulse`}
                       />
@@ -517,40 +526,40 @@ const Financials: React.FC = () => {
                 </div>
               </motion.div>
             ))}
+          </motion.div>
+        </motion.div>
+          
+        {/* Summary Stats Below Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: false, amount: 0.3 }}
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="mt-12 bg-gradient-to-r from-gray-50 to-cyan-50 rounded-3xl p-8 border border-gray-200"
+        >
+          <div className="text-center mb-6">
+            <h3 className="text-3xl font-black text-gray-900 mb-2">5-Year Impact Projection</h3>
+            <p className="text-gray-600">Cumulative lives saved through progressive deployment</p>
           </div>
           
-          {/* Summary Stats Below Cards */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, amount: 0.3 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-12 bg-gradient-to-r from-gray-50 to-cyan-50 rounded-3xl p-8 border border-gray-200"
-          >
-            <div className="text-center mb-6">
-              <h3 className="text-3xl font-black text-gray-900 mb-2">5-Year Impact Projection</h3>
-              <p className="text-gray-600">Cumulative lives saved through progressive deployment</p>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
+            <div className="bg-white p-6 rounded-2xl shadow-md border border-cyan-100">
+              <div className="text-3xl font-black text-cyan-500 mb-2">190K+</div>
+              <div className="text-gray-600 text-sm">Total Units Deployed</div>
             </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-center">
-              <div className="bg-white p-6 rounded-2xl shadow-md border border-cyan-100">
-                <div className="text-3xl font-black text-cyan-500 mb-2">190K+</div>
-                <div className="text-gray-600 text-sm">Total Units Deployed</div>
-              </div>
-              <div className="bg-white p-6 rounded-2xl shadow-md border border-emerald-100">
-                <div className="text-3xl font-black text-emerald-500 mb-2">47,000</div>
-                <div className="text-gray-600 text-sm">Lives Saved Annually</div>
-              </div>
-              <div className="bg-white p-6 rounded-2xl shadow-md border border-purple-100">
-                <div className="text-3xl font-black text-purple-500 mb-2">$14.25B</div>
-                <div className="text-gray-600 text-sm">Market Value Created</div>
-              </div>
-              <div className="bg-white p-6 rounded-2xl shadow-md border border-pink-100">
-                <div className="text-3xl font-black text-pink-500 mb-2">85%</div>
-                <div className="text-gray-600 text-sm">Crisis Prevention Rate</div>
-              </div>
+            <div className="bg-white p-6 rounded-2xl shadow-md border border-emerald-100">
+              <div className="text-3xl font-black text-emerald-500 mb-2">47,000</div>
+              <div className="text-gray-600 text-sm">Lives Saved Annually</div>
             </div>
-          </motion.div>
+            <div className="bg-white p-6 rounded-2xl shadow-md border border-purple-100">
+              <div className="text-3xl font-black text-purple-500 mb-2">$14.25B</div>
+              <div className="text-gray-600 text-sm">Market Value Created</div>
+            </div>
+            <div className="bg-white p-6 rounded-2xl shadow-md border border-pink-100">
+              <div className="text-3xl font-black text-pink-500 mb-2">85%</div>
+              <div className="text-gray-600 text-sm">Crisis Prevention Rate</div>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>

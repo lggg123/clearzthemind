@@ -332,9 +332,9 @@ const NavigationBar: React.FC = () => {
             })}
           </div>
 
-          {/* Mobile Menu Button - Enhanced with better positioning */}
+          {/* Mobile Menu Button - Centered with proper positioning */}
           <button
-            className="mobile-menu-btn flex md:hidden items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 hover:from-cyan-100 hover:to-blue-100 border border-cyan-200 hover:border-cyan-300 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group ml-auto"
+            className="mobile-menu-btn flex md:hidden items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-cyan-50 to-blue-50 hover:from-cyan-100 hover:to-blue-100 border border-cyan-200 hover:border-cyan-300 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105 group"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle mobile menu"
             style={{
@@ -342,7 +342,8 @@ const NavigationBar: React.FC = () => {
               border: '1px solid rgba(34, 211, 238, 0.3)',
               boxShadow: '0 4px 12px rgba(34, 211, 238, 0.15)',
               display: 'flex !important',
-              position: 'relative'
+              position: 'relative',
+              marginLeft: 'auto'
             }}
           >
             {isMobileMenuOpen ? (
@@ -356,20 +357,30 @@ const NavigationBar: React.FC = () => {
         </div>
       </nav>
 
-      {/* Mobile Menu Overlay - Full Screen */}
+      {/* Mobile Menu Overlay - Full Screen with higher z-index */}
       {isMobileMenuOpen && (
         <div 
-          className="fixed inset-0 z-[999] bg-black/80 backdrop-blur-md md:hidden"
+          className="fixed inset-0 z-[1100] bg-black/80 backdrop-blur-md md:hidden"
           onClick={() => setIsMobileMenuOpen(false)}
           style={{
-            animation: 'fadeIn 0.3s ease-out'
+            animation: 'fadeIn 0.3s ease-out',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            position: 'fixed'
           }}
         >
           <div 
             className="fixed inset-0 bg-white/95 backdrop-blur-xl shadow-2xl flex flex-col items-center justify-center transform transition-all duration-300"
             onClick={(e) => e.stopPropagation()}
             style={{
-              animation: 'slideIn 0.3s ease-out'
+              animation: 'slideIn 0.3s ease-out',
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              position: 'fixed'
             }}
           >
             {/* Close Button */}
