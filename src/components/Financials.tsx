@@ -139,7 +139,7 @@ const Financials: React.FC = () => {
   };
 
   return (
-    <section className="pt-26 pb-20 px-6 bg-white">
+      <section className="pt-24 pb-20 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
