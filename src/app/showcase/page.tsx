@@ -47,7 +47,7 @@ export default function ShowcasePage() {
     switch (activeComponent) {
       case 'chat':
         return (
-          <div className="h-full max-sm:fixed max-sm:inset-0 max-sm:z-50">
+          <div className="h-full lg:max-sm:fixed lg:max-sm:inset-0 lg:max-sm:z-50">
             <ChatInterface />
           </div>
         );
@@ -169,10 +169,62 @@ export default function ShowcasePage() {
         </div>
       </div>
 
-      <div className="relative max-w-7xl mx-auto p-6 pt-12">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 h-[calc(100vh-12rem)]">
-          {/* Component Selector */}
-          <div className="lg:col-span-1">
+      <div className="relative max-w-7xl mx-auto p-2 sm:p-6 pt-4 sm:pt-12">
+        {/* Mobile Component Selector - Horizontal Bar */}
+        <div className="block lg:hidden mb-4">
+          <motion.div 
+            className="flex justify-between items-center gap-1 bg-gradient-to-r from-blue-900/60 via-purple-900/60 to-cyan-900/60 rounded-xl p-2 border border-gray-700/50 backdrop-blur-md"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            {components.map((component) => {
+              const Icon = component.icon;
+              const isActive = activeComponent === component.id;
+              return (
+                <motion.button
+                  key={component.id}
+                  onClick={() => setActiveComponent(component.id)}
+                  className={`flex-1 flex flex-col items-center justify-center py-3 px-2 rounded-lg transition-all duration-300 ${
+                    isActive 
+                      ? 'bg-gradient-to-br from-blue-500/30 to-purple-500/30 shadow-lg border border-blue-400/30' 
+                      : 'hover:bg-white/10'
+                  }`}
+                  whileTap={{ scale: 0.95 }}
+                  aria-label={component.name}
+                >
+                  <Icon 
+                    className={`w-6 h-6 mb-1 ${
+                      isActive 
+                        ? component.color === 'blue' ? 'text-blue-300' 
+                          : component.color === 'purple' ? 'text-purple-300'
+                          : component.color === 'cyan' ? 'text-cyan-300'
+                          : 'text-green-300'
+                        : 'text-gray-400'
+                    }`} 
+                  />
+                  <span className={`text-[10px] font-medium ${
+                    isActive ? 'text-white' : 'text-gray-400'
+                  }`}>
+                    {component.name.split(' ')[0]}
+                  </span>
+                  {isActive && (
+                    <motion.div
+                      className="w-1 h-1 bg-white rounded-full mt-1"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ duration: 0.2 }}
+                    />
+                  )}
+                </motion.button>
+              );
+            })}
+          </motion.div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-2 lg:gap-8 h-[calc(100vh-8rem)] sm:h-[calc(100vh-10rem)] lg:h-[calc(100vh-12rem)]">
+          {/* Component Selector - Desktop Only */}
+          <div className="hidden lg:block lg:col-span-1">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -484,50 +536,51 @@ export default function ShowcasePage() {
           </div>
 
           {/* Enhanced Component Display */}
-          <div className="lg:col-span-3">
+          <div className="col-span-1 lg:col-span-3">
             <motion.div
               key={activeComponent}
               initial={{ opacity: 0, y: 20, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.4, type: "spring", stiffness: 300 }}
-              className="h-full bg-gradient-to-br from-gray-900/50 to-gray-800/30 rounded-3xl border border-gray-700/50 overflow-hidden relative backdrop-blur-sm"
-            >
-              {/* Header for component display */}
-              <div className="p-4 bg-gradient-to-r from-gray-800/50 to-gray-900/50 border-b border-gray-700/50 flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  {(() => {
-                    const component = components.find(c => c.id === activeComponent);
-                    if (!component) return null;
-                    const Icon = component.icon;
-                    const colorMap = {
-                      blue: 'text-blue-400',
-                      purple: 'text-purple-400',
-                      cyan: 'text-cyan-400',
-                      green: 'text-green-400'
-                    };
-                    const iconColor = colorMap[component.color as keyof typeof colorMap] || 'text-blue-400';
-                    
-                    return (
-                      <>
-                        <div className={`w-8 h-8 rounded-lg bg-current/10 flex items-center justify-center ${iconColor}`}>
-                          <Icon className="w-5 h-5" />
-                        </div>
-                        <div>
-                          <h3 className="font-bold text-white">{component.name}</h3>
-                          <p className="text-sm text-gray-400">{component.description}</p>
-                        </div>
-                      </>
-                    );
-                  })()}
+              className="h-full bg-gradient-to-br from-gray-900/50 to-gray-800/30 rounded-xl lg:rounded-3xl border border-gray-700/50 overflow-hidden relative backdrop-blur-sm"
+            >              {/* Header for component display - Show for non-chat or desktop */}
+              {activeComponent !== 'chat' && (
+                <div className="p-3 lg:p-4 bg-gradient-to-r from-gray-800/50 to-gray-900/50 border-b border-gray-700/50 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    {(() => {
+                      const component = components.find(c => c.id === activeComponent);
+                      if (!component) return null;
+                      const Icon = component.icon;
+                      const colorMap = {
+                        blue: 'text-blue-400',
+                        purple: 'text-purple-400',
+                        cyan: 'text-cyan-400',
+                        green: 'text-green-400'
+                      };
+                      const iconColor = colorMap[component.color as keyof typeof colorMap] || 'text-blue-400';
+                      
+                      return (
+                        <>
+                          <div className={`w-6 h-6 lg:w-8 lg:h-8 rounded-lg bg-current/10 flex items-center justify-center ${iconColor}`}>
+                            <Icon className="w-4 h-4 lg:w-5 lg:h-5" />
+                          </div>
+                          <div>
+                            <h3 className="font-bold text-white text-sm lg:text-base">{component.name}</h3>
+                            <p className="text-xs lg:text-sm text-gray-400">{component.description}</p>
+                          </div>
+                        </>
+                      );
+                    })()}
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span className="text-xs text-green-400 font-medium">LIVE</span>
+                  </div>
                 </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-xs text-green-400 font-medium">LIVE</span>
-                </div>
-              </div>
+              )}
               
               {/* Component content */}
-              <div className="h-[calc(100%-80px)]">
+              <div className={`${activeComponent === 'chat' ? 'h-full' : 'h-[calc(100%-70px)]'}`}>
                 {renderComponent()}
               </div>
             </motion.div>
