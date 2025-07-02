@@ -347,7 +347,7 @@ export default function ChatInterface() {
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center mt-6">
                   {[
-                    "I&apos;m feeling overwhelmed...",
+                    "I'm feeling overwhelmed...",
                     "I need someone to talk to",
                     "Help me understand my emotions"
                   ].map((suggestion) => (
