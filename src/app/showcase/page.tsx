@@ -47,7 +47,7 @@ export default function ShowcasePage() {
     switch (activeComponent) {
       case 'chat':
         return (
-          <div className="h-full max-lg:fixed max-lg:inset-0 max-lg:z-50">
+          <div className="h-full max-md:fixed max-md:inset-0 max-md:z-50">
             <ChatInterface />
           </div>
         );
@@ -171,7 +171,7 @@ export default function ShowcasePage() {
 
       <div className="relative max-w-7xl mx-auto p-2 sm:p-6 pt-4 sm:pt-12">
         {/* Mobile Component Selector - Horizontal Bar */}
-        <div className="block lg:hidden mb-4">
+        <div className="block md:hidden mb-4">
           <motion.div 
             className="flex justify-between items-center gap-1 bg-gradient-to-r from-blue-900/60 via-purple-900/60 to-cyan-900/60 rounded-xl p-2 border border-gray-700/50 backdrop-blur-md"
             initial={{ opacity: 0, y: -20 }}
@@ -222,9 +222,9 @@ export default function ShowcasePage() {
           </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-2 lg:gap-8 h-[calc(100vh-8rem)] sm:h-[calc(100vh-10rem)] lg:h-[calc(100vh-12rem)]">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-8 h-[calc(100vh-8rem)] sm:h-[calc(100vh-10rem)] md:h-[calc(100vh-12rem)]">
           {/* Component Selector - Desktop Only */}
-          <div className="hidden lg:block lg:col-span-1">
+          <div className="hidden md:block md:col-span-1">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -533,61 +533,20 @@ export default function ShowcasePage() {
                 </div>
               </div>
             </motion.div>
-
-            {/* Enhanced Stats */}
-            <motion.div 
-              className="mt-8 p-6 bg-gradient-to-br from-gray-900/80 to-gray-800/80 rounded-2xl border border-gray-700/50 backdrop-blur-sm relative overflow-hidden"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-            >
-              {/* Animated background */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 animate-pulse"></div>
-              
-              <div className="relative">
-                <h3 className="font-bold text-xl text-white mb-4 flex items-center gap-2">
-                  <BarChart3 className="w-5 h-5 text-cyan-400" />
-                  Live Demo Stats
-                </h3>
-                <div className="space-y-3">
-                  {[
-                    { label: 'Response Time', value: '0.3s', color: 'text-green-400', bg: 'bg-green-400/10' },
-                    { label: 'Crisis Detection', value: '94%', color: 'text-blue-400', bg: 'bg-blue-400/10' },
-                    { label: 'Uptime', value: '99.9%', color: 'text-purple-400', bg: 'bg-purple-400/10' },
-                    { label: 'User Satisfaction', value: '98%', color: 'text-cyan-400', bg: 'bg-cyan-400/10' }
-                  ].map((stat, index) => (
-                    <motion.div
-                      key={stat.label}
-                      className="flex justify-between items-center p-3 rounded-lg bg-black/20 border border-gray-700/30"
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.9 + index * 0.1 }}
-                      whileHover={{ scale: 1.02, backgroundColor: "rgba(0, 0, 0, 0.4)" }}
-                    >
-                      <span className="text-gray-300 font-medium">{stat.label}</span>
-                      <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full ${stat.bg} ${stat.color} animate-pulse`}></div>
-                        <span className={`font-bold ${stat.color}`}>{stat.value}</span>
-                      </div>
-                    </motion.div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
           </div>
 
           {/* Enhanced Component Display */}
-          <div className="col-span-1 lg:col-span-3">
+          <div className="col-span-1 md:col-span-3">
             <motion.div
               key={activeComponent}
               initial={{ opacity: 0, y: 20, scale: 0.98 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               transition={{ duration: 0.4, type: "spring", stiffness: 300 }}
-              className="h-full bg-gradient-to-br from-gray-900/50 to-gray-800/30 rounded-xl lg:rounded-3xl border border-gray-700/50 overflow-hidden relative backdrop-blur-sm"
+              className="h-full bg-gradient-to-br from-gray-900/50 to-gray-800/30 rounded-xl md:rounded-3xl border border-gray-700/50 overflow-hidden relative backdrop-blur-sm"
             >
               {/* Header for component display - Show for non-chat components */}
               {activeComponent !== 'chat' && (
-                <div className="p-3 lg:p-4 bg-gradient-to-r from-gray-800/50 to-gray-900/50 border-b border-gray-700/50 flex items-center justify-between">
+                <div className="p-3 md:p-4 bg-gradient-to-r from-gray-800/50 to-gray-900/50 border-b border-gray-700/50 flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     {(() => {
                       const component = components.find(c => c.id === activeComponent);
@@ -603,12 +562,12 @@ export default function ShowcasePage() {
                       
                       return (
                         <>
-                          <div className={`w-6 h-6 lg:w-8 lg:h-8 rounded-lg bg-current/10 flex items-center justify-center ${iconColor}`}>
-                            <Icon className="w-4 h-4 lg:w-5 lg:h-5" />
+                          <div className={`w-6 h-6 md:w-8 md:h-8 rounded-lg bg-current/10 flex items-center justify-center ${iconColor}`}>
+                            <Icon className="w-4 h-4 md:w-5 md:h-5" />
                           </div>
                           <div>
-                            <h3 className="font-bold text-white text-sm lg:text-base">{component.name}</h3>
-                            <p className="text-xs lg:text-sm text-gray-400">{component.description}</p>
+                            <h3 className="font-bold text-white text-sm md:text-base">{component.name}</h3>
+                            <p className="text-xs md:text-sm text-gray-400">{component.description}</p>
                           </div>
                         </>
                       );
