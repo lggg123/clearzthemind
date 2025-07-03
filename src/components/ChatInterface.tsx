@@ -10,6 +10,13 @@ type EmotionalState = 'neutral' | 'stressed' | 'sad' | 'angry' | 'fearful' | 'cr
 type RiskLevel = 'low' | 'medium' | 'high' | 'critical';
 type FrankMood = 'neutral' | 'concerned' | 'supportive';
 
+// Move suggestions outside component to prevent rerendering
+const CHAT_SUGGESTIONS = [
+  { id: 'overwhelmed', text: "I'm feeling overwhelmed...", color: "from-blue-500 to-purple-600", icon: "🌊", glowColor: "rgba(59, 130, 246, 0.4)" },
+  { id: 'talk', text: "I need someone to talk to", color: "from-pink-500 to-rose-600", icon: "💬", glowColor: "rgba(236, 72, 153, 0.4)" },
+  { id: 'emotions', text: "Help me understand my emotions", color: "from-cyan-500 to-teal-600", icon: "🧠", glowColor: "rgba(6, 182, 212, 0.4)" }
+] as const;
+
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -240,9 +247,10 @@ export default function ChatInterface() {
             </motion.div>
             <div>
               <motion.h2 
-                className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                className="text-xl md:text-2xl font-black bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent"
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
+                style={{ textShadow: '0 0 20px rgba(59, 130, 246, 0.3)' }}
               >
                 FRANK
               </motion.h2>
@@ -345,24 +353,36 @@ export default function ChatInterface() {
                 <p className="text-sm text-muted-foreground/70 max-w-md mx-auto">
                   I&apos;m here to listen without judgment. Share what&apos;s on your mind, and let&apos;s work through it together.
                 </p>
-                <div className="flex flex-wrap gap-2 justify-center mt-6">
-                  {[
-                    "I'm feeling overwhelmed...",
-                    "I need someone to talk to",
-                    "Help me understand my emotions"
-                  ].map((suggestion) => (
-                    <motion.button
-                      key={suggestion}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.5 }}
-                      whileHover={{ scale: 1.05, backgroundColor: "rgba(59, 130, 246, 0.1)" }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => setInput(suggestion)}
-                      className="text-xs px-3 py-2 rounded-full bg-white/50 border border-white/20 text-gray-600 hover:text-blue-600 transition-colors"
+                <div className="flex flex-wrap gap-3 justify-center mt-8">
+                  {CHAT_SUGGESTIONS.map((suggestion) => (
+                    <button
+                      key={suggestion.id}
+                      onClick={() => setInput(suggestion.text)}
+                      className={`
+                        relative overflow-hidden group
+                        text-sm font-bold px-7 py-4 rounded-3xl 
+                        bg-gradient-to-br ${suggestion.color}
+                        text-white shadow-lg hover:shadow-xl
+                        border-2 border-white/20 backdrop-blur-lg
+                        transition-all duration-300
+                        flex items-center gap-3
+                        cursor-pointer select-none
+                        hover:scale-105 hover:-translate-y-1
+                      `}
                     >
-                      {suggestion}
-                    </motion.button>
+                      {/* Simple icon container */}
+                      <div className="w-12 h-12 flex items-center justify-center">
+                        <span className="text-3xl filter drop-shadow-lg">
+                          {suggestion.icon}
+                        </span>
+                      </div>
+                      
+                      <div className="flex-1 text-left">
+                        <span className="relative z-10 font-black tracking-tight text-white/95 drop-shadow-lg leading-tight">
+                          {suggestion.text}
+                        </span>
+                      </div>
+                    </button>
                   ))}
                 </div>
               </motion.div>
@@ -493,96 +513,90 @@ export default function ChatInterface() {
                 whileFocus={{ scale: 1.01 }}
               />
               
-              {/* Character Count and Tips */}
-              <div className="absolute bottom-2 sm:bottom-3 right-2 sm:right-3 flex items-center gap-2 sm:gap-3">
-                {input.length > 0 && (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="text-xs sm:text-sm text-gray-500 bg-white/70 px-2 py-1 rounded-full"
-                  >
-                    {input.length}/1000
-                  </motion.div>
-                )}
-                
-                {/* Helpful Tips */}
-                <motion.div
-                  className="text-xs text-gray-400 bg-white/60 px-2 sm:px-3 py-1 rounded-full hidden sm:block"
-                  animate={{ opacity: [0.6, 1, 0.6] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  Press Enter to send • Shift+Enter for new line
-                </motion.div>
-              </div>
+
+              
+              {/* Enhanced Helpful Tips with Premium Styling */}
+              <motion.div
+                className="absolute top-2 sm:top-3 right-2 sm:right-3 text-xs text-gray-600 bg-gradient-to-r from-white/80 to-gray-50/80 px-3 py-2 rounded-xl hidden sm:block border border-gray-200/50 shadow-lg backdrop-blur-md"
+                animate={{ opacity: [0.7, 1, 0.7] }}
+                transition={{ duration: 4, repeat: Infinity }}
+                whileHover={{ 
+                  opacity: 1, 
+                  scale: 1.02,
+                  boxShadow: "0 8px 25px rgba(0, 0, 0, 0.15)"
+                }}
+              >
+                <div className="flex items-center gap-2 font-medium">
+                  <span className="text-sm">💡</span>
+                  <span>Press <kbd className="px-1 py-0.5 bg-gray-200 rounded text-xs">Enter</kbd> to send • <kbd className="px-1 py-0.5 bg-gray-200 rounded text-xs">Shift+Enter</kbd> for new line</span>
+                </div>
+              </motion.div>
             </div>
 
-            {/* Enhanced Send Button */}
-            <div className="flex flex-row sm:flex-col justify-between">
-              <motion.button
-                onClick={sendMessage}
-                disabled={isLoading || !input.trim()}
-                className="flex-1 sm:flex-none sm:w-full md:w-auto px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 lg:py-6 rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 text-white hover:from-blue-600 hover:via-purple-600 hover:to-cyan-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-xl shadow-blue-500/30 font-bold text-sm sm:text-base md:text-lg lg:text-xl min-h-[50px] sm:min-h-[60px] md:min-h-[80px] lg:min-h-[100px] flex items-center justify-center gap-2 sm:gap-3"
-                whileHover={{ 
-                  scale: isLoading || !input.trim() ? 1 : 1.05,
-                  boxShadow: "0 20px 40px rgba(59, 130, 246, 0.4)"
-                }}
-                whileTap={{ scale: isLoading || !input.trim() ? 1 : 0.95 }}
+            {/* Enhanced Send Button with Character Count */}
+            <motion.button
+              onClick={sendMessage}
+              disabled={isLoading || !input.trim()}
+              className="relative px-4 sm:px-6 md:px-8 lg:px-10 py-3 sm:py-4 md:py-5 lg:py-6 rounded-2xl bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 text-white hover:from-blue-600 hover:via-purple-600 hover:to-cyan-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-xl shadow-blue-500/30 font-bold text-sm sm:text-base md:text-lg lg:text-xl min-h-[50px] sm:min-h-[60px] md:min-h-[80px] lg:min-h-[100px] flex items-center justify-center gap-2 sm:gap-3 overflow-hidden"
+              whileHover={{ 
+                scale: isLoading || !input.trim() ? 1 : 1.05,
+                boxShadow: "0 20px 40px rgba(59, 130, 246, 0.4)"
+              }}
+              whileTap={{ scale: isLoading || !input.trim() ? 1 : 0.95 }}
+            >
+              {/* Send Icon */}
+              <motion.div
+                animate={isLoading ? { rotate: 360 } : {}}
+                transition={isLoading ? { duration: 1, repeat: Infinity, ease: "linear" } : {}}
               >
-                <motion.div
-                  animate={isLoading ? { rotate: 360 } : {}}
-                  transition={isLoading ? { duration: 1, repeat: Infinity, ease: "linear" } : {}}
-                >
-                  <Send className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7" />
-                </motion.div>
-                <span className="hidden sm:inline">
+                <Send className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7" />
+              </motion.div>
+              
+              {/* Send Text */}
+              <div className="flex flex-col items-center">
+                <span className="hidden sm:inline leading-tight">
                   {isLoading ? 'Thinking...' : 'Send Message'}
                 </span>
-                <span className="sm:hidden">
+                <span className="sm:hidden leading-tight">
                   {isLoading ? 'Thinking...' : 'Send'}
                 </span>
-              </motion.button>
-
-              {/* Quick Suggestion Buttons for Desktop/Tablet */}
-              <div className="hidden md:flex flex-col gap-2 mt-4">
-                <p className="text-xs text-gray-500 text-center mb-2">Quick starts:</p>
-                {[
-                  "I'm feeling overwhelmed",
-                  "I need someone to talk to",
-                  "Help me understand my emotions"
-                ].map((suggestion, index) => (
-                  <motion.button
-                    key={suggestion}
-                    onClick={() => setInput(suggestion)}
-                    className="text-xs px-3 py-2 rounded-full bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 hover:from-blue-100 hover:to-purple-100 hover:text-blue-700 transition-all border border-gray-200 hover:border-blue-300"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.5 + index * 0.1 }}
-                  >
-                    {suggestion}
-                  </motion.button>
-                ))}
+                
+                {/* Character Count Inside Button */}
+                <AnimatePresence>
+                  {input.length > 0 && !isLoading && (
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.8, y: 5 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.8, y: 5 }}
+                      className={`text-xs font-semibold mt-1 px-2 py-0.5 rounded-full backdrop-blur-sm border ${
+                        input.length > 800 
+                          ? 'bg-red-500/20 text-red-100 border-red-400/50' 
+                          : input.length > 600 
+                          ? 'bg-yellow-500/20 text-yellow-100 border-yellow-400/50'
+                          : 'bg-white/20 text-white/90 border-white/30'
+                      }`}
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      {input.length}/1000
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
               
-              {/* Quick Suggestion Buttons for Mobile */}
-              <div className="flex sm:hidden gap-2 mt-3 ml-3">
-                <motion.button
-                  onClick={() => setInput("I'm feeling overwhelmed")}
-                  className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700 border border-gray-200"
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Overwhelmed
-                </motion.button>
-                <motion.button
-                  onClick={() => setInput("I need someone to talk to")}
-                  className="text-xs px-2 py-1 rounded-full bg-gray-100 text-gray-700 border border-gray-200"
-                  whileTap={{ scale: 0.95 }}
-                >
-                  Need to talk
-                </motion.button>
-              </div>
-            </div>
+              {/* Subtle animated background effect */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -skew-x-12"
+                animate={{
+                  x: ['-200%', '200%'],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  repeatDelay: 2
+                }}
+              />
+            </motion.button>
           </div>
 
           {/* Encouragement Text */}
