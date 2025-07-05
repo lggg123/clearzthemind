@@ -207,17 +207,17 @@ export default function ChatInterface() {
               key={i}
               className="absolute w-1 h-1 bg-blue-400/30 rounded-full hidden md:block"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
+                left: `${(i * 12.5) + 5}%`,
+                top: `${(i * 11) + 10}%`,
               }}
               animate={{
                 y: [0, -20, 0],
                 opacity: [0.3, 0.8, 0.3],
               }}
               transition={{
-                duration: 3 + Math.random() * 2,
+                duration: 3 + (i * 0.3),
                 repeat: Infinity,
-                delay: Math.random() * 2,
+                delay: i * 0.5,
               }}
             />
           ))}
@@ -254,14 +254,82 @@ export default function ChatInterface() {
               >
                 FRANK
               </motion.h2>
-              <motion.p 
-                className="text-sm md:text-base text-muted-foreground"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
+              <motion.div 
+                className="text-sm md:text-base font-medium leading-relaxed tracking-wide"
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, type: "spring", stiffness: 300 }}
               >
-                Your AI therapist • {isLoading ? 'Thinking...' : 'Here for you 24/7'}
-              </motion.p>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <div className="relative">
+                    <span 
+                      style={{ 
+                        background: 'linear-gradient(90deg, #93c5fd, #c4b5fd, #67e8f9)',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        backgroundClip: 'text',
+                        display: 'inline-block'
+                      }}
+                    >
+                      Your AI therapist
+                    </span>
+                    <motion.div
+                      className="absolute -bottom-0.5 left-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: '100%' }}
+                      transition={{ delay: 0.8, duration: 0.6, ease: "easeOut" }}
+                    />
+                  </div>
+                  <span className="text-blue-300/90 font-bold">•</span>
+                  <div className="flex items-center gap-1">
+                    {isLoading ? (
+                      <>
+                        <motion.span
+                          style={{ 
+                            background: 'linear-gradient(90deg, #fbbf24, #f59e0b, #d97706)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text',
+                            display: 'inline-block'
+                          }}
+                          animate={{ opacity: [0.5, 1, 0.5] }}
+                          transition={{ duration: 1.5, repeat: Infinity }}
+                        >
+                          Thinking
+                        </motion.span>
+                        <motion.span
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                          className="text-xs"
+                        >
+                          🧠
+                        </motion.span>
+                      </>
+                    ) : (
+                      <>
+                        <span 
+                          style={{ 
+                            background: 'linear-gradient(90deg, #93c5fd, #c4b5fd, #67e8f9)',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            backgroundClip: 'text',
+                            display: 'inline-block'
+                          }}
+                        >
+                          Here for you 24/7
+                        </span>
+                        <motion.span
+                          animate={{ scale: [1, 1.2, 1] }}
+                          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                          className="text-xs ml-1"
+                        >
+                          💙
+                        </motion.span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
           
@@ -821,7 +889,7 @@ export default function ChatInterface() {
                       <Activity className="w-3 h-3" />
                       Real-time analysis
                     </div>
-                    Neural pathways will reset in {Math.floor(Math.random() * 5) + 1}s
+                    Neural pathways will reset in 3-5s
                   </motion.div>
                 </div>
               </motion.div>
