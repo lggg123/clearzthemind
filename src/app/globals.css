@@ -854,3 +854,94 @@ nav .w-6.h-6 {
   width: 1.5rem !important;
   height: 1.5rem !important;
 }
+
+/* Smooth scrolling utilities */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.5) transparent;
+}
+
+.smooth-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.smooth-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.smooth-scroll::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.5);
+  border-radius: 3px;
+}
+
+.smooth-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(148, 163, 184, 0.8);
+}
+
+/* Animation utilities */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+/* Override any height constraints for MoodTracker */
+.mood-tracker-container {
+  max-height: none !important;
+  height: auto !important;
+  overflow-y: auto !important;
+}
+
+/* Enhanced Typography and Visual Effects for MoodTracker */
+.mood-tracker-container {
+  /* Premium font smoothing */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.mood-tracker-container h1,
+.mood-tracker-container h2,
+.mood-tracker-container h3 {
+  /* Enhanced text shadows for premium feel */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  letter-spacing: 0.025em;
+}
+
+.mood-tracker-container .premium-text-gradient {
+  background: linear-gradient(135deg, #a855f7, #ec4899, #3b82f6);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-shift 3s ease-in-out infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.mood-tracker-container .premium-glow {
+  filter: drop-shadow(0 0 8px rgba(168, 85, 247, 0.3));
+}
+
+.mood-tracker-container .glass-morphism {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Enhanced button effects */
+.mood-tracker-container button {
+  font-weight: 600;
+  letter-spacing: 0.025em;
+}
+
+/* Better text contrast and readability */
+.mood-tracker-container .text-enhanced {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}

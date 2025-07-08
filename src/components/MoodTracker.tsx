@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Frown, 
   Meh, 
@@ -155,330 +154,221 @@ export default function MoodTracker() {
   };
 
   return (
-    <div className="h-full max-w-4xl mx-auto p-6 bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 rounded-2xl border border-slate-700/50 backdrop-blur-xl overflow-y-auto">
-      
-      {/* Enhanced Header */}
-      <motion.div 
-        className="text-center mb-8"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
-        <motion.div 
-          className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-full flex items-center justify-center shadow-2xl"
-          whileHover={{ scale: 1.1, rotate: 5 }}
-          transition={{ type: "spring", stiffness: 300 }}
+    <div className="mood-tracker-container w-full p-6">
+      <div className="max-w-4xl mx-auto pb-12 bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 rounded-2xl border border-slate-700/50 backdrop-blur-xl p-6">
+        
+        {/* Scroll to Top Button */}
+        <button 
+          onClick={() => {
+            // Try multiple scroll targets
+            const scrollableContainer = document.querySelector('.mood-tracker-container');
+            if (scrollableContainer) {
+              scrollableContainer.scrollTop = 0;
+            } else {
+              const parentContainer = document.querySelector('.mood-view') || document.querySelector('.app-content');
+              if (parentContainer) {
+                parentContainer.scrollTop = 0;
+              } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }
+          }}
+          className="fixed top-20 right-6 z-50 w-14 h-14 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full flex items-center justify-center shadow-2xl hover:shadow-3xl hover:scale-110 transition-all duration-300 font-bold text-xl tracking-widest drop-shadow-lg"
+          title="Scroll to Top - Click to see mood buttons"
         >
-          <Brain className="w-8 h-8 text-white" />
-          <motion.div
-            className="absolute"
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          >
-            <Sparkles className="w-4 h-4 text-yellow-300 absolute -top-2 -right-2" />
-          </motion.div>
-        </motion.div>
-        <motion.h2 
-          className="text-2xl md:text-3xl font-black bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-        >
-          Mood Check-In
-        </motion.h2>
-        <motion.p 
-          className="text-gray-400 mt-2"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
-        >
-          How are you feeling right now?
-        </motion.p>
-      </motion.div>
+          ↑
+        </button>
+        
+        {/* Enhanced Header */}
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-purple-500 via-pink-500 to-blue-500 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 hover:rotate-6 transition-transform duration-300 relative">
+            <Brain className="w-8 h-8 text-white" />
+            <div className="absolute -top-2 -right-2">
+              <Sparkles className="w-4 h-4 text-yellow-300" />
+            </div>
+          </div>
+          <div className="space-y-4">
+            <h1 className="text-4xl md:text-5xl font-black bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent tracking-tight drop-shadow-2xl premium-text-gradient">
+              Advanced Mood Analysis
+            </h1>
+            <h2 className="text-2xl md:text-3xl font-extrabold text-white drop-shadow-lg tracking-wide text-enhanced">
+              Mood Check-In
+            </h2>
+            <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed font-medium tracking-wide text-enhanced">
+              Take a moment to reflect on your current emotional state and mental well-being
+            </p>
+            <div className="mt-2 flex items-center justify-center gap-2">
+              <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
+              <p className="text-purple-300/80 text-sm font-semibold tracking-widest uppercase text-enhanced">
+                ✨ Premium Mental Health Tracking ✨
+              </p>
+              <div className="w-2 h-2 bg-pink-400 rounded-full animate-pulse"></div>
+            </div>
+          </div>
+        </div>
 
       {/* Enhanced Mood Selector */}
-      <motion.div 
-        className="glass-morphism rounded-3xl p-6 md:p-8 border-2 border-purple-500/20 shadow-2xl relative overflow-hidden mb-8"
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 0.6 }}
-      >
+      <div className="glass-morphism rounded-3xl p-6 md:p-8 border-2 border-purple-500/20 shadow-2xl relative overflow-hidden mb-8">
         {/* Static background effects */}
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-blue-500/10"></div>
-        <motion.div 
-          className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500"
-          initial={{ width: 0 }}
-          animate={{ width: '100%' }}
-          transition={{ duration: 1, delay: 0.8 }}
-        />
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500" />
         
         <div className="relative">
-          <motion.div 
-            className="flex items-center gap-3 mb-6"
-            initial={{ x: -20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 1 }}
-          >
-            <motion.div 
-              className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center"
-              whileHover={{ scale: 1.1 }}
-            >
-              <Heart className="w-5 h-5 text-white" />
-            </motion.div>
-            <h3 className="text-xl font-bold text-white">Rate Your Mood</h3>
-          </motion.div>
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-lg">
+              <Heart className="w-6 h-6 text-white drop-shadow-sm" />
+            </div>
+            <h3 className="text-2xl font-bold text-white drop-shadow-md tracking-wide">Rate Your Mood</h3>
+            <div className="ml-auto">
+              <span className="text-purple-300/70 text-sm font-semibold tracking-wider uppercase">Daily Check-In</span>
+            </div>
+          </div>
           
           <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            {moodIcons.map((mood, index) => {
+            {moodIcons.map((mood) => {
               const Icon = mood.icon;
               const isSelected = selectedMood === mood.score;
               
               return (
-                <motion.button
+                <button
                   key={mood.score}
                   onClick={() => setSelectedMood(mood.score)}
-                  className={`relative p-6 rounded-3xl border-2 transition-all duration-300 group backdrop-blur-sm ${
+                  className={`relative p-6 rounded-3xl border-2 transition-all duration-300 group backdrop-blur-sm hover:scale-105 ${
                     isSelected 
-                      ? `bg-gradient-to-br ${mood.bgColor} ${mood.borderColor} shadow-2xl` 
+                      ? `bg-gradient-to-br ${mood.bgColor} ${mood.borderColor} shadow-2xl scale-105` 
                       : 'bg-slate-800/50 border-slate-600/50 hover:border-slate-500/70 hover:bg-slate-700/50'
                   }`}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.2 + index * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                 >
                   {/* Enhanced glow effect for selected mood */}
-                  <AnimatePresence>
-                    {isSelected && (
-                      <motion.div 
-                        className={`absolute inset-0 rounded-3xl opacity-50 blur-xl bg-gradient-to-br ${mood.color}`}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 0.5, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.8 }}
-                        transition={{ duration: 0.3 }}
-                      />
-                    )}
-                  </AnimatePresence>
+                  {isSelected && (
+                    <div className={`absolute inset-0 rounded-3xl opacity-50 blur-xl bg-gradient-to-br ${mood.color}`} />
+                  )}
                   
                   <div className="relative z-10 text-center">
-                    <motion.div 
-                      className="text-4xl mb-3"
-                      animate={{ rotate: isSelected ? [0, 10, -10, 0] : 0 }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      {mood.emoji}
-                    </motion.div>
-                    <Icon className={`w-6 h-6 mx-auto mb-2 ${isSelected ? mood.textColor : 'text-gray-400'}`} />
-                    <h4 className={`font-bold text-sm ${isSelected ? mood.textColor : 'text-gray-300'}`}>
+                    <div className="text-4xl md:text-5xl mb-3 drop-shadow-lg">{mood.emoji}</div>
+                    <Icon className={`w-7 h-7 mx-auto mb-3 drop-shadow-sm ${isSelected ? mood.textColor : 'text-gray-400'}`} />
+                    <h4 className={`font-bold text-base md:text-lg tracking-wide drop-shadow-sm ${isSelected ? mood.textColor : 'text-gray-300'}`}>
                       {mood.label}
                     </h4>
-                    <AnimatePresence>
-                      {isSelected && (
-                        <motion.p 
-                          className={`text-xs mt-1 ${mood.textColor} opacity-80`}
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 0.8, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                        >
-                          {mood.description}
-                        </motion.p>
-                      )}
-                    </AnimatePresence>
+                    {isSelected && (
+                      <p className={`text-sm mt-2 font-medium leading-relaxed tracking-wide ${mood.textColor} opacity-90 drop-shadow-sm`}>
+                        {mood.description}
+                      </p>
+                    )}
                   </div>
-                </motion.button>
+                </button>
               );
             })}
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Enhanced Emotion Categories */}
       <div className="grid gap-6 mb-8">
-        {Object.entries(emotionCategories).map(([key, category], categoryIndex) => (
-          <motion.div 
+        {Object.entries(emotionCategories).map(([key, category]) => (
+          <div 
             key={key}
             className={`glass-morphism rounded-3xl p-6 border-2 ${category.borderColor} shadow-xl relative overflow-hidden`}
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.8 + categoryIndex * 0.2 }}
           >
             {/* Static background */}
             <div className={`absolute inset-0 bg-gradient-to-br ${category.bgColor}`}></div>
-            <motion.div 
-              className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${category.color}`}
-              initial={{ width: 0 }}
-              animate={{ width: '100%' }}
-              transition={{ delay: 2 + categoryIndex * 0.2, duration: 0.8 }}
-            />
+            <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${category.color}`} />
             
             <div className="relative">
-              <motion.div 
-                className="flex items-center gap-3 mb-4"
-                initial={{ y: -10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 2.2 + categoryIndex * 0.2 }}
-              >
-                <motion.div 
-                  className={`w-8 h-8 bg-gradient-to-br ${category.color} rounded-xl flex items-center justify-center`}
-                  whileHover={{ scale: 1.1, rotate: 10 }}
-                >
-                  <span className="text-lg">{category.icon}</span>
-                </motion.div>
-                <h3 className="text-lg font-bold text-white">{category.title}</h3>
-                <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ duration: 2, repeat: Infinity, delay: categoryIndex }}
-                >
-                  <Star className="w-4 h-4 text-yellow-400" />
-                </motion.div>
-              </motion.div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className={`w-10 h-10 bg-gradient-to-br ${category.color} rounded-xl flex items-center justify-center hover:scale-110 hover:rotate-12 transition-transform duration-300 shadow-lg`}>
+                  <span className="text-xl drop-shadow-sm">{category.icon}</span>
+                </div>
+                <h3 className="text-xl md:text-2xl font-bold text-white drop-shadow-md tracking-wide">{category.title}</h3>
+                <div className="animate-pulse ml-auto">
+                  <Star className="w-5 h-5 text-yellow-400 drop-shadow-sm" />
+                </div>
+              </div>
               
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-                {category.emotions.map((emotion, emotionIndex) => {
+                {category.emotions.map((emotion) => {
                   const isSelected = selectedEmotions.includes(emotion.name);
                   
                   return (
-                    <motion.button
+                    <button
                       key={emotion.name}
                       onClick={() => toggleEmotion(emotion.name)}
-                      className={`p-4 rounded-2xl border-2 transition-all duration-300 backdrop-blur-sm relative ${
+                      className={`p-4 rounded-2xl border-2 transition-all duration-300 backdrop-blur-sm hover:scale-105 relative ${
                         isSelected 
-                          ? `bg-gradient-to-br ${emotion.color}/20 border-white/30 shadow-xl` 
+                          ? `bg-gradient-to-br ${emotion.color}/20 border-white/30 shadow-xl scale-105` 
                           : 'bg-slate-800/50 border-slate-600/50 hover:border-slate-500/70 hover:bg-slate-700/50'
                       }`}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 2.4 + categoryIndex * 0.2 + emotionIndex * 0.05 }}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
                     >
                       {/* Glow effect for selected emotions */}
-                      <AnimatePresence>
-                        {isSelected && (
-                          <motion.div 
-                            className={`absolute inset-0 rounded-2xl opacity-30 blur-lg bg-gradient-to-br ${emotion.color}`}
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 0.3, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                          />
-                        )}
-                      </AnimatePresence>
+                      {isSelected && (
+                        <div className={`absolute inset-0 rounded-2xl opacity-30 blur-lg bg-gradient-to-br ${emotion.color}`} />
+                      )}
                       
                       <div className="relative z-10 text-center">
-                        <motion.div 
-                          className="text-2xl mb-2"
-                          animate={{ 
-                            scale: isSelected ? [1, 1.2, 1] : 1,
-                            rotate: isSelected ? [0, 5, -5, 0] : 0
-                          }}
-                          transition={{ duration: 0.5 }}
-                        >
-                          {emotion.emoji}
-                        </motion.div>
-                        <span className={`text-sm font-medium ${isSelected ? 'text-white' : 'text-gray-300'}`}>
+                        <div className="text-2xl md:text-3xl mb-2 drop-shadow-md">{emotion.emoji}</div>
+                        <span className={`text-sm md:text-base font-semibold tracking-wide drop-shadow-sm ${isSelected ? 'text-white' : 'text-gray-300'}`}>
                           {emotion.name}
                         </span>
                         {isSelected && (
-                          <motion.div
-                            className="absolute -top-1 -right-1"
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            exit={{ scale: 0 }}
-                          >
-                            <Zap className="w-3 h-3 text-yellow-400" />
-                          </motion.div>
+                          <div className="absolute -top-1 -right-1">
+                            <Zap className="w-4 h-4 text-yellow-400 drop-shadow-lg animate-pulse" />
+                          </div>
                         )}
                       </div>
-                    </motion.button>
+                    </button>
                   );
                 })}
               </div>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* Enhanced Notes Section */}
-      <motion.div 
-        className="glass-morphism rounded-3xl p-6 md:p-8 border-2 border-blue-500/20 shadow-xl relative overflow-hidden mb-8"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 3 }}
-      >
+      <div className="glass-morphism rounded-3xl p-6 md:p-8 border-2 border-blue-500/20 shadow-xl relative overflow-hidden mb-8">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-purple-500/10"></div>
-        <motion.div 
-          className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500"
-          initial={{ width: 0 }}
-          animate={{ width: '100%' }}
-          transition={{ delay: 3.2, duration: 0.8 }}
-        />
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500" />
         
         <div className="relative">
-          <motion.div 
-            className="flex items-center gap-3 mb-4"
-            initial={{ x: -20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 3.4 }}
-          >
-            <motion.div 
-              className="w-8 h-8 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center"
-              whileHover={{ scale: 1.1 }}
-            >
-              <MessageSquare className="w-5 h-5 text-white" />
-            </motion.div>
-            <h3 className="text-xl font-bold text-white">Notes & Reflections</h3>
-          </motion.div>
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-lg">
+              <MessageSquare className="w-6 h-6 text-white drop-shadow-sm" />
+            </div>
+            <h3 className="text-2xl font-bold text-white drop-shadow-md tracking-wide">Notes & Reflections</h3>
+            <div className="ml-auto">
+              <span className="text-cyan-300/70 text-sm font-semibold tracking-wider uppercase">Personal Insights</span>
+            </div>
+          </div>
           
-          <motion.textarea
+          <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="What's on your mind? Share your thoughts, experiences, or anything you'd like to remember about today..."
-            className="w-full h-32 bg-slate-800/50 border-2 border-slate-600/50 rounded-2xl p-4 text-white placeholder-gray-400 focus:border-blue-400/70 focus:bg-slate-700/50 transition-all duration-300 resize-none backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 3.6 }}
-            whileFocus={{ scale: 1.02 }}
+            className="w-full h-32 bg-slate-800/50 border-2 border-slate-600/50 rounded-2xl p-4 text-white placeholder-gray-400 focus:border-blue-400/70 focus:bg-slate-700/50 focus:scale-[1.01] transition-all duration-300 resize-none backdrop-blur-sm font-medium text-base leading-relaxed tracking-wide drop-shadow-sm"
           />
           
           {/* Submit Button */}
-          <motion.button
+          <button
             onClick={handleSubmit}
-            className="mt-4 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3.8 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            className="mt-4 px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold text-lg rounded-2xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center gap-3 tracking-wide drop-shadow-md"
           >
-            <Sparkles className="w-5 h-5" />
+            <Sparkles className="w-6 h-6 drop-shadow-sm" />
             Save My Check-In
-          </motion.button>
+          </button>
           
           {/* Success Message */}
-          <AnimatePresence>
-            {showSuccessMessage && (
-              <motion.div
-                className="mt-4 p-4 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-400/30 rounded-2xl flex items-center gap-3"
-                initial={{ opacity: 0, scale: 0.8, y: -20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.8, y: -20 }}
-                transition={{ type: "spring", stiffness: 300 }}
-              >
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                >
-                  <Star className="w-5 h-5 text-green-400" />
-                </motion.div>
-                <span className="text-green-100 font-medium">
-                  Your mood check-in has been saved! 🌟
-                </span>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {showSuccessMessage && (
+            <div className="mt-4 p-4 bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-400/30 rounded-2xl flex items-center gap-3 animate-fade-in">
+              <div className="animate-spin">
+                <Star className="w-6 h-6 text-green-400 drop-shadow-lg" />
+              </div>
+              <span className="text-green-100 font-semibold text-lg tracking-wide drop-shadow-sm">
+                Your mood check-in has been saved! 🌟
+              </span>
+            </div>
+          )}
         </div>
-      </motion.div>
+      </div>
 
       {/* Enhanced Mood Chart */}
       <div className="glass-morphism rounded-3xl p-6 md:p-8 border-2 border-green-500/20 shadow-xl relative overflow-hidden">
@@ -488,20 +378,20 @@ export default function MoodTracker() {
         <div className="relative">
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
-                <TrendingUp className="w-5 h-5 text-white" />
+              <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center hover:scale-110 transition-transform duration-300 shadow-lg">
+                <TrendingUp className="w-6 h-6 text-white drop-shadow-sm" />
               </div>
-              <h3 className="text-xl font-bold text-white">Weekly Mood Trends</h3>
+              <h3 className="text-2xl font-bold text-white drop-shadow-md tracking-wide">Weekly Mood Trends</h3>
             </div>
             
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full"></div>
-                <span className="text-sm text-gray-300">Mood</span>
+            <div className="flex items-center gap-6">
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-4 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full shadow-lg"></div>
+                <span className="text-base font-semibold text-gray-300 tracking-wide">Mood</span>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full"></div>
-                <span className="text-sm text-gray-300">Energy</span>
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-4 bg-gradient-to-r from-green-400 to-emerald-400 rounded-full shadow-lg"></div>
+                <span className="text-base font-semibold text-gray-300 tracking-wide">Energy</span>
               </div>
             </div>
           </div>
@@ -556,6 +446,7 @@ export default function MoodTracker() {
                 </defs>
               </LineChart>
             </ResponsiveContainer>
+          </div>
           </div>
         </div>
       </div>

@@ -69,7 +69,7 @@ const SHOWCASE_COMPONENTS = [
   {
     id: 'mood',
     name: 'Mood Tracker',
-    description: 'Advanced mood analysis and pattern recognition',
+    description: 'Advanced emotional intelligence & personalized wellness insights',
     icon: BarChart3,
     color: 'purple'
   },
@@ -120,7 +120,7 @@ export default function ShowcasePage() {
         );
       case 'mood':
         return (
-          <div className="h-full">
+          <div className="h-full overflow-y-auto">
             <MoodTracker />
           </div>
         );
@@ -291,7 +291,7 @@ export default function ShowcasePage() {
         </div>
         )}
 
-        <div className={`grid gap-2 md:gap-8 h-[calc(100vh-8rem)] sm:h-[calc(100vh-10rem)] md:h-[calc(100vh-12rem)] ${screenSize === 'desktop' ? 'grid-cols-4' : 'grid-cols-1'}`}>
+        <div className={`grid gap-2 md:gap-8 min-h-[calc(100vh-8rem)] ${screenSize === 'desktop' ? 'grid-cols-4' : 'grid-cols-1'}`}>
           {/* Component Selector - Desktop Only */}
           {screenSize === 'desktop' && (
           <div className="col-span-1">
@@ -706,43 +706,105 @@ export default function ShowcasePage() {
               className="h-full bg-gradient-to-br from-gray-900/50 to-gray-800/30 rounded-xl md:rounded-3xl border border-gray-700/50 overflow-hidden relative backdrop-blur-sm"
             >
               {/* Header for component display - Show for non-chat components */}
-              {activeComponent !== 'chat' && (
-                <div className="p-3 md:p-4 bg-gradient-to-r from-gray-800/50 to-gray-900/50 border-b border-gray-700/50 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
+              {activeComponent !== 'chat' && (                  <div className="p-4 md:p-6 bg-gradient-to-r from-gray-900/80 via-gray-800/60 to-gray-900/80 border-b border-gray-600/30 flex items-start backdrop-blur-lg">
+                  <div className="flex items-start gap-4 flex-1">
                     {(() => {
                       const component = SHOWCASE_COMPONENTS.find(c => c.id === activeComponent);
                       if (!component) return null;
                       const Icon = component.icon;
-                      const colorMap = {
-                        blue: 'text-blue-400',
-                        purple: 'text-purple-400',
-                        cyan: 'text-cyan-400',
-                        green: 'text-green-400'
+                      
+                      // Enhanced color theming for each component
+                      const themeConfig = {
+                        blue: {
+                          icon: 'text-white',
+                          iconBg: 'bg-gradient-to-br from-blue-400 to-blue-600',
+                          iconBorder: 'border-blue-300/60',
+                          iconShadow: 'shadow-lg shadow-blue-500/40',
+                          title: 'font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-blue-200 to-blue-100',
+                          description: 'text-blue-300 font-semibold'
+                        },
+                        purple: {
+                          icon: 'text-white',
+                          iconBg: 'bg-gradient-to-br from-purple-400 to-purple-600',
+                          iconBorder: 'border-purple-300/60',
+                          iconShadow: 'shadow-lg shadow-purple-500/40',
+                          title: 'font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-purple-200 to-purple-100',
+                          description: 'text-purple-300 font-semibold'
+                        },
+                        cyan: {
+                          icon: 'text-white',
+                          iconBg: 'bg-gradient-to-br from-cyan-400 to-cyan-600',
+                          iconBorder: 'border-cyan-300/60',
+                          iconShadow: 'shadow-lg shadow-cyan-500/40',
+                          title: 'font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-cyan-200 to-cyan-100',
+                          description: 'text-cyan-300 font-semibold'
+                        },
+                        green: {
+                          icon: 'text-white',
+                          iconBg: 'bg-gradient-to-br from-green-400 to-green-600',
+                          iconBorder: 'border-green-300/60',
+                          iconShadow: 'shadow-lg shadow-green-500/40',
+                          title: 'font-black text-transparent bg-clip-text bg-gradient-to-r from-green-300 via-green-200 to-green-100',
+                          description: 'text-green-300 font-semibold'
+                        }
                       };
-                      const iconColor = colorMap[component.color as keyof typeof colorMap] || 'text-blue-400';
+
+                      const theme = themeConfig[component.color as keyof typeof themeConfig] || themeConfig.blue;
                       
                       return (
                         <>
-                          <div className={`w-6 h-6 md:w-8 md:h-8 rounded-lg bg-current/10 flex items-center justify-center ${iconColor}`}>
-                            <Icon className="w-4 h-4 md:w-5 md:h-5" />
+                          <div className={`w-10 h-10 md:w-12 md:h-12 rounded-xl ${theme.iconBg} border ${theme.iconBorder} ${theme.iconShadow} flex items-center justify-center ${theme.icon} flex-shrink-0 self-start`}>
+                            <Icon className="w-5 h-5 md:w-6 md:h-6" />
                           </div>
-                          <div>
-                            <h3 className="font-bold text-white text-sm md:text-base">{component.name}</h3>
-                            <p className="text-xs md:text-sm text-gray-400">{component.description}</p>
+                          <div className="flex-1">
+                            <h3 
+                              className={`font-bold text-lg md:text-xl tracking-tight mb-2 ${theme.title}`}
+                              style={{ 
+                                background: component.color === 'purple' 
+                                  ? 'linear-gradient(to right, #d8b4fe, #c4b5fd, #e9d5ff)' 
+                                  : component.color === 'blue'
+                                  ? 'linear-gradient(to right, #93c5fd, #bfdbfe, #dbeafe)'
+                                  : component.color === 'cyan'
+                                  ? 'linear-gradient(to right, #67e8f9, #a5f3fc, #cdfaff)'
+                                  : component.color === 'green'
+                                  ? 'linear-gradient(to right, #86efac, #bbf7d0, #dcfce7)'
+                                  : 'linear-gradient(to right, #93c5fd, #bfdbfe, #dbeafe)',
+                                backgroundClip: 'text',
+                                WebkitBackgroundClip: 'text',
+                                color: 'transparent !important',
+                                fontWeight: '900'
+                              }}
+                            >
+                              {component.name}
+                            </h3>
+                            <p 
+                              className="text-sm md:text-base font-semibold leading-relaxed"
+                              style={{ 
+                                color: component.color === 'purple' 
+                                  ? '#d8b4fe' 
+                                  : component.color === 'blue'
+                                  ? '#93c5fd'
+                                  : component.color === 'cyan'
+                                  ? '#67e8f9'
+                                  : component.color === 'green'
+                                  ? '#86efac'
+                                  : '#93c5fd',
+                                fontWeight: '600',
+                                opacity: '0.9'
+                              }}
+                            >
+                              {component.description}
+                            </p>
                           </div>
                         </>
                       );
                     })()}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <span className="text-xs text-green-400 font-medium">LIVE</span>
-                  </div>
                 </div>
               )}
               
               {/* Component content */}
-              <div className={`${activeComponent === 'chat' ? 'h-full' : 'h-[calc(100%-70px)]'}`}>
+              <div className={`${activeComponent === 'chat' ? 'h-full' : 'min-h-[calc(100%-70px)] overflow-y-auto'}`}>
                 {renderComponent()}
               </div>
             </motion.div>
