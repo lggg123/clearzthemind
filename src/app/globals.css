@@ -945,3 +945,289 @@ nav .w-6.h-6 {
 .mood-tracker-container .text-enhanced {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
+
+/* Enhanced Neural Pathways Component Styling */
+.neural-pathways-container {
+  /* Premium font smoothing */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Neural pathway button text styling */
+.neural-pathways-container .pathway-button {
+  /* Enhanced text contrast with darker text */
+  color: #1e293b !important; /* slate-800 for strong contrast */
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.neural-pathways-container .pathway-button h3,
+.neural-pathways-container .pathway-button .pathway-title {
+  color: #0f172a !important; /* slate-900 for maximum contrast */
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-size: 1.25rem; /* Larger text for better visibility */
+}
+
+.neural-pathways-container .pathway-button .pathway-description {
+  color: #475569 !important; /* slate-600 for better contrast */
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+  font-size: 1rem; /* Slightly larger for better readability */
+  opacity: 1;
+}
+
+/* Enhanced button background for better text visibility */
+.neural-pathways-container .pathway-button {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.9), 
+    rgba(248, 250, 252, 0.85)
+  ) !important;
+}
+
+.neural-pathways-container .pathway-button.active {
+  background: linear-gradient(135deg, 
+    rgba(240, 249, 255, 0.95), 
+    rgba(219, 234, 254, 0.90)
+  ) !important;
+}
+
+.neural-pathways-container .pathway-button:hover {
+  background: linear-gradient(135deg, 
+    rgba(255, 255, 255, 0.95), 
+    rgba(241, 245, 249, 0.90)
+  ) !important;
+}
+
+/* Remove any conflicting background overlays */
+.neural-pathways-container .pathway-button .absolute.inset-0 {
+  display: none !important;
+}
+
+/* Enhanced badge styling */
+.neural-pathways-container .pathway-badge {
+  background: rgba(255, 255, 255, 0.95) !important; /* white background for badges */
+  color: #1e293b !important; /* dark slate text */
+  text-shadow: none;
+  backdrop-filter: blur(8px);
+}
+
+.neural-pathways-container .pathway-badge.positive {
+  background: rgba(220, 252, 231, 0.98) !important; /* light green background */
+  color: #14532d !important; /* dark green text */
+}
+
+.neural-pathways-container .pathway-badge.negative {
+  background: rgba(254, 226, 226, 0.98) !important; /* light red background */
+  color: #7f1d1d !important; /* dark red text */
+}
+
+.neural-pathways-container .pathway-badge.risk-high {
+  background: rgba(254, 226, 226, 0.98) !important;
+  color: #7f1d1d !important;
+}
+
+.neural-pathways-container .pathway-badge.risk-medium {
+  background: rgba(254, 243, 199, 0.98) !important;
+  color: #78350f !important;
+}
+
+.neural-pathways-container .pathway-badge.risk-low {
+  background: rgba(220, 252, 231, 0.98) !important;
+  color: #14532d !important;
+}
+
+/* Active pathway enhanced styling */
+.neural-pathways-container .pathway-button.active {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(59, 130, 246, 0.3)) !important;
+  border-color: rgba(6, 182, 212, 0.8) !important;
+  box-shadow: 0 0 30px rgba(6, 182, 212, 0.4), 0 0 60px rgba(59, 130, 246, 0.2) !important;
+}
+
+.neural-pathways-container .pathway-button.active .pathway-title {
+  color: #1e293b !important; /* dark slate for active titles */
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+}
+
+.neural-pathways-container .pathway-button.active .pathway-description {
+  color: #334155 !important; /* slate-700 for active descriptions */
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* Hover effects for better interactivity */
+.neural-pathways-container .pathway-button:hover .pathway-title {
+  color: #0f172a !important; /* slate-900 for hover titles */
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.4);
+}
+
+.neural-pathways-container .pathway-button:hover .pathway-description {
+  color: #1e293b !important; /* slate-800 for hover descriptions */
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+/* Neural stats text improvements */
+.neural-pathways-container .stats-label {
+  color: #cbd5e1 !important; /* slate-300 for labels */
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.neural-pathways-container .stats-value {
+  color: #f8fafc !important; /* slate-50 for values */
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* Enhanced glow effects for readability */
+.neural-pathways-container .text-glow-cyan {
+  color: #67e8f9 !important;
+  text-shadow: 0 0 10px rgba(103, 232, 249, 0.6), 0 0 20px rgba(103, 232, 249, 0.3), 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.neural-pathways-container .text-glow-purple {
+  color: #c4b5fd !important;
+  text-shadow: 0 0 10px rgba(196, 181, 253, 0.6), 0 0 20px rgba(196, 181, 253, 0.3), 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.neural-pathways-container .text-glow-blue {
+  color: #93c5fd !important;
+  text-shadow: 0 0 10px rgba(147, 197, 253, 0.6), 0 0 20px rgba(147, 197, 253, 0.3), 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Centered text layout for pathway buttons */
+.neural-pathways-container .pathway-button .text-center {
+  padding: 0.75rem 1rem;
+  min-height: 5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.neural-pathways-container .pathway-button .text-center .pathway-title {
+  font-size: 1.375rem !important; /* text-xl equivalent */
+  line-height: 1.375;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.neural-pathways-container .pathway-button .text-center .pathway-description {
+  font-size: 1rem !important; /* text-base equivalent */
+  line-height: 1.5;
+  text-align: center;
+  max-width: 100%;
+}
+
+/* Enhanced hover and active states for centered text */
+.neural-pathways-container .pathway-button:hover .text-center .pathway-title {
+  transform: scale(1.05);
+  transition: transform 0.2s ease;
+}
+
+.neural-pathways-container .pathway-button.active .text-center .pathway-title {
+  transform: scale(1.08);
+  color: #1e293b !important;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5);
+}
+
+.neural-pathways-container .pathway-button.active .text-center .pathway-description {
+  color: #475569 !important;
+  text-shadow: 0 1px 3px rgba(255, 255, 255, 0.3);
+}
+
+/* Enhanced Neural Stats styling */
+.neural-pathways-container .stats-card {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.neural-pathways-container .stats-card:hover {
+  transform: translateX(4px) scale(1.02);
+  box-shadow: 0 8px 35px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+.neural-pathways-container .stats-label {
+  color: #f1f5f9 !important; /* slate-100 for enhanced contrast */
+  font-weight: 700;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.05em;
+  font-size: 1rem;
+}
+
+.neural-pathways-container .stats-value-container {
+  background: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  transition: all 0.3s ease;
+}
+
+.neural-pathways-container .stats-value-container:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.25) !important;
+  transform: scale(1.05);
+}
+
+.neural-pathways-container .stats-value {
+  font-weight: 900;
+  font-size: 1.125rem;
+  letter-spacing: 0.1em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+  position: relative;
+}
+
+/* Enhanced glow effects for stats values */
+.neural-pathways-container .stats-value.text-cyan-400 {
+  color: #22d3ee !important;
+  text-shadow: 0 0 10px rgba(34, 211, 238, 0.5), 0 0 20px rgba(34, 211, 238, 0.2), 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.neural-pathways-container .stats-value.text-purple-400 {
+  color: #c084fc !important;
+  text-shadow: 0 0 10px rgba(192, 132, 252, 0.5), 0 0 20px rgba(192, 132, 252, 0.2), 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.neural-pathways-container .stats-value.text-green-400 {
+  color: #4ade80 !important;
+  text-shadow: 0 0 10px rgba(74, 222, 128, 0.5), 0 0 20px rgba(74, 222, 128, 0.2), 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.neural-pathways-container .stats-value.text-yellow-400 {
+  color: #facc15 !important;
+  text-shadow: 0 0 10px rgba(250, 204, 21, 0.5), 0 0 20px rgba(250, 204, 21, 0.2), 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Enhanced background gradients for stats cards */
+.neural-pathways-container .stats-card {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.6)) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.neural-pathways-container .stats-card:hover {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(30, 41, 59, 0.7)) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Simplified pathway button animations */
+.neural-pathways-container .pathway-button {
+  transition: all 0.3s ease;
+}
+
+.neural-pathways-container .pathway-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15) !important;
+}
+
+.neural-pathways-container .pathway-button:active:not(:disabled) {
+  transform: translateY(0px);
+  transition: transform 0.1s ease;
+}
+
+/* Enhanced badge hover effects */
+.neural-pathways-container .pathway-badge {
+  transition: all 0.2s ease;
+}
+
+.neural-pathways-container .pathway-badge:hover {
+  transform: scale(1.05);
+}
